@@ -1,6 +1,7 @@
 SELECT
     "ID", -- Replace 'id' with the actual unique identifier column name if different
     observations->>'First name' AS first_name_value,
+    observations->>'Last name' AS last_name_value,
     observations->>'Date of birth' AS date_of_birth,
     observations->>'Year' AS year_value,
     observations->>'Gender' AS gender_value,
