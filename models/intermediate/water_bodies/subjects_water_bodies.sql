@@ -1,3 +1,7 @@
+{{ config(
+  materialized='table'
+) }}
+
 SELECT
     "ID", 
     observations->>'First name' AS first_name,
