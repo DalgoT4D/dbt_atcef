@@ -15,19 +15,23 @@ SELECT
     location->>'Taluka' as Taluka,
     audit->>'Created at' as created_at,
     audit->>'Last modified at' as last_modified_at,
+    observations->>'Silt to be excavated as per plan' as silt_to_be_excavated,
+    observations->>'Total silt required' as total_silt_required,
+    observations->>'Type of well' as type_of_well,
+    observations->>'Other type of well' as other_type_of_well,
+    observations->>'Wells nearby' as wells_nearby,
+    observations->>'Water level in well during registration' as water_level_in_well_during_registration,
     observations->>'Capacity of trolleys in cu.m.' AS capacity_of_trolleys,
     observations->>'Number of hywas required' as number_of_hywas_required,
     observations->>'Number of trolleys required' as number_of_trolleys_required,
     observations->>'Farmer contribution per trolley' as farmer_contribution_per_trolley,
-    observations->>'Total silt required' as total_silt_required,
-    observations->>'Silt to be excavated as per plan' as silt_to_be_excavated,
     observations->>'Amount for diesel is paid by' as amount_for_diesel_is_paid_by,
     observations->>'Machine' AS machine_value,
+    observations->>'Rent for machine per hour' as rent_for_machine_per_hour,
     observations->>'How the rent of the machine is paid' AS how_the_rent_of_the_machine_is_paid,
     observations->>'Make of machine' AS make_of_machine,
     observations->>'Manufacturing year of machine' AS manufacturing_year_of_machine,
     observations->>'Model of machine' AS model_of_machine,
-    observations->>'Rent for machine per hour' AS rent_for_machine_per_hour,
     observations->>'Type of Machine' AS type_of_machine
 
-FROM rwb_niti_2022.subjects 
+FROM niti_2022.subjects 
