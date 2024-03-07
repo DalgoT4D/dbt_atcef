@@ -1,5 +1,6 @@
 
+dbt-env/
 target/
 dbt_packages/
 logs/
-dbt-env/
+
