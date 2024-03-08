@@ -2,8 +2,17 @@
   materialized='table'
 ) }}
 
-SELECT a.*, 
-       b."Total Silt Excavated",
-       b."Total Silt Carted"
-FROM prod.subjects_2023 as a
-RIGHT JOIN prod.encounter_2023 AS b ON a.uid = b."Subject_ID"
+WITH WorkOrderEncounters AS (
+    SELECT * 
+    FROM prod.encounter_2023 
+    WHERE subject_type = 'Work Order'
+)
+
+SELECT a.*,
+       woe.encounter_location,
+       woe.total_silt_excavated,
+       woe.total_silt_carted
+
+
+FROM prod.subjects_2023 AS a
+RIGHT JOIN WorkOrderEncounters AS woe ON a.uid = woe.subject_id
