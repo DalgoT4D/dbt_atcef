@@ -10,6 +10,6 @@ SELECT
  "Encounter_location" AS encounter_location,
   observations ->> 'Total silt excavated' AS total_silt_excavated,
   observations ->> 'Total Silt carted' AS total_silt_carted,
-  observations ->> 'Silt excavated as per MB recording' AS "Silt Excavated as Per MB Recording",
-  observations ->> 'The total farm area on which Silt is spread' AS "Total Farm Area on Which Silt Is Spread"
+  observations ->> 'Silt excavated as per MB recording' AS silt_excavated_as_per_MB_recording
+  
 FROM staging.encounters
