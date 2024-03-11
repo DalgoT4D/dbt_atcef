@@ -10,7 +10,8 @@ WITH WorkOrderEncounters AS (
 
 SELECT a.*,
        woe.encounter_location,
-       woe.total_silt_carted
+       woe.total_silt_carted,
+       woe.date_time
 
 
 FROM prod.subjects_2023 AS a
