@@ -10,7 +10,6 @@ WITH WorkOrderEncounters AS (
 
 SELECT a.*,
        woe.encounter_location,
-       woe.total_silt_excavated,
        woe.total_silt_carted
 
 

@@ -7,7 +7,7 @@ select
     "Subject_ID" AS subject_id,
     "Subject_type" AS subject_type,
     "Encounter_location" AS encounter_location,
-    observations ->> 'Total Silt carted' as total_silt_carted,
-    observations ->> 'Total silt excavated' as total_silt_excavated, 
-    observations ->> 'Silt excavated as per MB recording' as silt_excavated_as_per_MB_recording
+    CAST(TO_DATE("Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS date) AS date_time,
+    CAST(observations ->> 'Total Silt carted' AS FLOAT) AS total_silt_carted
+
 FROM niti_2022.encounters
