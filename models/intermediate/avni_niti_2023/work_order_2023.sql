@@ -5,7 +5,6 @@
 WITH WorkOrderEncounters AS (
     SELECT * 
     FROM prod.encounter_2023 
-    WHERE subject_type = 'Work Order'
 )
 
 SELECT a.*,

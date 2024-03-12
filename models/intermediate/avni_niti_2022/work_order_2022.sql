@@ -7,7 +7,6 @@
 WITH WorkOrderEncounters AS (
     SELECT * 
     FROM prod.encounter_2022
-    WHERE subject_type = 'Work Order'
 )
 
 SELECT a.*,
