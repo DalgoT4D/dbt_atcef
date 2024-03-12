@@ -23,7 +23,7 @@ latest_details AS (
     taluka,
     date_time,
     ROW_NUMBER() OVER(PARTITION BY dam ORDER BY date_time DESC) as rn
-  FROM prod.work_order_union
+  FROM prod.work_order_union where date_time is not null
 )
 SELECT
   ld.date_time AS "Date",

@@ -6,7 +6,6 @@
 WITH WorkOrderEncounters AS (
     SELECT 
         subject_id,
-        eid,
         COUNT(*) OVER(PARTITION BY subject_id) AS encounters_count, -- Count of encounters per subject
         encounter_location,
         encounter_type,
@@ -16,7 +15,6 @@ WITH WorkOrderEncounters AS (
 )
 
 SELECT 
-    woe.eid,
     s.uid,
     s.dam,
     s.district,
@@ -29,7 +27,6 @@ SELECT
     END AS project_status,
     woe.encounter_location,
     woe.encounter_type,
-    s.silt_to_be_excavated,
     woe.total_silt_carted,
     woe.date_time
 FROM prod.subjects_2022 AS s
