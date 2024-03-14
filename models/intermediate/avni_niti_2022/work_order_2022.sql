@@ -12,7 +12,7 @@ WITH WorkOrderEncounters AS (
         encounter_type,
         total_silt_carted,
         date_time
-    FROM prod.encounter_2022
+    FROM {{ ref('encounter_2022') }}
 )
 
 SELECT 
@@ -32,6 +32,6 @@ SELECT
     s.silt_to_be_excavated,
     woe.total_silt_carted,
     woe.date_time
-FROM prod.subjects_2022 AS s
+FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
 

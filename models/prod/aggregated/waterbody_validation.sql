@@ -3,7 +3,7 @@ WITH WorkOrderEncounters AS (
         subject_id,
         COUNT(*) AS encounters_count, -- Total number of encounters per subject
         MAX(date_time) AS last_encounter_date -- Date of the latest encounter
-    FROM prod.encounter_2022
+    FROM {{ ref('encounter_2022') }}
     GROUP BY subject_id
 )
 SELECT
@@ -21,5 +21,5 @@ SELECT
         WHEN woe.encounters_count IS NULL THEN 'Not Started'
         ELSE 'Ongoing'
     END AS project_status
-FROM prod.subjects_2022 AS s
+FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id

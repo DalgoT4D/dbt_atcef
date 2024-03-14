@@ -12,4 +12,4 @@ SELECT
     location->>'GP/Village' as Village,
     CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated
     
-FROM niti_2022.subjects 
+FROM {{ source('source_atecf_surveyss', 'subjects_2022') }}

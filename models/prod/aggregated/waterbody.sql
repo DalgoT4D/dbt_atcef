@@ -11,7 +11,7 @@ WITH WorkOrderEncounters AS (
         encounter_type,
         total_silt_carted,
         date_time
-    FROM prod.encounter_2022
+    FROM {{ ref('encounter_2022') }}
 )
 
 SELECT 

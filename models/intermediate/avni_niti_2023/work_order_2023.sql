@@ -2,10 +2,6 @@
   materialized='table'
 ) }}
 
-{{ config(
-  materialized='table'
-) }}
-
 
 WITH WorkOrderEncounters AS (
     SELECT 
@@ -16,7 +12,7 @@ WITH WorkOrderEncounters AS (
         encounter_type,
         total_silt_carted,
         date_time
-    FROM prod.encounter_2023
+    FROM {{ ref('encounter_2023') }}
 )
 
 SELECT 
@@ -36,6 +32,6 @@ SELECT
     s.silt_to_be_excavated,
     woe.total_silt_carted,
     woe.date_time
-FROM prod.subjects_2023 AS s
+FROM {{ ref('subjects_2023') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
 

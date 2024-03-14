@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: source_atecf_surveyss
+    schema: rwb_niti_2022
+    tables:
+      - name: subjects_2022
+        identifier: subjects
+        description: "Areas of working."
+
+  - name: public_data
+    schema: public
+    tables:
+      - name: encounter_2022
+        identifier: encounters
+        description: "Daily basis action for field workers."
+
+  - name: source_atecf_surveys
+    schema: rwb_niti_2023
+    tables:
+      - name: subjects_2023
+        identifier: subjects
+        description: "Areas of working."
+      - name: encounter_2023
+        identifier: encounters
+        description: "Daily basis action for field workers."

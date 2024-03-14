@@ -12,4 +12,4 @@ SELECT
   CAST(TO_DATE("Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS date) AS date_time,
   CAST(observations ->> 'Total Silt carted' AS FLOAT) AS total_silt_carted
   
-FROM staging.encounters
+FROM {{ source('source_atecf_surveys', 'encounter_2023') }}
