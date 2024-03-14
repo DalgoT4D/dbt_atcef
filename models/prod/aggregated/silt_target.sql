@@ -18,7 +18,7 @@ WITH silt_calculations AS (
         (silt_to_be_excavated - silt_target) * 1000 AS silt_difference_litres,
         (silt_to_be_excavated * 1000) / 10000 AS equivalent_water_tankers
     FROM
-        {{ ref('work_orders') }}
+        {{ ref('work_order') }}
 )
 
 SELECT
