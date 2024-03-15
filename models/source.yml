@@ -7,10 +7,6 @@ sources:
       - name: subjects_2022
         identifier: subjects
         description: "Areas of working."
-
-  - name: public_data
-    schema: public
-    tables:
       - name: encounter_2022
         identifier: encounters
         description: "Daily basis action for field workers."
