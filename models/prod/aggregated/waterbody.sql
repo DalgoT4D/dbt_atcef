@@ -29,6 +29,6 @@ SELECT
     woe.encounter_type,
     woe.total_silt_carted,
     woe.date_time
-FROM prod.subjects_2022 AS s
+FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
 

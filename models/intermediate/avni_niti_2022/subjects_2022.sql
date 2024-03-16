@@ -10,6 +10,7 @@ SELECT
     location->>'State' as state,
     location->>'Taluka' as Taluka,
     location->>'GP/Village' as Village,
+    observations ->> 'Type of Machine' as type_of_machine,
     CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated
     
 FROM {{ source('source_atecf_surveyss', 'subjects_2022') }}

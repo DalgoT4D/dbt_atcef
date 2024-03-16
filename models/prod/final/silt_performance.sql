@@ -8,11 +8,11 @@ WITH ranked_districts AS (
     district,
     AVG(pct_silt_achieved_vs_target) AS avg_pct_achieved
   FROM
-  {{ ref('work_order') }}
+   {{ ref('work_order') }} 
+  WHERE
+   pct_silt_achieved_vs_target IS NOT NULL
   GROUP BY
     district
-  ORDER BY
-    avg_pct_achieved DESC
 )
 
 , top_performers AS (
@@ -22,6 +22,10 @@ WITH ranked_districts AS (
     ROW_NUMBER() OVER(ORDER BY avg_pct_achieved DESC) AS rank
   FROM
     ranked_districts
+  WHERE
+    avg_pct_achieved IS NOT NULL
+  ORDER BY
+    avg_pct_achieved DESC
   LIMIT 5
 )
 
@@ -32,6 +36,10 @@ WITH ranked_districts AS (
     ROW_NUMBER() OVER(ORDER BY avg_pct_achieved ASC) AS rank
   FROM
     ranked_districts
+   WHERE
+    avg_pct_achieved IS NOT NULL
+  ORDER BY
+    avg_pct_achieved ASC
   LIMIT 5
 )
 
