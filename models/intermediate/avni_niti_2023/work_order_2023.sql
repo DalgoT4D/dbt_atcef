@@ -19,6 +19,7 @@ WITH WorkOrderEncounters AS (
 SELECT 
     s.uid,
     woe.eid,
+    s.mobile_verified,
     s.dam,
     s.district,
     s.state,

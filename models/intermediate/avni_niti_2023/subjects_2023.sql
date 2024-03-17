@@ -11,6 +11,7 @@ SELECT
     location->>'Taluka' AS taluka,
     location->>'GP/Village' as Village,
     observations ->> 'Type of Machine' as type_of_machine,
+    (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
     CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated
     
 FROM {{ source('source_atecf_surveys', 'subjects_2023') }}
