@@ -35,7 +35,8 @@ SELECT
     woe.encounter_type,
     s.silt_to_be_excavated,
     woe.total_silt_carted,
-    woe.date_time
+    woe.date_time,
+    s.category_of_farmer
 FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
 
