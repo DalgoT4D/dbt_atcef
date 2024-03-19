@@ -12,7 +12,7 @@ WITH WorkOrderEncounters AS (
         encounter_type,
         total_silt_carted,
         date_time,
-        machine_working_hours
+        working_hours_as_per_time
     FROM {{ ref('encounter_2023') }}
 )
 
@@ -26,7 +26,7 @@ SELECT
     s.taluka,
     s.village,
     s.type_of_machine,
-    woe.machine_working_hours,
+    woe.working_hours_as_per_time,
     CASE 
         WHEN woe.subject_id IS NOT NULL THEN 'Ongoing'
         ELSE 'Not Started'
