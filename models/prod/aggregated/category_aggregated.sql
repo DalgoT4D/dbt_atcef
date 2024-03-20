@@ -9,13 +9,31 @@ SELECT
     taluka,
     village,
     dam,
-    SUM(vulnerable_small + vulnerable_marginal) AS vulnerable_farmers_count,
-    SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large) AS total_farmers_count,
-    ROUND(
-        (SUM(vulnerable_small + vulnerable_marginal)::FLOAT / NULLIF(SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large), 0))::NUMERIC, 2
-    ) AS vulnerable_farmers_percentage
+    'vulnerable' AS farmer_type,
+    SUM(vulnerable_small + vulnerable_marginal) AS farmers_count
 FROM
-    {{ ref('category_farmer') }} 
+    {{ ref('category_farmer') }}
+GROUP BY
+    state,
+    district,
+    taluka,
+    village,
+    dam
+HAVING
+    SUM(vulnerable_small + vulnerable_marginal) > 0
+
+UNION ALL
+
+SELECT
+    state,
+    district,
+    taluka,
+    village,
+    dam,
+    'total' AS farmer_type,
+    SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large) AS farmers_count
+FROM
+    {{ ref('category_farmer') }}
 GROUP BY
     state,
     district,
@@ -24,9 +42,10 @@ GROUP BY
     dam
 HAVING
     SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large) > 0
+
 ORDER BY
     state,
     district,
     taluka,
     village,
-    dam
+    dam, farmer_type
