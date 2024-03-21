@@ -12,7 +12,8 @@ WITH WorkOrderEncounters AS (
         encounter_type,
         total_silt_carted,
         date_time,
-        working_hours_as_per_time
+        working_hours_as_per_time,
+        silt_to_be_excavated_as_per_mb
     FROM {{ ref('encounter_2023') }}
 )
 
@@ -35,6 +36,7 @@ SELECT
     woe.encounter_type,
     s.silt_to_be_excavated,
     woe.total_silt_carted,
+    woe.silt_to_be_excavated_as_per_mb,
     woe.date_time,
     s.category_of_farmer
 FROM {{ ref('subjects_2023') }} AS s
