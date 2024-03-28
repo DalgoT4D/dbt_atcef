@@ -12,6 +12,7 @@ SELECT
   observations->>'Working Hours as per time' as working_hours_as_per_time,
   CAST(TO_DATE("Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS date) AS date_time,
   CAST(observations ->> 'Total Silt carted' AS FLOAT) AS total_silt_carted,
-  observations ->> 'Silt excavated as per MB recording' AS silt_to_be_excavated_as_per_mb
+  observations ->> 'Silt excavated as per MB recording' AS silt_to_be_excavated_as_per_mb,
+  observations ->> 'The total farm area on which Silt is spread' AS total_farm_area
   
 FROM {{ source('source_atecf_surveys', 'encounter_2023') }}
