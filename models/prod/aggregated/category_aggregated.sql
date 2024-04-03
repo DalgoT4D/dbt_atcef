@@ -30,8 +30,8 @@ SELECT
     taluka,
     village,
     dam,
-    'total' AS farmer_type,
-    SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large) AS farmers_count
+    'others' AS farmer_type,
+    SUM(semi_medium + medium + large) AS farmers_count
 FROM
     {{ ref('category_farmer') }}
 GROUP BY

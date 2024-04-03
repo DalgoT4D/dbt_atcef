@@ -6,7 +6,7 @@ sources:
     tables:
       - name: subjects_2022
         identifier: subjects
-        description: "Areas of working."
+        description: "Areas of working(example farmers, machine, work order, gram panchyat). We pull limited data from this areas"
       - name: encounter_2022
         identifier: encounters
         description: "Daily basis action for field workers."
@@ -16,7 +16,7 @@ sources:
     tables:
       - name: subjects_2023
         identifier: subjects
-        description: "Areas of working."
+        description: "Areas of working(example farmers, machine, )."
       - name: encounter_2023
         identifier: encounters
         description: "Daily basis action for field workers."
