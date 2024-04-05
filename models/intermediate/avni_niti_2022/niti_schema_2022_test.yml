@@ -32,3 +32,17 @@ models:
       - accepted_values:
           column_name: mobile_verified
           values: [true, false]
+      
+  - name: work_order_2022
+    tests: 
+      - accepted_values:
+          column_name: encounter_type
+          values:
+            - 'Work order daily Recording - Machine'
+            - 'Farmer Interaction'
+            - 'Work order daily Recording - Farmer'
+            - 'Work order endline'
+            - 'Farmer Endline'
+            - 'Excavating Machine Endline'
+            - 'Regular recording'
+            - 'Work Order Endline Executive Engineer'
