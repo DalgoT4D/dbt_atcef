@@ -32,7 +32,7 @@ models:
       - accepted_values:
           column_name: mobile_verified
           values: [true, false]
-          
+
   - name: work_order_2023
     tests: 
       - accepted_values:
@@ -47,6 +47,17 @@ models:
                    Excavating Machine Endline, 
                    Regular recording, 
                    Work Order Endline Executive Engineer]
+      - not_null: 
+          column_name: dam
+      - not_null: 
+          column_name: district
+      - not_null: 
+          column_name: state
+      - not_null: 
+          column_name: taluka
+      - not_null: 
+          column_name: village
+   
 
 
 

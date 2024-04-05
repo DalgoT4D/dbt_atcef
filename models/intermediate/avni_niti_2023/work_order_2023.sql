@@ -36,5 +36,5 @@ SELECT
     woe.date_time,
     s.category_of_farmer
 FROM {{ ref('subjects_2023') }} AS s
-LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
+LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id where dam is not null
 
