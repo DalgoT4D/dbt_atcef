@@ -57,6 +57,15 @@ models:
           column_name: taluka
       - not_null: 
           column_name: village
+      - accepted_values:
+          column_name: category_of_farmer
+          values: 
+            - 'Marginal (0-2.49 acres)'
+            - 'Semi-medium (5-9.55 acres)'
+            - 'Medium (10-24.99 acres)'
+            - 'Large (above 25 acres)'
+            - 'Small (2.5-4.99 acres)'
+
    
 
 
