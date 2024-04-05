@@ -15,4 +15,4 @@ SELECT
     (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
     CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated
     
-FROM {{ source('source_atecf_surveys', 'subjects_2023') }}
+FROM {{ source('source_atecf_surveys', 'subjects_2023') }} where location->>'Dam' is not null
