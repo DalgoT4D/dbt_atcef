@@ -15,17 +15,20 @@ models:
 
   - name: subjects_2022
     tests:
-      - not_null: 
+      - not_null:
           column_name: first_name
-      - not_null: 
+      - not_null:
           column_name: dam
-      - not_null: 
+      - not_null:
           column_name: district
-      - not_null: 
+      - not_null:
           column_name: state
-      - not_null: 
+      - not_null:
           column_name: taluka
-      - not_null: 
+      - not_null:
           column_name: village
-      - not_null: 
+      - not_null:
           column_name: uid
+      - accepted_values:
+          column_name: mobile_verified
+          values: [true, false]

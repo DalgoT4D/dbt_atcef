@@ -29,3 +29,7 @@ models:
           column_name: village
       - not_null: 
           column_name: uid
+      - accepted_values:
+          column_name: mobile_verified
+          values: [true, false]
+
