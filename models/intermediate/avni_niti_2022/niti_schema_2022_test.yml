@@ -46,3 +46,14 @@ models:
             - 'Excavating Machine Endline'
             - 'Regular recording'
             - 'Work Order Endline Executive Engineer'
+      - not_null: 
+          column_name: dam
+      - not_null: 
+          column_name: district
+      - not_null: 
+          column_name: state
+      - not_null: 
+          column_name: taluka
+      - not_null: 
+          column_name: village
+   
