@@ -10,8 +10,9 @@ SELECT
     taluka,
     dam,
     village,
-    MAX(silt_to_be_excavated) AS silt_target,
-    SUM(CASE WHEN total_silt_carted::TEXT <> 'NaN' THEN total_silt_carted ELSE 0 END) AS silt_achieved
+    COALESCE(MAX(silt_to_be_excavated), 0) as silt_target, 
+    COALESCE(CAST(ROUND(SUM(CASE WHEN total_silt_carted::text <> 'NaN' THEN total_silt_carted ELSE 0 END)) AS numeric), 0) AS silt_achieved
+ 
     FROM
     {{ ref('work_order_union') }}
 WHERE
