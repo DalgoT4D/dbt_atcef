@@ -21,6 +21,7 @@ SELECT
     s.uid,
     woe.eid,
     s.mobile_verified,
+    s.mobile_number,
     s.dam,
     s.district,
     s.state,

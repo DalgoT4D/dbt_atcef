@@ -12,6 +12,7 @@ SELECT
     location->>'GP/Village' as Village,
     null as category_of_farmer,
     observations ->> 'Type of Machine' as type_of_machine,
+    observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations ->'Mobile Number'->>'verified')::boolean AS mobile_verified,
     CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated
     
