@@ -14,11 +14,11 @@ GROUP BY
 district_geojson AS (
     SELECT
         dtname,
-        MAX(geojson) AS district_geojson
+        geojson AS district_geojson
     FROM
         public.fips_geojson
     GROUP BY
-        dtname
+        dtname, geojson
 )
 
 SELECT

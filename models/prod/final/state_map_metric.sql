@@ -14,11 +14,11 @@ WITH aggregated_data AS (
 state_geojson AS (
     SELECT
         st_nm,
-        MAX(geojson) AS state_geojson
+        geojson AS state_geojson
     FROM
         state_jeojson
     GROUP BY
-        st_nm
+        st_nm, geojson
 )
 SELECT
     ad.*,
