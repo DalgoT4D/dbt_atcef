@@ -12,14 +12,7 @@ WITH aggregated_data AS (
         taluka, 
         village, 
         COALESCE(MAX(silt_to_be_excavated), 0) as silt_target, 
-        COALESCE(CAST(ROUND(SUM(CASE WHEN total_silt_carted::text <> 'NaN' THEN total_silt_carted ELSE 0 END)) AS numeric), 0) AS silt_achieved,
-        COUNT(CASE WHEN mobile_verified = TRUE THEN 1 ELSE NULL END) AS mobile_verified_count,
-        COUNT(CASE WHEN mobile_verified = FALSE THEN 1 ELSE NULL END) AS mobile_unverified_count,
-        SUM(CASE WHEN  category_of_farmer = 'Small (2.5-4.99 acres)' THEN 1 ELSE 0 END) AS vulnerable_small,
-        SUM(CASE WHEN  category_of_farmer = 'Marginal (0-2.49 acres)' THEN 1 ELSE 0 END) AS vulnerable_marginal,
-        SUM(CASE WHEN  category_of_farmer = 'Semi-medium (5-9.55 acres)' THEN 1 ELSE 0 END) AS semi_medium,
-        SUM(CASE WHEN  category_of_farmer = 'Medium (10-24.99 acres)' THEN 1 ELSE 0 END) AS medium,
-        SUM(CASE WHEN  category_of_farmer = 'Large (above 25 acres)' THEN 1 ELSE 0 END) AS large
+        COALESCE(CAST(ROUND(SUM(CASE WHEN total_silt_carted::text <> 'NaN' THEN total_silt_carted ELSE 0 END)) AS numeric), 0) AS silt_achieved
     FROM
         {{ ref('work_order_union') }} 
     WHERE
