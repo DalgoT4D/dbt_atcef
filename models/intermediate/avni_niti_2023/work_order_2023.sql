@@ -13,6 +13,8 @@ WITH WorkOrderEncounters AS (
         total_silt_carted,
         date_time,
         working_hours_as_per_time,
+        total_working_hours_of_machine_by_time,
+        total_working_hours_of_machine,
         silt_carted_by_farmer_trolleys
     FROM {{ ref('encounter_2023') }}
 )
@@ -29,6 +31,8 @@ SELECT
     s.village,
     s.type_of_machine,
     woe.working_hours_as_per_time,
+    woe.total_working_hours_of_machine_by_time,
+    woe.total_working_hours_of_machine,
     CASE WHEN woe.subject_id IS NOT NULL THEN 'Ongoing' END AS project_ongoing,
     CASE WHEN woe.subject_id IS NULL THEN 'Yet to start' END AS project_not_started,
     woe.encounter_location,
