@@ -11,6 +11,7 @@ WITH cte AS (
         taluka,
         village,
         dam,
+        ngo_name,
         date_time,
         category_of_farmer
     FROM
@@ -27,6 +28,7 @@ SELECT
     district,
     taluka,
     village,
+    ngo_name,
     dam AS waterbodies,
     SUM(
         CASE
@@ -65,7 +67,8 @@ GROUP BY
     district,
     taluka,
     village,
-    dam
+    dam,
+    ngo_name
 
 
 

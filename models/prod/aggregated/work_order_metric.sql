@@ -6,6 +6,7 @@
 SELECT 
     first_name as work_order,
     MAX(date_time) as date_time,
+    ngo_name,
     state, 
     district,
     taluka,
@@ -20,4 +21,4 @@ WHERE
     encounter_type = 'Work order daily Recording - Farmer'
     AND project_ongoing = 'Ongoing'
 GROUP BY
-    state, district, taluka, dam, village, first_name
+    state, district, taluka, dam, village, first_name, ngo_name

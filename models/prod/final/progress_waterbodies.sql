@@ -10,6 +10,7 @@ SELECT DISTINCT ON (dam) dam AS waterbodies,
        village, 
        taluka, 
        district, 
+       ngo_name,
        project_ongoing, 
        project_not_started 
 FROM {{ ref('work_order_union') }}

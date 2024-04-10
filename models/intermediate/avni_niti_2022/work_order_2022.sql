@@ -28,6 +28,7 @@ SELECT
     s.mobile_verified,
     s.mobile_number,
     s.dam,
+    s.ngo_name,
     s.district,
     s.state,
     s.taluka,
@@ -49,4 +50,3 @@ SELECT
     woe.silt_carted_by_farmer_trolleys
 FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
-

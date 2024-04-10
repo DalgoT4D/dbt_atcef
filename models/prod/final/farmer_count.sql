@@ -9,6 +9,7 @@ SELECT
     taluka,
     village,
     waterbodies,
+    ngo_name,
     'vulnerable' AS farmer_type,
     SUM(vulnerable_small + vulnerable_marginal) AS farmers_count
 FROM
@@ -18,7 +19,8 @@ GROUP BY
     district,
     taluka,
     village,
-    waterbodies
+    waterbodies,
+    ngo_name
 HAVING
     SUM(vulnerable_small + vulnerable_marginal) > 0
 
@@ -31,6 +33,7 @@ SELECT
     village,
     waterbodies,
     'others' AS farmer_type,
+    ngo_name,
     SUM(semi_medium + medium + large) AS farmers_count
 FROM
     {{ ref('farmer_endline') }}
@@ -39,7 +42,8 @@ GROUP BY
     district,
     taluka,
     village,
-    waterbodies
+    waterbodies,
+    ngo_name
 HAVING
     SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large) > 0
 
@@ -48,4 +52,4 @@ ORDER BY
     district,
     taluka,
     village,
-    waterbodies, farmer_type
+    waterbodies, farmer_type, ngo_name

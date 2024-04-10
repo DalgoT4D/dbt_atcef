@@ -5,6 +5,7 @@
 
 SELECT
     date_time,
+    ngo_name,
     state,
     village,
     district,
