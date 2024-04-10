@@ -4,12 +4,13 @@
 ) }}
 
 
-select date_time,
+SELECT DISTINCT ON (dam) dam AS waterbodies,
+       date_time,
        state, 
        village, 
        taluka, 
        district, 
-       dam as waterbodies, 
        project_ongoing, 
        project_not_started 
-from {{ ref('work_order_union') }} 
+FROM {{ ref('work_order_union') }}
+ORDER BY dam, date_time
