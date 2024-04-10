@@ -23,6 +23,7 @@ WITH WorkOrderEncounters AS (
 SELECT 
     woe.eid,
     s.uid,
+    s.first_name,
     s.mobile_verified,
     s.mobile_number,
     s.dam,
