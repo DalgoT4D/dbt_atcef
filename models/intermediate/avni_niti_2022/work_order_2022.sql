@@ -17,7 +17,8 @@ WITH WorkOrderEncounters AS (
         total_working_hours_of_machine,
         silt_excavated_as_per_MB_recording,
         silt_carted_by_farmer_trolleys,
-        total_silt_excavated
+        total_silt_excavated,
+        number_of_trolleys_carted
     FROM {{ ref('encounter_2022') }}
 )
 
@@ -47,6 +48,7 @@ SELECT
     woe.total_silt_carted,
     woe.date_time,
     s.category_of_farmer,
-    woe.silt_carted_by_farmer_trolleys
+    woe.silt_carted_by_farmer_trolleys,
+    woe.number_of_trolleys_carted
 FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
