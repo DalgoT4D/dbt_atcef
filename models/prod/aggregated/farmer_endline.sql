@@ -22,6 +22,10 @@ WITH cte AS (
     ORDER BY
         mobile_number, date_time DESC
 )
+
+
+
+
 SELECT
     max(date_time) AS date_time,
     state,
@@ -67,8 +71,8 @@ GROUP BY
     district,
     taluka,
     village,
-    dam,
-    ngo_name
+    ngo_name,
+    dam
 
 
 

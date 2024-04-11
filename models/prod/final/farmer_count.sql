@@ -2,7 +2,6 @@
   materialized='table'
 ) }}
 
-
 SELECT
     state,
     district,
@@ -32,8 +31,8 @@ SELECT
     taluka,
     village,
     waterbodies,
-    'others' AS farmer_type,
     ngo_name,
+    'others' AS farmer_type,
     SUM(semi_medium + medium + large) AS farmers_count
 FROM
     {{ ref('farmer_endline') }}
@@ -45,7 +44,7 @@ GROUP BY
     waterbodies,
     ngo_name
 HAVING
-    SUM(vulnerable_small + vulnerable_marginal + semi_medium + medium + large) > 0
+    SUM(semi_medium + medium + large) > 0
 
 ORDER BY
     state,
