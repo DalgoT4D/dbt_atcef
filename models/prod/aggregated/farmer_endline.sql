@@ -18,7 +18,6 @@ WITH cte AS (
         {{ ref('work_order_union') }} 
     WHERE
         encounter_type = 'Farmer Endline'
-        AND project_ongoing = 'Ongoing'
     ORDER BY
         mobile_number, date_time DESC
 )

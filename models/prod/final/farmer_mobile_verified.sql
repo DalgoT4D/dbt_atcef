@@ -17,8 +17,7 @@ WITH DistinctRecords AS (
     FROM
         {{ ref('work_order_union') }}
     WHERE
-        project_ongoing = 'Ongoing'
-        AND encounter_type = 'Farmer Endline'
+       encounter_type = 'Farmer Endline'
     ORDER BY mobile_number -- Ensure the query is ordered by mobile_number for DISTINCT ON to work properly
 )
 SELECT
