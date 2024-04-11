@@ -40,8 +40,18 @@ SELECT
     woe.total_working_hours_of_machine,
     woe.silt_excavated_as_per_MB_recording,
     woe.total_silt_excavated,
-    CASE WHEN woe.subject_id IS NOT NULL THEN 'Ongoing' END AS project_ongoing,
-    CASE WHEN woe.subject_id IS NULL THEN 'Yet to start' END AS project_not_started,
+    CASE 
+        WHEN woe.subject_id IS NOT NULL AND woe.encounter_type <> 'Farmer Endline' THEN 'Ongoing'
+    ELSE NULL
+    END AS project_ongoing,
+    CASE 
+        WHEN woe.subject_id IS NULL THEN 'Yet to start' 
+        ELSE NULL
+    END AS project_not_started,
+    CASE 
+        WHEN woe.encounter_type = 'Farmer Endline' THEN 'Completed'
+        ELSE NULL
+    END AS project_completed,
     woe.encounter_location,
     woe.encounter_type,
     s.silt_to_be_excavated,
