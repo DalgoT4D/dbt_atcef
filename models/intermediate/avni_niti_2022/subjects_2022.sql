@@ -2,7 +2,7 @@
   materialized='table'
 ) }}
 
-SELECT
+with cte as (SELECT
     "ID" AS uid, -- Replace 'id' with the actual unique identifier column name if different
     observations->>'First name' AS first_name,
     location->>'Dam' AS dam,
@@ -17,4 +17,11 @@ SELECT
     CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated,
     rwb."Project/NGO" AS ngo_name
 FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} -- Assuming this is a correct reference to a source in dbt
-RIGHT JOIN rwb_niti_2022."RWB Niti 2022" AS rwb ON location->>'Dam' = rwb."Dam"
+RIGHT JOIN rwb_niti_2022."RWB Niti 2022" AS rwb ON location->>'Dam' = rwb."Dam")
+
+select * from cte where dam IS NOT NULL
+      and district is not null
+      and taluka is not null
+      and state is not null
+      and village is not null
+

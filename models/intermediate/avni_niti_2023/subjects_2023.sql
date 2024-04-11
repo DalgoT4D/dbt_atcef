@@ -2,7 +2,7 @@
   materialized='table'
 ) }}
 
-SELECT
+with cte as (SELECT
     "ID" AS uid, 
     observations->>'First name' AS first_name,
     location->>'Dam' AS dam,
@@ -21,6 +21,12 @@ FROM
 RIGHT JOIN 
     rwb_niti_2023."Niti 2023 Address" AS rwb 
 ON 
-    location->>'Dam' = rwb."Dam" 
-WHERE 
-    location->>'Dam' IS NOT NULL
+    location->>'Dam' = rwb."Dam" )
+
+
+select * from cte where dam IS NOT NULL 
+      and district is not null
+      and taluka is not null
+      and state is not null
+      and village is not null
+

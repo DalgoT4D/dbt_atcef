@@ -4,8 +4,13 @@
 
 WITH excavated_data AS (
   SELECT
+    e.state,
     e.district,
+    e.village,
+    e.taluka,
+    e.dam,
     e.type_of_machine,
+    e.date_time,
     w.silt_achieved, 
     CASE
       WHEN CAST(COALESCE(e.total_working_hours_of_machine, '0') AS NUMERIC) = 0 THEN NULL
@@ -16,7 +21,12 @@ WITH excavated_data AS (
 )
 
 SELECT
+  date_time,
+  state,
   district,
+  village,
+  taluka,
+  dam,
   type_of_machine,
   AVG(silt_excavated_per_hour) as avg_silt_excavated_per_hour,
   CASE
@@ -27,4 +37,4 @@ SELECT
     ELSE 'Benchmark Not Applicable'
   END as benchmark_classification
 FROM excavated_data
-GROUP BY district, type_of_machine
+GROUP BY date_time, state, district, village, taluka, dam, type_of_machine
