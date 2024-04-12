@@ -19,6 +19,7 @@ SELECT
   observations ->> 'Silt carted by farmer - Number of trolleys' AS silt_carted_by_farmer_trolleys,
   observations ->> 'The total farm area on which Silt is spread' AS total_farm_area,
   observations ->> 'Area covered by silt' as area_covered_by_silt,
-  observations ->> 'Number of trolleys carted' as number_of_trolleys_carted
+  observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
+  CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread
   
 FROM {{ source('source_atecf_surveys', 'encounter_2023') }}
