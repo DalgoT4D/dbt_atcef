@@ -62,3 +62,9 @@ SELECT
     woe.number_of_trolleys_carted
 FROM {{ ref('subjects_2022') }} AS s
 LEFT JOIN WorkOrderEncounters AS woe ON s.uid = woe.subject_id
+where dam is not null
+      and district is not null
+      and taluka is not null
+      and state is not null
+      and village is not null
+
