@@ -14,10 +14,11 @@ with cte as (SELECT
     observations ->> 'Type of Machine' AS type_of_machine,
     observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations ->'Mobile Number'->>'verified')::boolean AS mobile_verified,
-    CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated,
-    rwb."Project/NGO" AS ngo_name
+    rwb."Project/NGO" AS ngo_name,
+    CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target
+
 FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} -- Assuming this is a correct reference to a source in dbt
-RIGHT JOIN rwb_niti_2022."RWB Niti 2022" AS rwb ON location->>'Dam' = rwb."Dam")
+RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam")
 
 select * from cte where dam IS NOT NULL
       and district is not null

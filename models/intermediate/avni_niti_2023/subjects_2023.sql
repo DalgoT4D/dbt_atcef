@@ -14,12 +14,18 @@ with cte as (SELECT
     observations ->> 'Category of farmer' AS category_of_farmer,
     observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
-    CAST(observations ->> 'Silt to be excavated as per plan' AS FLOAT) AS silt_to_be_excavated,
-    rwb."Stakeholder responsible" AS ngo_name
+    rwb."Stakeholder responsible" AS ngo_name,
+    CAST(
+        COALESCE(
+            NULLIF(TRIM(rwb."Estimated quantity of Silt"::text), ''),
+            '0'
+        ) AS integer
+    ) AS silt_target
+
 FROM 
     {{ source('source_atecf_surveys', 'subjects_2023') }}
 RIGHT JOIN 
-    rwb_niti_2023."Niti 2023 Address" AS rwb 
+    rwb_niti_2023."rwb2023_address" AS rwb 
 ON 
     location->>'Dam' = rwb."Dam" )
 
