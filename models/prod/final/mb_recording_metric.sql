@@ -18,4 +18,4 @@ FROM
     {{ ref('work_order_union') }}
 WHERE
     encounter_type = 'Work order endline'
-    AND project_ongoing = 'Ongoing'
+   

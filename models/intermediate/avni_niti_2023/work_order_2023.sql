@@ -44,7 +44,7 @@ SELECT
     woe.total_silt_excavated,
     woe.total_farm_area_on_which_Silt_is_spread,
     CASE 
-        WHEN woe.subject_id IS NOT NULL AND woe.encounter_type <> 'Farmer Endline' THEN 'Ongoing'
+        WHEN woe.subject_id IS NOT NULL AND woe.encounter_type <> 'Work order endline' THEN 'Ongoing'
     ELSE NULL
     END AS project_ongoing,
     CASE 
@@ -52,7 +52,7 @@ SELECT
         ELSE NULL
     END AS project_not_started,
     CASE 
-        WHEN woe.encounter_type = 'Farmer Endline' THEN 'Completed'
+        WHEN woe.encounter_type = 'Work order endline' THEN 'Completed'
         ELSE NULL
     END AS project_completed,
     woe.encounter_location,
