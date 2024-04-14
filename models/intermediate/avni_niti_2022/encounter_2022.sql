@@ -2,7 +2,7 @@
   materialized='table'
 ) }}
 
-select 
+with mycte as (select 
     "ID" AS eid,
     "Subject_ID" AS subject_id,
     "Subject_type" AS subject_type,
@@ -21,5 +21,13 @@ select
     observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
     CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread
 
-FROM {{ source('source_atecf_surveyss', 'encounter_2022') }}
+FROM {{ source('source_atecf_surveyss', 'encounter_2022') }})
+
+
+{{ dbt_utils.deduplicate(
+    relation='mycte',
+    partition_by='eid',
+    order_by='eid desc',
+   )
+}}
 

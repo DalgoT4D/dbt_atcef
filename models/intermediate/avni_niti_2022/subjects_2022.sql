@@ -18,11 +18,17 @@ with cte as (SELECT
     CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target
 
 FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} -- Assuming this is a correct reference to a source in dbt
-RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam")
+RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam"),
 
-select * from cte where dam IS NOT NULL
+removing_nulls as (select * from cte where dam IS NOT NULL
       and district is not null
       and taluka is not null
       and state is not null
-      and village is not null
+      and village is not null)
 
+{{ dbt_utils.deduplicate(
+    relation='removing_nulls',
+    partition_by='uid',
+    order_by='uid desc',
+   )
+}}
