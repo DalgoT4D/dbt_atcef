@@ -4,6 +4,8 @@
 
 
 SELECT
+    distinct on (eid)
+    eid,
     date_time,
     first_name AS work_order,
     state, 
@@ -17,5 +19,5 @@ SELECT
 FROM
     {{ ref('work_order_union') }}
 WHERE
-    encounter_type = 'Work order endline'
-   
+    encounter_type = 'Work order endline' and
+    silt_excavated_as_per_mb_recording != 0

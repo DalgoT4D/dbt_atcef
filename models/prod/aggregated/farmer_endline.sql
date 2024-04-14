@@ -4,7 +4,7 @@
 
 
 WITH cte AS (
-    SELECT DISTINCT ON (mobile_number)
+    SELECT DISTINCT ON (mobile_number, eid, uid)
         mobile_number,
         state,
         district,
@@ -19,7 +19,7 @@ WITH cte AS (
     WHERE
         encounter_type = 'Farmer Endline'
     ORDER BY
-        mobile_number, date_time DESC
+        mobile_number, eid, uid, date_time DESC
 )
 
 
