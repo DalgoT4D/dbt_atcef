@@ -18,9 +18,9 @@ WITH excavated_data AS (
     END as silt_excavated_per_hour
   FROM {{ref('machine_endline_aggregated')}} e
   INNER JOIN {{ref('work_order_metric')}} w ON e.district = w.district AND e.dam = w.dam
-)
+),
 
-SELECT
+cte as (SELECT
   date_time,
   state,
   district,
@@ -34,7 +34,8 @@ SELECT
     WHEN type_of_machine = 'JCB' AND AVG(silt_excavated_per_hour) >= 39.2 THEN 'Above Benchmark'
     WHEN type_of_machine = 'Poclain' AND AVG(silt_excavated_per_hour) < 89.6 THEN 'Below Benchmark'
     WHEN type_of_machine = 'Poclain' AND AVG(silt_excavated_per_hour) >= 89.6 THEN 'Above Benchmark'
-    ELSE 'Benchmark Not Applicable'
   END as benchmark_classification
 FROM excavated_data
-GROUP BY date_time, state, district, village, taluka, dam, type_of_machine
+GROUP BY date_time, state, district, village, taluka, dam, type_of_machine)
+
+select * from cte Where benchmark_classification is not null
