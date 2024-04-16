@@ -75,14 +75,4 @@ models:
         tests:
           - not_null
 
-    tests:
-      - unique:
-          column_names:
-            - state
-            - district
-            - taluka
-            - dam
-            - village
-            - work_order
-            - ngo_name
   

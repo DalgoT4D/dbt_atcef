@@ -1,0 +1,146 @@
+version: 2
+
+models:
+  - name: bar_chart
+    description: "Aggregated data model for bar chart visualizations."
+    columns:
+      - name: waterbodies
+        tests:
+          - not_null
+          - unique
+
+      - name: state
+        tests:
+          - not_null
+
+      - name: village
+        tests:
+          - not_null
+
+      - name: taluka
+        tests:
+          - not_null
+
+      - name: district
+        tests:
+          - not_null
+
+      - name: ngo_name
+        tests:
+          - not_null
+
+      - name: project_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Ongoing', 'Not Started', 'Completed']
+
+  - name: farmer_count
+    description: "A summary table aggregating farmer data into vulnerable and others categories."
+    columns:
+      - name: state
+        tests:
+          - not_null
+
+      - name: district
+        tests:
+          - not_null
+
+      - name: taluka
+        tests:
+          - not_null
+
+      - name: village
+        tests:
+          - not_null
+
+      - name: waterbodies
+        tests:
+          - not_null
+
+      - name: ngo_name
+        tests:
+          - not_null
+
+      - name: farmer_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['vulnerable', 'others']
+
+  - name: farmer_mobile_verified
+    description: "Summarizes mobile verification status from work_order_union by various geographical and temporal dimensions."
+    columns:
+      - name: state
+        tests:
+          - not_null
+
+      - name: district
+        tests:
+          - not_null
+
+      - name: taluka
+        tests:
+          - not_null
+
+      - name: village
+        tests:
+          - not_null
+
+      - name: dam
+        tests:
+          - not_null
+
+      - name: date_time
+        tests:
+          - not_null
+
+      - name: ngo_name
+        tests:
+          - not_null
+
+
+  - name: machine_endline_metic
+    description: "Analyzes average silt excavated per hour and benchmarks it against predefined standards."
+    columns:
+      - name: state
+        tests:
+          - not_null
+
+      - name: district
+        tests:
+          - not_null
+
+      - name: village
+        tests:
+          - not_null
+
+      - name: taluka
+        tests:
+          - not_null
+
+      - name: dam
+        tests:
+          - not_null
+
+      - name: type_of_machine
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['JCB', 'Poclain']
+
+      - name: date_time
+        tests:
+          - not_null
+
+      - name: avg_silt_excavated_per_hour
+        tests:
+          - not_null
+          - greater_than:
+              value: 0  # Assuming there should be no zero or negative values after calculations
+
+      - name: benchmark_classification
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Below Benchmark', 'Above Benchmark']
