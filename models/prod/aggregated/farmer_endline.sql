@@ -23,8 +23,6 @@ WITH cte AS (
 )
 
 
-
-
 SELECT
     max(date_time) AS date_time,
     state,
@@ -65,6 +63,7 @@ SELECT
     ) AS large
 FROM
     cte
+where date_time is not null
 GROUP BY
     state,
     district,

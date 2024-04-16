@@ -20,4 +20,5 @@ FROM
 	{{ ref('work_order_union') }}
 WHERE
 	encounter_type = 'Excavating Machine Endline' 
-  and project_ongoing = 'Ongoing' 
+  and project_ongoing = 'Ongoing'
+  and  total_working_hours_of_machine is not null
