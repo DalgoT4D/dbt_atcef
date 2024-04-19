@@ -3,27 +3,31 @@
 ) }}
 
 
-with cte as (SELECT
-    "ID" AS uid, 
-    observations->>'First name' AS first_name,
-    location->>'Dam' AS dam,
-    location->>'District' AS district,
-    location->>'State' AS state,
-    location->>'Taluka' AS taluka,
-    location->>'GP/Village' AS village,
-    observations ->> 'Type of Machine' AS type_of_machine,
-    observations ->> 'Category of farmer' AS category_of_farmer,
-    observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
-    (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
-    observations ->> 'Silt to be excavated as per plan' as silt_to_be_excavated_as_per_plan,
-    observations ->> 'Total silt required' as total_silt_required,
-    observations ->> 'Total Silt Excavated' as total_silt_excavated,
-    observations ->> 'Farmer contribution per trolley' as farmer_contribution_per_trolley,
-    observations ->> 'Number of trolleys required' as number_of_trolleys_required,
-    observations ->> 'Number of hywas required' as number_of_hywas_required,
-    observations ->> 'Name of WB' as name_of_WB
-FROM 
-    {{ source('source_gdgsom_surveys', 'subjects_2024') }}
+WITH cte AS (
+    SELECT
+        "ID" AS uid,
+        INITCAP(TRIM(COALESCE(observations->>'First name'))) AS first_name,  
+        INITCAP(COALESCE(location->>'Dam')) AS dam,  
+        INITCAP(COALESCE(location->>'District')) AS district,  
+        CASE  -- Standardize state names
+            WHEN LOWER(location->>'State') LIKE '%maharastra%' THEN 'Maharashtra'
+            ELSE INITCAP(COALESCE(location->>'State'))
+        END AS state,
+        INITCAP(COALESCE(location->>'Taluka')) AS taluka, 
+        INITCAP(COALESCE(location->>'GP/Village')) AS village, 
+        INITCAP(COALESCE(observations ->> 'Type of Machine')) AS type_of_machine, 
+        INITCAP(COALESCE(observations ->> 'Category of farmer')) AS category_of_farmer, 
+        COALESCE(observations ->'Mobile Number'->>'phoneNumber') AS mobile_number,
+        (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
+        CAST(COALESCE(observations ->> 'Silt to be excavated as per plan', '0') AS NUMERIC) AS silt_to_be_excavated_as_per_plan,
+        CAST(COALESCE(observations ->> 'Total Silt Required', '0') AS NUMERIC) AS total_silt_required,
+        CAST(COALESCE(observations ->> 'Total Silt Excavated', '0') AS NUMERIC) AS total_silt_excavated,
+        CAST(COALESCE(observations ->> 'Farmer contribution per trolley', '0') AS NUMERIC) AS farmer_contribution_per_trolley,
+        CAST(COALESCE(observations ->> 'Number of trolleys required', '0') AS NUMERIC) AS number_of_trolleys_required,
+        CAST(COALESCE(observations ->> 'Number of hywas required', '0') AS NUMERIC) AS number_of_hywas_required,
+        INITCAP(COALESCE(observations ->> 'Name of WB')) AS name_of_WB  
+    FROM 
+        {{ source('source_gdgsom_surveys', 'subjects_2024') }}
 )
 
 
