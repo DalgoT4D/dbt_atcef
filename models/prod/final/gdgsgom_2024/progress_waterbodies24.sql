@@ -15,4 +15,5 @@ SELECT DISTINCT ON (dam) dam AS waterbodies,
           CASE WHEN project_completed IS NOT NULL THEN 'Completed' ELSE '' END
        ) AS project_status
 FROM {{ ref('work_order_2024') }}
+Where dam is not null
 ORDER BY dam, date_time
