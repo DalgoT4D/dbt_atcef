@@ -23,4 +23,6 @@ FROM
 LEFT JOIN 
     {{ ref('encounters_2024') }} AS woe 
 ON 
-    s.uid = woe.subject_id
+    s.uid = woe.subject_id 
+WHERE 
+    s.dam != 'Test'
