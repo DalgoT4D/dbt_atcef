@@ -4,7 +4,8 @@
 
 
 WITH cte AS (
-    SELECT DISTINCT ON (mobile_number, eid, uid)
+   SELECT DISTINCT ON (first_name)
+        first_name,
         mobile_number,
         state,
         district,
@@ -14,12 +15,8 @@ WITH cte AS (
         ngo_name,
         date_time,
         category_of_farmer
-    FROM
-        {{ ref('work_order_union') }} 
-    WHERE
-        encounter_type = 'Farmer Endline'
-    ORDER BY
-        mobile_number, eid, uid, date_time DESC
+FROM {{ ref('work_order_union') }}
+where category_of_farmer is not null
 )
 
 
