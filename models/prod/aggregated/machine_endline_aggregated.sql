@@ -2,23 +2,26 @@
   materialized='table'
 ) }}
 
-
 SELECT
-    date_time,
-    ngo_name,
-    state,
-    village,
-    district,
-    taluka,
-    dam,
-	  type_of_machine,
-    encounter_type,
-	  working_hours_as_per_time,
-	  total_working_hours_of_machine_by_time,
-	  total_working_hours_of_machine
+	max(date_time) as date_time,
+	ngo_name,
+	state,
+	village,
+	district,
+	taluka,
+	dam,
+	type_of_machine,
+	ROUND(sum(total_working_hours_of_machine), 2) as total_working_hours_of_machine
 FROM
-	{{ ref('work_order_union') }}
+	prod_aggregated.work_order_union
 WHERE
-	encounter_type = 'Excavating Machine Endline' 
-  and project_ongoing = 'Ongoing'
-  and  total_working_hours_of_machine is not null
+	encounter_type = 'Excavating Machine Endline'
+	AND total_working_hours_of_machine IS NOT NULL
+GROUP BY
+    ngo_name,
+	dam,
+	state,
+	district,
+	taluka,
+	village,
+	type_of_machine
