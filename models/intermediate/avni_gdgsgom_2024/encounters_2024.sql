@@ -11,7 +11,7 @@ with mycte as (SELECT
   "Encounter_type" AS encounter_type,
   observations->>'Working Hours as per time' as working_hours_as_per_time,
   observations->>'Total working hours of machine by time' as total_working_hours_of_machine_by_time,
-  observations->>'Total working hours of machine' as total_working_hours_of_machine,
+  CAST(observations->>'Total working hours of machine' AS numeric) as total_working_hours_of_machine,
   CAST(observations->>'Silt excavated as per MB recording' AS numeric) as silt_excavated_as_per_MB_recording,
   CAST(observations->>'Total silt excavated' as numeric) as total_silt_excavated_encounter,
   CAST(TO_DATE("Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS date) AS date_time,
