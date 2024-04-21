@@ -25,6 +25,21 @@ SELECT
     taluka,
     village,
     dam AS waterbodies,
+    SUM( CASE 
+            WHEN mobile_verified = 'True' THEN 1 
+            else 0 
+         END
+        ) AS verified_farmers,
+    SUM( CASE 
+            WHEN mobile_verified = 'False' THEN 1 
+            else 0 
+         END
+        ) AS unverified_farmers,
+    SUM(CASE 
+            WHEN mobile_verified = 'True' OR mobile_verified = 'False' THEN 1 
+            ELSE 0 
+        END
+    ) AS total,
     SUM(
         CASE
             WHEN category_of_farmer = 'Small (2.5-4.99 Acres)' THEN 1
