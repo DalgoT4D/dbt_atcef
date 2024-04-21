@@ -20,3 +20,12 @@ sources:
       - name: encounter_2023
         identifier: encounters
         description: "Daily basis action for field workers."
+
+  - name: source_gdgsom_surveys
+    schema: gdgsgom_2024
+    tables: 
+      - name: subjects_2024
+        identifier: subjects 
+
+      - name: encounters_2024
+        identifier: encounters
