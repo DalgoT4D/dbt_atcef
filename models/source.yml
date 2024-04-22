@@ -29,3 +29,12 @@ sources:
 
       - name: encounters_2024
         identifier: encounters
+        
+  - name: source_gdgsom_surveys_2023
+    schema: gdgsgom_2023
+    tables: 
+      - name: subjects_2023
+        identifier: subjects 
+
+      - name: encounters_2023
+        identifier: encounters
