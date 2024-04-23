@@ -16,7 +16,7 @@ WITH DistinctRecords AS (
         dam,
 		ngo_name
     FROM
-        {{ ref('work_order_2023') }}
+        {{ ref('work_order_union') }}
 )
 SELECT
     state,

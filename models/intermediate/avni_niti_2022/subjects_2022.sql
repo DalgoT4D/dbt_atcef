@@ -15,7 +15,8 @@ with cte as (SELECT
     observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations ->'Mobile Number'->>'verified')::boolean AS mobile_verified,
     rwb."Project/NGO" AS ngo_name,
-    CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target
+    CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target,
+    "Voided" as voided
 
 FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} -- Assuming this is a correct reference to a source in dbt
 RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam"),
@@ -24,7 +25,8 @@ removing_nulls as (select * from cte where dam IS NOT NULL
       and district is not null
       and taluka is not null
       and state is not null
-      and village is not null)
+      and village is not null 
+      and voided is false)
 
 {{ dbt_utils.deduplicate(
     relation='removing_nulls',

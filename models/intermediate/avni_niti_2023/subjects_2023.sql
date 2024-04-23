@@ -20,8 +20,8 @@ with cte as (SELECT
             NULLIF(TRIM(rwb."Estimated quantity of Silt"::text), ''),
             '0'
         ) AS integer
-    ) AS silt_target
-
+    ) AS silt_target,
+    "Voided" as Voided
 FROM 
     {{ source('source_atecf_surveys', 'subjects_2023') }}
 RIGHT JOIN 
@@ -34,7 +34,8 @@ removing_nulls as (select * from cte where dam IS NOT NULL
       and district is not null
       and taluka is not null
       and state is not null
-      and village is not null)
+      and village is not null
+      and Voided is FALSE)
 
 
 {{ dbt_utils.deduplicate(
