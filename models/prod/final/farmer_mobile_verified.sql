@@ -3,7 +3,8 @@
 ) }}
 
 WITH DistinctRecords AS (
-    SELECT DISTINCT ON (mobile_number)
+    SELECT DISTINCT ON (uid)
+        uid,
         mobile_number,
 		date_time,
         mobile_verified,
@@ -15,10 +16,7 @@ WITH DistinctRecords AS (
         dam,
 		ngo_name
     FROM
-        {{ ref('work_order_union') }}
-    WHERE
-       encounter_type = 'Farmer Endline'
-    ORDER BY mobile_number -- Ensure the query is ordered by mobile_number for DISTINCT ON to work properly
+        {{ ref('work_order_2023') }}
 )
 SELECT
     state,

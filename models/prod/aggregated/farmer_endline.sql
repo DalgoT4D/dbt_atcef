@@ -4,7 +4,7 @@
 
 
 WITH cte AS (
-   SELECT DISTINCT ON (first_name)
+   SELECT DISTINCT uid,
         first_name,
         mobile_number,
         state,
