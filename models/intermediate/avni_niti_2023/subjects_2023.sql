@@ -15,12 +15,12 @@ with cte as (SELECT
     observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
     rwb."Stakeholder responsible" AS ngo_name,
-    CAST(
+    ROUND(CAST(CAST(
         COALESCE(
             NULLIF(TRIM(rwb."Estimated quantity of Silt"::text), ''),
             '0'
-        ) AS integer
-    ) AS silt_target,
+        ) AS FLOAT
+    ) as numeric), 2) AS silt_target,
     "Voided" as Voided
 FROM 
     {{ source('source_atecf_surveys', 'subjects_2023') }}
