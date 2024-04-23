@@ -19,7 +19,8 @@ with mycte as (select
     observations ->> 'The total farm area on which Silt is spread' AS total_farm_area,
     observations ->> 'Area covered by silt' as area_covered_by_silt,
     observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
-    CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread
+    CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread,
+    null as total_silt_excavated_by_GP_for_non_farm_purpose
 
 FROM {{ source('source_atecf_surveyss', 'encounter_2022') }})
 

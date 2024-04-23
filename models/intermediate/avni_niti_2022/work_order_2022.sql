@@ -19,7 +19,8 @@ WITH WorkOrderEncounters AS (
         silt_carted_by_farmer_trolleys,
         total_silt_excavated,
         number_of_trolleys_carted,
-        total_farm_area_on_which_Silt_is_spread
+        total_farm_area_on_which_Silt_is_spread,
+        total_silt_excavated_by_GP_for_non_farm_purpose
     FROM {{ ref('encounter_2022') }}
 )
 
@@ -43,6 +44,7 @@ SELECT
     woe.silt_excavated_as_per_MB_recording,
     woe.total_silt_excavated,
     woe.total_farm_area_on_which_Silt_is_spread,
+    woe.total_silt_excavated_by_GP_for_non_farm_purpose,
     CASE 
         WHEN woe.subject_id IS NOT NULL AND woe.encounter_type <> 'Work order endline' THEN 'Ongoing'
     ELSE NULL
