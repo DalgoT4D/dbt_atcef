@@ -16,6 +16,6 @@ SELECT
 FROM {{ref('work_order_2024')}}
 WHERE
     encounter_type = 'Work order daily Recording - Farmer'
-    AND project_ongoing = 'Ongoing'
+    AND project_ongoing = 'Ongoing' and silt_to_be_excavated_as_per_plan !=0 
 GROUP BY
     state, district, taluka, dam, village, first_name
