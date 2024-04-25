@@ -28,6 +28,7 @@ WITH cte AS (
         INITCAP(COALESCE(observations ->> 'Name of WB')) AS name_of_WB  
     FROM 
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
+    WHERE "Voided" is FALSE
 )
 
 

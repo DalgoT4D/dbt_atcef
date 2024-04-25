@@ -22,8 +22,10 @@ with mycte as (SELECT
   observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
   CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread,
   observations ->> 'Total silt excavated by GP (for non-farm purpose)' as total_silt_excavated_by_GP_for_non_farm_purpose
-  
-FROM {{ source('source_atecf_surveys', 'encounter_2023') }})
+
+FROM {{ source('source_atecf_surveys', 'encounter_2023') }} 
+WHERE "Voided" is FALSE
+) 
 
 
 {{ dbt_utils.deduplicate(

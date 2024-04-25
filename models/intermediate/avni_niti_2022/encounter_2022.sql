@@ -22,7 +22,9 @@ with mycte as (select
     CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread,
     null as total_silt_excavated_by_GP_for_non_farm_purpose
 
-FROM {{ source('source_atecf_surveyss', 'encounter_2022') }})
+FROM {{ source('source_atecf_surveyss', 'encounter_2022') }}
+WHERE "Voided" is FALSE
+)
 
 
 {{ dbt_utils.deduplicate(

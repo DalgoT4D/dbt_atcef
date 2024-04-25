@@ -3,7 +3,8 @@
 ) }}
 
 
-with cte as (SELECT DISTINCT on (first_name, mobile_number)
+with cte as (SELECT DISTINCT on (first_name, mobile_number, uid)
+  uid,
   date_time,
   first_name, 
   mobile_number,
