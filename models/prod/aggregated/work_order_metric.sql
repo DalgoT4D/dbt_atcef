@@ -16,8 +16,7 @@ SELECT
 FROM
 	{{ref ('work_order_union')}}
 WHERE
-	encounter_type = 'Work order daily Recording - Farmer'
-	AND project_ongoing = 'Ongoing'
+    project_ongoing = 'Ongoing'
 	AND silt_target != 0
 GROUP BY
 	state,
