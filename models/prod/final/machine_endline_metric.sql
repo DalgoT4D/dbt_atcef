@@ -14,6 +14,7 @@ WITH excavated_data AS (
     ROUND(SUM(w.silt_achieved / CASE WHEN COALESCE(e.total_working_hours_of_machine, 0) = 0 THEN 1 ELSE e.total_working_hours_of_machine END), 2) AS avg_silt_excavated_per_hour
   FROM {{ref('machine_endline_aggregated')}} e
   INNER JOIN {{ref('work_order_metric')}} w ON e.district = w.district AND e.dam = w.dam
+  WHERE total_working_hours_of_machine != 0
   GROUP BY
     e.state, e.district, e.village, e.taluka, e.dam, e.type_of_machine, e.date_time
 ),

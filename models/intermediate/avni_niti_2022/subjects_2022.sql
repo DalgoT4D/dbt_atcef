@@ -14,7 +14,7 @@ with cte as (SELECT
     observations ->> 'Type of Machine' AS type_of_machine,
     observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations ->'Mobile Number'->>'verified')::boolean AS mobile_verified,
-    rwb."Project/NGO" AS ngo_name,
+    COALESCE(NULLIF(rwb."Project/NGO", ''), 'Unknown') AS ngo_name,
     CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target,
     "Voided" as voided
 

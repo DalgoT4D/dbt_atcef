@@ -14,7 +14,7 @@ with cte as (SELECT
     observations ->> 'Category of farmer' AS category_of_farmer,
     observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
     (observations -> 'Mobile Number'->>'verified')::boolean AS mobile_verified,
-    rwb."Stakeholder responsible" AS ngo_name,
+    COALESCE(NULLIF(rwb."Stakeholder responsible", ''), 'Unknown') AS ngo_name,
     ROUND(CAST(CAST(
         COALESCE(
             NULLIF(TRIM(rwb."Estimated quantity of Silt"::text), ''),
