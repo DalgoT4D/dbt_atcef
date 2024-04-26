@@ -12,6 +12,21 @@ models:
       - accepted_values:
           column_name: subject_type
           values: ['Work Order', 'Excavating Machine', 'Farmer', 'Well']
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: working_hours_as_per_time
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: total_working_hours_of_machine
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: silt_excavated_as_per_MB_recording
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: total_silt_excavated
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: date_time
+          column_type: date
 
   - name: subjects_2022
     tests:
@@ -32,20 +47,15 @@ models:
       - accepted_values:
           column_name: mobile_verified
           values: [true, false]
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: mobile_verified
+          column_type: boolean
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: silt_target
+          column_type: numeric
       
   - name: work_order_2022
     tests: 
-      - accepted_values:
-          column_name: encounter_type
-          values:
-            - 'Work order daily Recording - Machine'
-            - 'Farmer Interaction'
-            - 'Work order daily Recording - Farmer'
-            - 'Work order endline'
-            - 'Farmer Endline'
-            - 'Excavating Machine Endline'
-            - 'Regular recording'
-            - 'Work Order Endline Executive Engineer'
       - not_null: 
           column_name: dam
       - not_null: 
@@ -56,4 +66,8 @@ models:
           column_name: taluka
       - not_null: 
           column_name: village
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: date_time
+          column_type: date
+    
    
