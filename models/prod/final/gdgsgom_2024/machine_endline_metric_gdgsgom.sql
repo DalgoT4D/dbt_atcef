@@ -14,8 +14,8 @@ WITH excavated_data AS (
     e.type_of_machine,
     ROUND(SUM(w.silt_achieved / CASE WHEN COALESCE(e.total_working_hours_of_machine, 0) = 0 THEN 1 ELSE e.total_working_hours_of_machine END), 2) AS avg_silt_excavated_per_hour
   FROM
-    prod_aggregated_gdgsgom_2024.machine_endline_aggregated24 AS e
-    left JOIN prod_final_gdgsgom_2024.work_order_metric24 w ON e.district = w.district AND e.waterbodies = w.dam
+    {{ ref('machine_endline_aggregated24') }} AS e
+    left JOIN {{ ref('work_order_metric24') }} w ON e.district = w.district AND e.waterbodies = w.dam
   GROUP BY
     e.state, e.district, e.village, e.taluka, e.waterbodies, e.type_of_machine, e.date_time
 ),
