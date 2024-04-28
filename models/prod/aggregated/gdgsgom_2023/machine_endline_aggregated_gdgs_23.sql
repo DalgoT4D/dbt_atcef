@@ -10,13 +10,15 @@ SELECT
 	district,
 	taluka,
 	village,
-	sum(total_working_hours_of_machine) as total_working_hours_of_machine,
+	ROUND(sum(total_working_hours_of_machine), 2) as total_working_hours_of_machine,
 	type_of_machine
 	
 FROM
 	{{ref('work_order_gdgs_2023')}}
 WHERE
-	encounter_type = 'Excavating Machine Endline'
+	encounter_type = 'Excavating Machine Endline' and
+    total_working_hours_of_machine is not NULL and 
+    total_working_hours_of_machine != 0
 group by 
 	dam,
 	state, 
