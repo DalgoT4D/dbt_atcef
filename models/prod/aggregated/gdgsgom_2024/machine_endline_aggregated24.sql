@@ -10,7 +10,7 @@ SELECT
 	district,
 	taluka,
 	village,
-	sum(total_working_hours_of_machine) as total_working_hours_of_machine,
+	ROUND(sum(total_working_hours_of_machine), 2) as total_working_hours_of_machine,
 	type_of_machine
 	
 FROM
