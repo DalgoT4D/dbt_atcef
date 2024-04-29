@@ -24,10 +24,12 @@ with cte as (SELECT
     "Voided" as Voided
 FROM 
     {{ source('source_atecf_surveys', 'subjects_2023') }}
+
 RIGHT JOIN 
     rwb_niti_2023."rwb2023_address" AS rwb 
 ON 
-    location->>'Dam' = rwb."Dam" ),
+    location->>'Dam' = rwb."Dam" 
+WHERE NOT (LOWER(location->>'Dam') ~ 'voided')),
 
 
 removing_nulls as (select * from cte where dam IS NOT NULL 
@@ -35,8 +37,7 @@ removing_nulls as (select * from cte where dam IS NOT NULL
       AND taluka is not null
       AND state is not null
       AND village is not null
-      AND Voided is FALSE
-      AND NOT (LOWER(location->>'Dam') ~ 'voided'))
+      AND Voided is FALSE)
 
 
 {{ dbt_utils.deduplicate(
