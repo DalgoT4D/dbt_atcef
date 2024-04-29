@@ -29,6 +29,7 @@ WITH cte AS (
     FROM 
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
     WHERE "Voided" is FALSE
+    AND NOT (LOWER(location->>'Dam') ~ 'voided')
 )
 
 
