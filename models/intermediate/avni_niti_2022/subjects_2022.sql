@@ -22,11 +22,12 @@ FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} -- Assuming this is 
 RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam"),
 
 removing_nulls as (select * from cte where dam IS NOT NULL
-      and district is not null
-      and taluka is not null
-      and state is not null
-      and village is not null 
-      and voided is false)
+      AND district is not null
+      AND taluka is not null
+      AND state is not null
+      AND village is not null 
+      AND voided is false 
+      AND NOT (LOWER(location->>'Dam') ~ 'voided'))
 
 {{ dbt_utils.deduplicate(
     relation='removing_nulls',
