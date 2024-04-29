@@ -31,11 +31,12 @@ ON
 
 
 removing_nulls as (select * from cte where dam IS NOT NULL 
-      and district is not null
-      and taluka is not null
-      and state is not null
-      and village is not null
-      and Voided is FALSE)
+      AND district is not null
+      AND taluka is not null
+      AND state is not null
+      AND village is not null
+      AND Voided is FALSE
+      AND NOT (LOWER(location->>'Dam') ~ 'voided'))
 
 
 {{ dbt_utils.deduplicate(
