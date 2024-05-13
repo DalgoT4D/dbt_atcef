@@ -20,6 +20,10 @@ sources:
       - name: encounter_2023
         identifier: encounters
         description: "Daily basis action for field workers."
+      
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for subjects and encounters"
 
   - name: source_gdgsom_surveys
     schema: gdgsgom_2024
