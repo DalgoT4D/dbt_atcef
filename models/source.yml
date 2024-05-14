@@ -10,6 +10,10 @@ sources:
       - name: encounter_2022
         identifier: encounters
         description: "Daily basis action for field workers."
+      
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for subjects and encounters"
 
   - name: source_atecf_surveys
     schema: rwb_niti_2023

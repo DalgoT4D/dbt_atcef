@@ -28,11 +28,23 @@ removing_nulls as (select * from cte where dam IS NOT NULL
       AND taluka is not null
       AND state is not null
       AND village is not null 
-      AND voided is false)
+      AND voided is false),
 
-{{ dbt_utils.deduplicate(
+approved_subjects AS (
+    SELECT r.*
+    FROM removing_nulls r
+    JOIN {{ ref('approval_statuses_niti_2022') }} a 
+    ON r.uid = a.entity_id
+    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
+),
+
+deduplicated AS ({{ dbt_utils.deduplicate(
     relation='removing_nulls',
     partition_by='uid',
     order_by='uid desc',
    )
-}}
+}})
+
+SELECT *
+FROM deduplicated
+

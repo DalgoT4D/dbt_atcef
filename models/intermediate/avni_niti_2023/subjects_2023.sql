@@ -52,9 +52,12 @@ approved_subjects AS (
 ),
 
 deduplicated AS (
-    SELECT DISTINCT ON (uid) *
-    FROM approved_subjects
-    ORDER BY uid, uid DESC -- Adjust as needed based on your deduplication criteria
+    {{ dbt_utils.deduplicate(
+    relation='removing_nulls',
+    partition_by='uid',
+    order_by='uid desc',
+   )
+}}
 )
 
 SELECT *
