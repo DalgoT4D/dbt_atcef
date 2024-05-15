@@ -33,7 +33,7 @@ WITH cte AS (
 ),
 
 approval_subjects as (
-SELECT d.*, a.approval_status
+SELECT d.*
 FROM cte d
 JOIN {{ ref('approval_statuses_gdgs_2023') }} a ON d.uid = a.entity_id
 WHERE a.entity_type = 'Subject' and a.approval_status = 'Approved'
