@@ -4,17 +4,19 @@
 
 
 SELECT
-    distinct on (eid)
-    eid,
-    date_time,
-    first_name AS work_order,
+    max(date_time) as date_time,
     state, 
     district,
     taluka,
     dam,
     village,
-    ngo_name,
-    COALESCE(silt_excavated_as_per_MB_recording, 0) AS silt_excavated_as_per_MB_recording,
-    COALESCE(total_silt_carted, 0) AS total_silt_excavated
+    SUM(COALESCE(silt_excavated_as_per_MB_recording, 0)) AS silt_excavated_as_per_MB_recording,
+    MAX(COALESCE(silt_target, 0)) AS total_silt_excavated
 FROM
-    {{ ref('work_order_union') }}
+    prod_aggregated.work_order_union
+group by 
+    state,
+	district,
+	taluka,
+	dam,
+	village
