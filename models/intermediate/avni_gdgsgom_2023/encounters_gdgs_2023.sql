@@ -24,12 +24,19 @@ with mycte as (SELECT
   
 FROM {{ source('source_gdgsom_surveys_2023', 'encounters_2023') }}
 WHERE "Voided" is FALSE
+),
+
+approval_encounters as (
+SELECT d.*, a.approval_status
+FROM mycte d
+JOIN {{ ref('approval_statuses_gdgs_2023') }} a ON d.eid = a.entity_id
+WHERE a.entity_type = 'Encounter' and a.approval_status = 'Approved'
 )
 
-
-{{ dbt_utils.deduplicate(
-    relation='mycte',
+({{ dbt_utils.deduplicate(
+    relation='approval_encounters',
     partition_by='eid',
     order_by='eid desc',
    )
-}}
+}})
+
