@@ -25,14 +25,17 @@ WITH mycte AS (
     observations ->> 'Total silt excavated by GP (for non-farm purpose)' AS total_silt_excavated_by_GP_for_non_farm_purpose
   FROM {{ source('source_atecf_surveys', 'encounter_2023') }} 
   WHERE "Voided" IS FALSE
-), deduplicated AS (
-  {{ dbt_utils.deduplicate(
+), 
+
+approval_encounters AS (
+SELECT d.*, a.approval_status
+FROM mycte d
+JOIN {{ ref('approval_statuses_niti_2023') }} a ON d.eid = a.entity_id
+WHERE a.entity_type = 'Encounter' and a.approval_status = 'Approved'
+)
+
+{{ dbt_utils.deduplicate(
       relation='mycte',
       partition_by='eid',
       order_by='eid desc'
-  )}}
-)
-SELECT d.*, a.approval_status
-FROM deduplicated d
-JOIN {{ ref('approval_statuses_niti_2023') }} a ON d.eid = a.entity_id
-WHERE a.entity_type = 'Encounter' and a.approval_status = 'Approved'
+)}}
