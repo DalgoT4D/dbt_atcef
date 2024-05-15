@@ -46,3 +46,7 @@ sources:
 
       - name: encounters_2023
         identifier: encounters
+      
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for gdgs 2023 subjects and encounters"
