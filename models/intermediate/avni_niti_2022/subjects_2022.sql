@@ -28,7 +28,7 @@ removing_nulls as (select * from cte where dam IS NOT NULL
       AND taluka is not null
       AND state is not null
       AND village is not null 
-      AND voided is false),
+      ),
 
 approved_subjects AS (
     SELECT r.*
@@ -39,7 +39,7 @@ approved_subjects AS (
 ),
 
 deduplicated AS ({{ dbt_utils.deduplicate(
-    relation='removing_nulls',
+    relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )

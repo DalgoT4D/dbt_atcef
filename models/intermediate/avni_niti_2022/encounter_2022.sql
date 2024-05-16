@@ -23,7 +23,6 @@ with mycte as (select
     null as total_silt_excavated_by_GP_for_non_farm_purpose
 
 FROM {{ source('source_atecf_surveyss', 'encounter_2022') }}
-WHERE "Voided" is FALSE
 ),
 
 approval_encounters as (

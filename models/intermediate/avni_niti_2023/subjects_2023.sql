@@ -40,7 +40,6 @@ removing_nulls AS (
         AND taluka IS NOT NULL
         AND state IS NOT NULL
         AND village IS NOT NULL
-        AND NOT voided
 ),
 
 approved_subjects AS (
@@ -53,7 +52,7 @@ approved_subjects AS (
 
 deduplicated AS (
     {{ dbt_utils.deduplicate(
-    relation='removing_nulls',
+    relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )
