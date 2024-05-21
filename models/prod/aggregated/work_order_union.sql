@@ -6,6 +6,7 @@
 
 SELECT
     uid,
+    eid,
     date_time,
     ngo_name,
     first_name,
@@ -35,6 +36,7 @@ FROM
 UNION ALL
 SELECT
     uid,
+    eid,
     date_time,
     ngo_name,
     first_name,

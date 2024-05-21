@@ -6,6 +6,7 @@
 WITH cte AS (
    SELECT DISTINCT uid,
         first_name,
+        eid,
         mobile_number,
         state,
         district,
@@ -16,7 +17,7 @@ WITH cte AS (
         date_time,
         category_of_farmer
 FROM {{ ref('work_order_union') }}
-where category_of_farmer is not null
+where category_of_farmer is not null and eid is not null
 )
 
 
