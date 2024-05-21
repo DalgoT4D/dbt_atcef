@@ -30,11 +30,18 @@ WITH cte AS (
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
     WHERE "Voided" is FALSE
     AND NOT (LOWER(location->>'Dam') ~ 'voided')
+),
+
+approved_subjects AS (
+    SELECT r.*
+    FROM cte r
+    JOIN {{ ref('approval_statuses_gdgs_24') }} a 
+    ON r.uid = a.entity_id
+    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 )
 
-
 {{ dbt_utils.deduplicate(
-    relation='cte',
+    relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )
