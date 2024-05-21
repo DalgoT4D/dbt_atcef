@@ -22,7 +22,8 @@ with mycte as (select
     observations ->> 'Area covered by silt' as area_covered_by_silt,
     observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
     CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread,
-    null as total_silt_excavated_by_GP_for_non_farm_purpose
+    null as total_silt_excavated_by_GP_for_non_farm_purpose,
+    "Voided" as encounter_voided
 
 FROM {{ source('source_atecf_surveyss', 'encounter_2022') }}
 ),
@@ -31,7 +32,9 @@ approval_encounters as (
 SELECT d.*, a.approval_status
 FROM mycte d
 JOIN {{ ref('approval_statuses_niti_2022') }} a ON d.eid = a.entity_id
-WHERE a.entity_type = 'Encounter' and a.approval_status = 'Approved'
+WHERE a.entity_type = 'Encounter' 
+and a.approval_status = 'Approved'
+AND d.encounter_voided = 'false'
 )
 
 

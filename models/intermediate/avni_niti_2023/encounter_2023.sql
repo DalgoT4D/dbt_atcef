@@ -24,7 +24,8 @@ WITH mycte AS (
     observations ->> 'Area covered by silt' AS area_covered_by_silt,
     observations ->> 'Number of trolleys carted' AS number_of_trolleys_carted,
     CAST(observations ->> 'The total farm area on which Silt is spread' AS FLOAT) AS total_farm_area_on_which_Silt_is_spread,
-    observations ->> 'Total silt excavated by GP (for non-farm purpose)' AS total_silt_excavated_by_GP_for_non_farm_purpose
+    observations ->> 'Total silt excavated by GP (for non-farm purpose)' AS total_silt_excavated_by_GP_for_non_farm_purpose,
+    "Voided" as encounter_voided
   FROM {{ source('source_atecf_surveys', 'encounter_2023') }} 
 ), 
 
@@ -32,7 +33,9 @@ approval_encounters AS (
 SELECT d.*, a.approval_status
 FROM mycte d
 JOIN {{ ref('approval_statuses_niti_2023') }} a ON d.eid = a.entity_id
-WHERE a.entity_type = 'Encounter' and a.approval_status = 'Approved'
+WHERE a.entity_type = 'Encounter' 
+and a.approval_status = 'Approved'
+AND d.encounter_voided = 'false'
 )
 
 {{ dbt_utils.deduplicate(
