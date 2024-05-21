@@ -22,7 +22,7 @@ WITH cte AS (
                 '0'
             ) AS FLOAT
         ) AS numeric), 2) AS silt_target,
-        "Voided" AS voided
+       "Voided" as subject_voided
     FROM 
         {{ source('source_atecf_surveys', 'subjects_2023') }}
     RIGHT JOIN 
@@ -40,6 +40,7 @@ removing_nulls AS (
         AND taluka IS NOT NULL
         AND state IS NOT NULL
         AND village IS NOT NULL
+        AND subject_voided = 'false'
 ),
 
 approved_subjects AS (

@@ -28,15 +28,15 @@ WITH WorkOrderEncounters AS (
     LEFT JOIN {{ ref('subjects_2022') }} AS s 
         ON e.subject_id = s.uid 
         AND e.encounter_type <> 'Work order daily Recording - Farmer'
-        AND s.voided = false
+        AND s.subject_voided = false
     LEFT JOIN {{ ref('subjects_2022') }} AS f 
         ON e.farmer_sub_id = f.uid 
         AND e.encounter_type = 'Work order daily Recording - Farmer'
-        AND f.voided = false
+        AND f.subject_voided = false
     LEFT JOIN {{ ref('subjects_2022') }} AS m 
         ON e.machine_sub_id = m.uid 
         AND e.encounter_type = 'Work order daily Recording - Farmer'
-        AND m.voided = false
+        AND m.subject_voided = false
     WHERE 
         (e.encounter_type = 'Work order daily Recording - Farmer' 
             AND e.farmer_sub_id IS NOT NULL 
@@ -71,5 +71,5 @@ WHERE
     AND s.taluka IS NOT NULL
     AND s.state IS NOT NULL
     AND s.village IS NOT NULL
-    AND s.voided = false
+    AND s.subject_voided = false
 
