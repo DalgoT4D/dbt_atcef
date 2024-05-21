@@ -5,25 +5,7 @@
 WITH WorkOrderEncounters AS (
     SELECT 
         e.*,
-        subject_id as subject_uid,
-        s.first_name AS subject_first_name_s,
-        s.mobile_verified AS subject_mobile_verified_s,
-        s.mobile_number AS subject_mobile_number_s,
-        s.dam AS subject_dam_s,
-        s.ngo_name AS subject_ngo_name_s,
-        s.district AS subject_district_s,
-        s.state AS subject_state_s,
-        s.taluka AS subject_taluka_s,
-        s.village AS subject_village_s,
-        s.type_of_machine AS subject_type_of_machine_s,
-        s.silt_target AS subject_silt_target_s,
-        s.category_of_farmer AS subject_category_of_farmer_s,
-        f.first_name AS farmer_first_name,
-        f.mobile_verified AS farmer_mobile_verified,
-        f.mobile_number AS farmer_mobile_number,
-        f.category_of_farmer AS farmer_category_of_farmer,
-        m.first_name AS machine_first_name,
-        m.type_of_machine AS machine_type_of_machine
+        subject_id as subject_uid
     FROM {{ ref('encounter_2023') }} AS e
     LEFT JOIN {{ ref('subjects_2023') }} AS s 
         ON e.subject_id = s.uid 
