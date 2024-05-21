@@ -6,7 +6,6 @@
 SELECT 
     s.*,
     woe.*,
-    null as approval_status,
     CASE 
         WHEN woe.subject_id IS NOT NULL AND woe.encounter_type <> 'Work order endline' THEN 'Ongoing'
         ELSE NULL
