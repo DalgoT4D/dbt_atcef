@@ -51,11 +51,26 @@ SELECT DISTINCT uid,
         category_of_farmer
 FROM approved_subjects
 where category_of_farmer is not null 
-)
+), 
 
-select * from onem
+encounterjoin AS (
+    SELECT 
+        m.*
+    FROM onem m 
+    INNER JOIN {{ ref('encounter_2023') }} e
+    ON m.uid = e.farmer_sub_id
+) 
 
-
-
-
+SELECT DISTINCT uid, 
+    date_time,
+    first_name,
+    mobile_number,
+    mobile_verified,
+    state,
+    district,
+    taluka,
+    village,
+    dam,
+    category_of_farmer
+FROM encounterjoin
 
