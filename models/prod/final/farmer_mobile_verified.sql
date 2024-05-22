@@ -2,22 +2,34 @@
   materialized='table'
 ) }}
 
-WITH DistinctRecords AS (
-    SELECT DISTINCT ON (uid)
-        uid,
-        mobile_number,
-		date_time,
-        mobile_verified,
-        encounter_type,
-        state,
-        district,
-        taluka,
-        village,
-        dam,
-		ngo_name
-    FROM
-        {{ ref('work_order_union') }}
-)
+with farmer_union as (select uid, 
+       date_time, 
+       first_name,
+       mobile_number, 
+       mobile_verified,
+       state, 
+       district, 
+       taluka, 
+       village,
+       dam, 
+       category_of_farmer 
+FROM
+    {{ ref('farmer_niti_count_22') }} 
+UNION ALL 
+select uid, 
+       date_time, 
+       first_name,
+       mobile_number, 
+       mobile_verified,
+       state, 
+       district, 
+       taluka, 
+       village,
+       dam, 
+       category_of_farmer 
+FROM
+    {{ ref('farmer_niti_count_23') }} )
+
 SELECT
     state,
     district,
@@ -25,17 +37,15 @@ SELECT
     village,
     dam,
 	date_time,
-	ngo_name,
     COUNT(CASE WHEN mobile_verified = TRUE THEN 1 ELSE NULL END) AS mobile_verified_count,
     COUNT(CASE WHEN mobile_verified = FALSE THEN 1 ELSE NULL END) AS mobile_unverified_count,
     COUNT(*) AS total -- Counts the total number of records (both verified and unverified)
 FROM
-    DistinctRecords
+    farmer_union
 GROUP BY
     state,
     district,
     taluka,
     village,
     dam,
-	date_time,
-	ngo_name
+	date_time
