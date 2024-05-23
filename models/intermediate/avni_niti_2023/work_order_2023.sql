@@ -15,16 +15,11 @@ WITH WorkOrderEncounters AS (
         ON e.farmer_sub_id = f.uid 
         AND e.encounter_type = 'Work order daily Recording - Farmer'
         AND f.subject_voided = false
-    LEFT JOIN {{ ref('subjects_2023') }} AS m 
-        ON e.machine_sub_id = m.uid 
-        AND e.encounter_type = 'Work order daily Recording - Farmer'
-        AND m.subject_voided = false
     WHERE 
         (e.encounter_type = 'Work order daily Recording - Farmer' 
             AND e.farmer_sub_id IS NOT NULL 
             AND e.machine_sub_id IS NOT NULL 
-            AND f.uid IS NOT NULL 
-            AND m.uid IS NOT NULL)
+            AND f.uid IS NOT NULL)
         OR (e.encounter_type <> 'Work order daily Recording - Farmer' 
             AND s.uid IS NOT NULL)
 )
