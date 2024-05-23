@@ -9,6 +9,8 @@ with mycte as (SELECT
  "Subject_type" AS subject_type,
  "Encounter_location" AS encounter_location,
   "Encounter_type" AS encounter_type,
+  observations ->> 'Excavating Machine' as machine_sub_id,
+  observations ->> 'Farmer/Beneficiary' as farmer_sub_id,
   observations->>'Working Hours as per time' as working_hours_as_per_time,
   observations->>'Total working hours of machine by time' as total_working_hours_of_machine_by_time,
   CAST(observations->>'Total working hours of machine' AS numeric) as total_working_hours_of_machine,
@@ -24,11 +26,18 @@ with mycte as (SELECT
   
 FROM {{ source('source_gdgsom_surveys', 'encounters_2024') }}
 WHERE "Voided" is FALSE
+),
+
+approval_encounters AS (
+SELECT d.*, a.approval_status
+FROM mycte d
+JOIN {{ ref('approval_statuses_gdgs_24') }} a ON d.eid = a.entity_id
+WHERE a.entity_type = 'Encounter' 
+and a.approval_status = 'Approved'
 )
 
-
 {{ dbt_utils.deduplicate(
-    relation='mycte',
+    relation='approval_encounters',
     partition_by='eid',
     order_by='eid desc',
    )

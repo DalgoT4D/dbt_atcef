@@ -11,7 +11,7 @@ SELECT
     'vulnerable' AS farmer_type,
     SUM(vulnerable_small + vulnerable_marginal + widow + Disabled + family_of_farmer_who_committed_suicide) AS farmers_count
 FROM
-   {{ ref('farmer_aggregated') }}
+   {{ ref('farmer_aggregated_un') }}
 GROUP BY
     state,
     district,
@@ -32,7 +32,7 @@ SELECT
     'others' AS farmer_type,
     SUM(semi_medium + medium + large) AS farmers_count
 FROM
-    {{ ref('farmer_aggregated') }}
+    {{ ref('farmer_aggregated_un') }}
 GROUP BY
     state,
     district,

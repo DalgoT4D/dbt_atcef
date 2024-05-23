@@ -37,6 +37,10 @@ sources:
 
       - name: encounters_2024
         identifier: encounters
+      
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for subjects and encounters"
         
   - name: source_gdgsom_surveys_2023
     schema: gdgsgom_2023

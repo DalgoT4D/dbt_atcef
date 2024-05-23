@@ -25,7 +25,8 @@ WITH cte AS (
         CAST(COALESCE(observations ->> 'Farmer contribution per trolley', '0') AS NUMERIC) AS farmer_contribution_per_trolley,
         CAST(COALESCE(observations ->> 'Number of trolleys required', '0') AS NUMERIC) AS number_of_trolleys_required,
         CAST(COALESCE(observations ->> 'Number of hywas required', '0') AS NUMERIC) AS number_of_hywas_required,
-        INITCAP(COALESCE(observations ->> 'Name of WB')) AS name_of_WB  
+        INITCAP(COALESCE(observations ->> 'Name of WB')) AS name_of_WB ,
+        "Voided" as subject_voided
     FROM 
         {{ source('source_gdgsom_surveys_2023', 'subjects_2023') }}
     WHERE "Voided" is FALSE

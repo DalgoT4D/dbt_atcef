@@ -14,6 +14,6 @@ SELECT DISTINCT ON (dam) dam AS waterbodies,
           CASE WHEN project_not_started IS NOT NULL THEN 'Not Started' ELSE '' END,
           CASE WHEN project_completed IS NOT NULL THEN 'Completed' ELSE '' END
        ) AS project_status
-FROM {{ ref('work_order_gdgs_2023') }}
+FROM {{ ref('work_order_gdgs_union') }}
 Where dam is not null
 ORDER BY dam, date_time

@@ -2,8 +2,9 @@
   materialized='table'
 ) }}
 
-SELECT
+with mycte as (SELECT
 	MAX(date_time) AS date_time,
+	first_name,
 	ngo_name,
 	state,
 	district,
@@ -19,9 +20,12 @@ WHERE
     project_ongoing = 'Ongoing'
 	AND silt_target != 0
 GROUP BY
+    first_name,
 	state,
 	district,
 	taluka,
 	dam,
 	village,
-	ngo_name
+	ngo_name) 
+
+select * from mycte where silt_achieved != 0

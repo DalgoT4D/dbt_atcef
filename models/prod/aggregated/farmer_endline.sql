@@ -3,21 +3,33 @@
 ) }}
 
 
-WITH cte AS (
-   SELECT DISTINCT uid,
-        first_name,
-        mobile_number,
-        state,
-        district,
-        taluka,
-        village,
-        dam,
-        ngo_name,
-        date_time,
-        category_of_farmer
-FROM {{ ref('work_order_union') }}
-where category_of_farmer is not null
-)
+with farmer_union as (select uid, 
+       date_time, 
+       first_name,
+       mobile_number, 
+       mobile_verified,
+       state, 
+       district, 
+       taluka, 
+       village,
+       dam, 
+       category_of_farmer 
+FROM
+    {{ ref('farmer_niti_count_22') }} 
+UNION ALL 
+select uid, 
+       date_time, 
+       first_name,
+       mobile_number, 
+       mobile_verified,
+       state, 
+       district, 
+       taluka, 
+       village,
+       dam, 
+       category_of_farmer 
+FROM
+    {{ ref('farmer_niti_count_23') }} )
 
 
 SELECT
@@ -26,7 +38,6 @@ SELECT
     district,
     taluka,
     village,
-    ngo_name,
     dam AS waterbodies,
     SUM(
         CASE
@@ -59,13 +70,12 @@ SELECT
         END
     ) AS large
 FROM
-    cte
+    farmer_union
 GROUP BY
     state,
     district,
     taluka,
     village,
-    ngo_name,
     dam
 
 

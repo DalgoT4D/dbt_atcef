@@ -22,7 +22,7 @@ WITH cte AS (
                 '0'
             ) AS FLOAT
         ) AS numeric), 2) AS silt_target,
-        "Voided" AS voided
+       "Voided" as subject_voided
     FROM 
         {{ source('source_atecf_surveys', 'subjects_2023') }}
     RIGHT JOIN 
@@ -40,7 +40,7 @@ removing_nulls AS (
         AND taluka IS NOT NULL
         AND state IS NOT NULL
         AND village IS NOT NULL
-        AND NOT voided
+        AND subject_voided = 'false'
 ),
 
 approved_subjects AS (
@@ -53,7 +53,7 @@ approved_subjects AS (
 
 deduplicated AS (
     {{ dbt_utils.deduplicate(
-    relation='removing_nulls',
+    relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )
