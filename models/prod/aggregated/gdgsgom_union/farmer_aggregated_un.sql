@@ -21,6 +21,7 @@ FROM
 )
   
 SELECT
+    date_time,
     state,
     district,
     taluka,
@@ -93,6 +94,7 @@ SELECT
 FROM
     cte
 GROUP BY
+    date_time,
     state,
     district,
     taluka,
