@@ -54,3 +54,12 @@ sources:
       - name: approval_statuses
         identifier: approvalStatuses
         description: "approval status for gdgs 2023 subjects and encounters"
+
+  - name: source_gramin
+    schema: gramin_niti
+    tables:
+      - name: subjects_gramin
+        identifier: subjects
+      - name: encounters_gramin
+        identifier: encounters
+        
