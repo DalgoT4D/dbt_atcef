@@ -20,14 +20,14 @@ WITH mycte AS (
         INITCAP(COALESCE(location->>'GP/Village')) AS village,
         "Voided" AS machine_voided
     FROM
-        {{ source('source_atecf_surveys', 'subjects_2023') }}
+        {{ source('source_atecf_surveyss', 'subjects_2022') }}
     WHERE
-        "Subject_type" = 'Excavating Machine' AND "Voided" = 'False'
+        "Voided" = 'False'
 ),
 approval_machines AS (
     SELECT d.*, a.approval_status AS machine_approval_status
     FROM mycte d
-    JOIN {{ ref('approval_statuses_niti_2023') }} a ON d.machine_id = a.entity_id
+    JOIN {{ ref('approval_statuses_niti_2022') }} a ON d.machine_id = a.entity_id
     WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 ),
 deduplicated_machines AS (
@@ -37,8 +37,6 @@ deduplicated_machines AS (
         order_by='machine_id desc'
     ) }}
 )
-
-
 SELECT
     m.machine_id,
     m.machine_name,
@@ -51,25 +49,12 @@ SELECT
     m.village,
     m.machine_voided,
     m.machine_approval_status,
-    e.machine_sub_id,
-    SUM(e.working_hours_as_per_time) AS total_working_hours,
-    MAX(e.date_time) AS latest_date_time
+    e.total_working_hours_of_machine AS total_working_hours,
+    e.date_time AS latest_date_time
 FROM
-    {{ref('encounter_2023')}} e
+    {{ref('encounter_2022')}} e
 JOIN
     deduplicated_machines m
 ON
-    e.machine_sub_id = m.machine_id
-GROUP BY
-    m.machine_id,
-    m.machine_name,
-    m.type_of_machine,
-    m.dam,
-    m.district,
-    m.subject_type,
-    m.state,
-    m.taluka,
-    m.village,
-    m.machine_voided,
-    m.machine_approval_status,
-    e.machine_sub_id
+    e.subject_id = m.machine_id
+Where total_working_hours_of_machine is not null

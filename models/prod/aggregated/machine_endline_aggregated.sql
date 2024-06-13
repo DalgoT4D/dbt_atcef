@@ -2,26 +2,32 @@
   materialized='table'
 ) }}
 
-SELECT
-	max(date_time) as date_time,
-	ngo_name,
-	state,
-	village,
-	district,
-	taluka,
-	dam,
-	type_of_machine,
-	ROUND(sum(total_working_hours_of_machine), 2) as total_working_hours_of_machine
+
+select latest_date_time, 
+       machine_name, 
+	   type_of_machine,
+	   state,
+	   district,
+	   taluka,
+	   village, 
+	   dam,
+	   machine_voided, 
+	   machine_approval_status,
+	   total_working_hours
 FROM
-	{{ref('work_order_union')}}
-WHERE
-	encounter_type = 'Excavating Machine Endline'
-	AND total_working_hours_of_machine IS NOT NULL
-GROUP BY
-    ngo_name,
-	dam,
-	state,
-	district,
-	taluka,
-	village,
-	type_of_machine
+    {{ ref('machine_niti_2022') }} 
+UNION ALL 
+select 
+       latest_date_time, 
+       machine_name, 
+	   type_of_machine,
+	   state,
+	   district,
+	   taluka,
+	   village, 
+	   dam,
+	   machine_voided, 
+	   machine_approval_status,
+	   total_working_hours 
+FROM
+    {{ ref('machine_niti_2023') }} 
