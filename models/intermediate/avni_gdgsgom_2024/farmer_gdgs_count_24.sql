@@ -55,13 +55,15 @@ onem AS (
 
 encounterjoin AS (
     SELECT 
-        m.*
+        m.*,
+        ROW_NUMBER() OVER (PARTITION BY m.uid ORDER BY e.date_time DESC) AS rn
     FROM onem m 
     INNER JOIN {{ ref('encounters_2024') }} e
     ON m.uid = e.farmer_sub_id
 ) 
 
-SELECT DISTINCT uid, 
+SELECT 
+    uid, 
     date_time,
     first_name,
     mobile_number,
@@ -73,3 +75,4 @@ SELECT DISTINCT uid,
     dam,
     category_of_farmer
 FROM encounterjoin
+WHERE rn = 1
