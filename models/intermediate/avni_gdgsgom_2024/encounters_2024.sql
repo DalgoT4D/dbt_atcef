@@ -11,7 +11,7 @@ with mycte as (SELECT
   "Encounter_type" AS encounter_type,
   observations ->> 'Excavating Machine' as machine_sub_id,
   observations ->> 'Farmer/Beneficiary' as farmer_sub_id,
-  observations->>'Working Hours as per time' as working_hours_as_per_time,
+  CAST(observations->>'Working Hours as per time' AS numeric) AS working_hours_as_per_time,
   observations->>'Total working hours of machine by time' as total_working_hours_of_machine_by_time,
   CAST(observations->>'Total working hours of machine' AS numeric) as total_working_hours_of_machine,
   CAST(observations->>'Silt excavated as per MB recording' AS numeric) as silt_excavated_as_per_MB_recording,

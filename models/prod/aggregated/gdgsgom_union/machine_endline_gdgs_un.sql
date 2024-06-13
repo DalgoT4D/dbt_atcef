@@ -3,26 +3,32 @@
 ) }}
 
 
-SELECT
-	max(date_time) as date_time,
-	dam as waterbodies,
-	state, 
-	district,
-	taluka,
-	village,
-	ROUND(sum(total_working_hours_of_machine), 2) as total_working_hours_of_machine,
-	type_of_machine
-	
+
+select latest_date_time, 
+       machine_name, 
+	   type_of_machine,
+	   state,
+	   district,
+	   taluka,
+	   village, 
+	   dam,
+	   machine_voided, 
+	   machine_approval_status,
+	   total_working_hours
 FROM
-	{{ref('work_order_gdgs_union')}}
-WHERE
-	encounter_type = 'Excavating Machine Endline' and
-    total_working_hours_of_machine is not NULL and 
-    total_working_hours_of_machine != 0
-group by 
-	dam,
-	state, 
-	district,
-	taluka,
-	village,
-	type_of_machine
+    {{ ref('machine_gdgs_2023') }} 
+UNION ALL 
+select 
+       latest_date_time, 
+       machine_name, 
+	   type_of_machine,
+	   state,
+	   district,
+	   taluka,
+	   village, 
+	   dam,
+	   machine_voided, 
+	   machine_approval_status,
+	   total_working_hours 
+FROM
+    {{ ref('machine_gdgs_2024') }} 
