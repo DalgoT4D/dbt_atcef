@@ -62,4 +62,6 @@ sources:
         identifier: subjects
       - name: encounters_gramin
         identifier: encounters
-        
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for gdgs gramin subjects and encounters"

@@ -3,6 +3,7 @@
 ) }}
 
 
+with cte as (
 Select 
  "ID" AS eid,
  "Subject_ID" AS subject_id,
@@ -25,5 +26,21 @@ Select
   CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread,
   "Voided" as voided
   
-FROM {{ source('source_gramin', 'encounters_gramin') }}
+FROM {{ source('source_gramin', 'encounters_gramin') }}),
 
+
+approval_encounters AS (
+SELECT d.*, a.approval_status
+FROM cte d
+JOIN {{ ref('approval_status_gramin') }} a ON d.eid = a.entity_id
+WHERE a.entity_type = 'Encounter' 
+and a.approval_status = 'Approved'
+)
+
+
+
+{{ dbt_utils.deduplicate(
+      relation='approval_encounters',
+      partition_by='eid',
+      order_by='eid desc'
+)}}
