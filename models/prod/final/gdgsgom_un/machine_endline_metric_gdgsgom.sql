@@ -31,8 +31,8 @@ benchmark_cte AS (
     type_of_machine,
     avg_silt_excavated_per_hour,
     CASE
-      WHEN type_of_machine = 'Jcb' AND avg_silt_excavated_per_hour < 39.2 THEN 'Below Benchmark'
-      WHEN type_of_machine = 'Jcb' AND avg_silt_excavated_per_hour >= 39.2 THEN 'Above Benchmark'
+      WHEN type_of_machine = 'JCB' AND avg_silt_excavated_per_hour < 39.2 THEN 'Below Benchmark'
+      WHEN type_of_machine = 'JCB' AND avg_silt_excavated_per_hour >= 39.2 THEN 'Above Benchmark'
       WHEN type_of_machine = 'Poclain' AND avg_silt_excavated_per_hour < 89.6 THEN 'Below Benchmark'
       WHEN type_of_machine = 'Poclain' AND avg_silt_excavated_per_hour >= 89.6 THEN 'Above Benchmark'
     END AS benchmark_classification
