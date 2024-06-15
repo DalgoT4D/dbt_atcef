@@ -15,20 +15,20 @@ WITH cte AS (
         observations->>'Category of farmer' AS category_of_farmer,
         observations->'Mobile Number'->>'phoneNumber' AS mobile_number,
         (observations->'Mobile Number'->>'verified')::boolean AS mobile_verified,
-        COALESCE(NULLIF(rwb."Stakeholder responsible", ''), 'Unknown') AS ngo_name,
+        COALESCE(NULLIF(rwb.stakeholder_responsible, ''), 'Unknown') AS ngo_name,
         ROUND(CAST(CAST(
             COALESCE(
-                NULLIF(TRIM(rwb."Estimated quantity of Silt"::text), ''),
+                NULLIF(TRIM(rwb.silt_target::text), ''),
                 '0'
             ) AS FLOAT
         ) AS numeric), 2) AS silt_target,
        "Voided" as subject_voided
     FROM 
         {{ source('source_atecf_surveys', 'subjects_2023') }}
-    RIGHT JOIN 
-        rwb_niti_2023."rwb2023_address" AS rwb 
-    ON 
-        location->>'Dam' = rwb."Dam" 
+    LEFT JOIN 
+        {{ref('address_niti_2023')}} AS rwb 
+    ON
+         location->>'Dam' = rwb.dam
     WHERE NOT (LOWER(location->>'Dam') ~ 'voided')
 ),
 

@@ -17,7 +17,8 @@ SELECT
     s.category_of_farmer,
     w.work_order_name,
     w.silt_target,
-    e.total_silt_carted
+    e.total_silt_carted,
+    e.date_time
 FROM {{ ref('encounter_2023') }} AS e
 LEFT JOIN {{ ref('farmer_niti_2023') }} AS s 
     ON e.farmer_sub_id = s.farmer_id
