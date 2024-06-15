@@ -21,7 +21,7 @@ with mycte as (SELECT
         "Voided" as farmer_voided
  FROM 
         {{ source('source_atecf_surveys', 'subjects_2023') }}
- Where "Subject_type" = 'Farmer' and "Voided" = 'False'), 
+ Where "Subject_type" = 'Farmer' and "Voided" = 'False' and NOT (LOWER(location->>'Dam') ~ 'voided') ), 
 
  approval_farmers AS (
 SELECT d.*, a.approval_status as farmer_approval_status

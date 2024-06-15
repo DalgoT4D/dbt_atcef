@@ -22,7 +22,7 @@ WITH mycte AS (
     FROM
         {{ source('source_atecf_surveys', 'subjects_2023') }}
     WHERE
-        "Subject_type" = 'Excavating Machine' AND "Voided" = 'False'
+        "Subject_type" = 'Excavating Machine' AND "Voided" = 'False' and NOT (LOWER(location->>'Dam') ~ 'voided') 
 ),
 approval_machines AS (
     SELECT d.*, a.approval_status AS machine_approval_status
