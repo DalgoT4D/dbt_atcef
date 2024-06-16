@@ -63,6 +63,10 @@ sources:
         identifier: approvalStatuses
         description: "approval status for gdgs 2023 subjects and encounters"
 
+      - name: address_gdgs_2023
+        identifier: locations
+        description: "address api for waterbodies - gdgs 2023"
+
   - name: source_gramin
     schema: gramin_niti
     tables:
