@@ -48,7 +48,7 @@ sources:
       
       - name: address_gdgs_2024
         identifier: locations
-        description: "address api for waterbodies - niti 2023"
+        description: "address api for waterbodies - gdgs 2024"
         
   - name: source_gdgsom_surveys_2023
     schema: gdgsgom_2023
@@ -73,5 +73,9 @@ sources:
       - name: approval_statuses
         identifier: approvalStatuses
         description: "approval status for gdgs gramin subjects and encounters"
+
+      - name: address_gramin
+        identifier: locations
+        description: "address api for waterbodies - gramin"
 
   
