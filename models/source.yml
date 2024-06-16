@@ -78,4 +78,20 @@ sources:
         identifier: locations
         description: "address api for waterbodies - gramin"
 
+  - name: source_avni_niti_2024
+    schema: rwb_niti_2024
+    tables:
+      - name: subjects_niti_2024
+        identifier: subjects
+      - name: encounters__niti_2024
+        identifier: encounters
+      - name: approval_statuses_niti_2024
+        identifier: approvalStatuses
+        description: "approval status for niti subjects and encounters"
+
+      - name: address_niti_2024
+        identifier: locations
+        description: "address api for waterbodies - niti2024"
+
+
   
