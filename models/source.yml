@@ -83,7 +83,7 @@ sources:
     tables:
       - name: subjects_niti_2024
         identifier: subjects
-      - name: encounters__niti_2024
+      - name: encounters_niti_2024
         identifier: encounters
       - name: approval_statuses_niti_2024
         identifier: approvalStatuses
