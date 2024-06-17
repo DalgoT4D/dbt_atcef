@@ -3,40 +3,34 @@
 ) }}
 
 
-SELECT
-    m.machine_id,
-    m.machine_name,
-    m.type_of_machine,
-    m.dam,
-    m.district,
-    m.subject_type,
-    m.state,
-    m.taluka,
-    m.village,
-    m.machine_voided,
-    m.machine_approval_status,
-    e.machine_sub_id,
-    SUM(CAST(e.working_hours_as_per_time AS NUMERIC)) AS total_working_hours,
-    MAX(e.date_time) AS date_time
+with cte as (SELECT
+    subject_id as machine_id,
+    first_name as machine_name,
+    type_of_machine,
+    dam,
+    district,
+    subject_type,
+    state,
+    taluka,
+    village,
+    SUM(CAST(total_working_hours_of_machine_by_time AS NUMERIC)) AS total_working_hours,
+    MAX(date_time) AS date_time
 FROM
-    {{ref('encounter_2022')}} e
-LEFT JOIN
-    {{ref('machine_niti_22')}} m
-ON
-    e.machine_sub_id = m.machine_id
-GROUP BY
-    m.machine_id,
-    m.machine_name,
-    m.type_of_machine,
-    m.dam,
-    m.district,
-    m.subject_type,
-    m.state,
-    m.taluka,
-    m.village,
-    m.machine_voided,
-    m.machine_approval_status,
-    e.machine_sub_id
+    {{ref('work_order_2022')}} 
+where encounter_type = 'Excavating Machine Endline'
+GROUP BY 
+    subject_id,
+    first_name,
+    type_of_machine,
+    dam,
+    district,
+    subject_type,
+    state,
+    taluka,
+    village)
+
+select * from cte where total_working_hours is not null and total_working_hours != 0
+
 
 
 
