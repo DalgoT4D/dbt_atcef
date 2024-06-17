@@ -49,7 +49,8 @@ SELECT
     COUNT(CASE WHEN category_of_farmer = 'Medium (10-24.99 acres)' THEN 1 END) AS "medium",
     COUNT(CASE WHEN category_of_farmer = 'Large (above 25 acres)' THEN 1 END) AS "large",
     COUNT(CASE WHEN category_of_farmer = 'Widow' THEN 1 END) AS "widow",
-    COUNT(CASE WHEN category_of_farmer = 'Disabled' THEN 1 END) AS "disabled"
+    COUNT(CASE WHEN category_of_farmer = 'Disabled' THEN 1 END) AS "disabled",
+    COUNT(CASE WHEN category_of_farmer = 'Family of farmer who committed suicide' THEN 1 END) AS "family_of_farmer_who_committed_suicide"
 FROM
     cte
 GROUP BY

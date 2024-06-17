@@ -9,7 +9,7 @@ SELECT
     village,
     dam,
     'vulnerable' AS farmer_type,
-    SUM(vulnerable_small + vulnerable_marginal + widow + disabled) AS farmers_count
+    SUM(vulnerable_small + vulnerable_marginal + widow + disabled + family_of_farmer_who_committed_suicide) AS farmers_count
 FROM
     {{ref('farmer_agg_gdgs_24')}}
 GROUP BY
