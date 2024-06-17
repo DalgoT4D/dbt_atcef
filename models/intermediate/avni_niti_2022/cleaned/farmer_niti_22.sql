@@ -15,7 +15,7 @@ with mycte as (SELECT
         END AS state,
         INITCAP(COALESCE(location->>'Taluka')) AS taluka, 
         INITCAP(COALESCE(location->>'GP/Village')) AS village, 
-        observations ->> 'Category of farmer' AS category_of_farmer,
+        'farmer_niti_2022' AS category_of_farmer,
         observations -> 'Mobile Number' ->> 'phoneNumber' AS mobile_number,
         (observations -> 'Mobile Number' ->> 'verified')::boolean AS mobile_verified,
         "Voided" as farmer_voided
