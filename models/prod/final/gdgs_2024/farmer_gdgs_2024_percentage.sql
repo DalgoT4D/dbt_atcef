@@ -7,19 +7,17 @@ SELECT
     district,
     taluka,
     village,
-    waterbodies,
+    dam,
     'vulnerable' AS farmer_type,
-    SUM(vulnerable_small + vulnerable_marginal + widow + Disabled + family_of_farmer_who_committed_suicide) AS farmers_count
+    SUM(vulnerable_small + vulnerable_marginal + widow + disabled + family_of_farmer_who_committed_suicide) AS farmers_count
 FROM
-   {{ ref('farmer_aggregated_un') }}
+    {{ref('farmer_agg_gdgs_24')}}
 GROUP BY
     state,
     district,
     taluka,
     village,
-    waterbodies
-HAVING
-    SUM(vulnerable_small + vulnerable_marginal) > 0
+    dam
 
 UNION ALL
 
@@ -28,23 +26,21 @@ SELECT
     district,
     taluka,
     village,
-    waterbodies,
+    dam,
     'others' AS farmer_type,
     SUM(semi_medium + medium + large) AS farmers_count
 FROM
-    {{ ref('farmer_aggregated_un') }}
+    {{ref('farmer_agg_gdgs_24')}}
 GROUP BY
     state,
     district,
     taluka,
     village,
-    waterbodies
-HAVING
-    SUM(semi_medium + medium + large) > 0
+    dam
 
 ORDER BY
     state,
     district,
     taluka,
     village,
-    waterbodies, farmer_type
+    dam, farmer_type

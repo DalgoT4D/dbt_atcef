@@ -29,48 +29,11 @@ approval_machines AS (
     FROM mycte d
     JOIN {{ ref('approval_statuses_gdgs_24') }} a ON d.machine_id = a.entity_id
     WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
-),
-deduplicated_machines AS (
+)
+
+
     {{ dbt_utils.deduplicate(
         relation='approval_machines',
         partition_by='machine_id',
         order_by='machine_id desc'
     ) }}
-)
-
-
-SELECT
-    m.machine_id,
-    m.machine_name,
-    m.type_of_machine,
-    m.dam,
-    m.district,
-    m.subject_type,
-    m.state,
-    m.taluka,
-    m.village,
-    m.machine_voided,
-    m.machine_approval_status,
-    e.machine_sub_id,
-    SUM(e.working_hours_as_per_time) AS total_working_hours,
-    MAX(e.date_time) AS latest_date_time
-FROM
-    {{ref('encounters_2024')}} e
-JOIN
-    deduplicated_machines m
-ON
-    e.machine_sub_id = m.machine_id
-WHERE working_hours_as_per_time is not null
-GROUP BY
-    m.machine_id,
-    m.machine_name,
-    m.type_of_machine,
-    m.dam,
-    m.district,
-    m.subject_type,
-    m.state,
-    m.taluka,
-    m.village,
-    m.machine_voided,
-    m.machine_approval_status,
-    e.machine_sub_id
