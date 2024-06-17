@@ -39,4 +39,4 @@ cte as (
 
 SELECT * 
 FROM cte 
-WHERE benchmark_classification is not null
+WHERE benchmark_classification is not null and avg_silt_excavated_per_hour::text != 'NaN'
