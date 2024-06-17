@@ -16,20 +16,12 @@ WITH mycte AS (
         END AS state,
         INITCAP(COALESCE(location->>'Taluka', '')) AS taluka,
         INITCAP(COALESCE(location->>'GP/Village', '')) AS village,
-        COALESCE(NULLIF(rwb.stakeholder_responsible, ''), 'Unknown') AS ngo_name,
-        ROUND(CAST(CAST(
-            COALESCE(
-                NULLIF(TRIM(rwb.silt_target::text), ''),
-                '0'
-            ) AS FLOAT
-        ) AS numeric), 2) AS silt_target,
+        COALESCE(NULLIF(rwb."Project/NGO", ''), 'Unknown') AS ngo_name,
+        CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target,
         "Voided" AS work_order_voided
     FROM 
         {{ source('source_atecf_surveyss', 'subjects_2022') }}
-    LEFT JOIN 
-        {{ref('address_niti_22')}} AS rwb 
-    ON 
-        location->>'Dam' = rwb.dam
+    RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam"
     WHERE 
         NOT (LOWER(location->>'Dam') ~ 'voided') 
         AND "Subject_type" = 'Work Order' 
