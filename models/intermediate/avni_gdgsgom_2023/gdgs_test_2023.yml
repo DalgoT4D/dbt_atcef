@@ -1,0 +1,154 @@
+version: 2
+
+models:
+  - name: encounters_gdgs_2023
+    tests:
+      - not_null:
+          column_name: date_time
+      - not_null:
+          column_name: subject_type
+      - not_null:
+          column_name: eid
+      - accepted_values:
+          column_name: subject_type
+          values: ['Work Order', 'Excavating Machine', 'Farmer', 'Gram panchayat']
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: working_hours_as_per_time
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: total_working_hours_of_machine
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: silt_excavated_as_per_MB_recording
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: total_silt_excavated
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: date_time
+          column_type: date
+
+  - name: subjects_gdgs_2023
+    tests:
+      - not_null: 
+          column_name: first_name
+      - not_null: 
+          column_name: dam
+      - not_null: 
+          column_name: district
+      - not_null: 
+          column_name: state
+      - not_null: 
+          column_name: taluka
+      - not_null: 
+          column_name: village
+      - not_null: 
+          column_name: uid
+      - accepted_values:
+          column_name: mobile_verified
+          values: [true, false]
+
+  - name: work_order_gdgs_2023
+    tests: 
+      - accepted_values:
+          column_name: encounter_type
+          values: [Work order daily Recording - Machine, 
+                   Farmer Interaction, 
+                   Work order daily Recording - Farmer, 
+                   Work order endline, 
+                   Gram Panchayat Interaction,
+                   Gram Panchayat Endline,
+                   Farmer Endline, 
+                   Excavating Machine Endline, 
+                   Regular recording, 
+                   Work Order Endline Executive Engineer]
+      - not_null: 
+          column_name: dam
+      - not_null: 
+          column_name: district
+      - not_null: 
+          column_name: state
+      - not_null: 
+          column_name: taluka
+      - not_null: 
+          column_name: village
+    version: 2
+
+
+  - name: address_gdgs_23
+    description: "Write a test case for gdgs address model"
+    columns:
+      - name: address_id
+        tests:
+          - not_null
+      - name: dam
+        tests:
+          - not_null
+
+  - name: farmer_gdgs_23
+    description: "Registered farmer gdgs 2023 tests"
+    columns:
+      - name: farmer_id
+        tests:
+          - not_null
+      - name: farmer_name
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+    
+  - name: machine_gdgs_23
+    description: "machine registered gdgs 2023 tests"
+    columns:
+      - name: machine_id
+        tests:
+          - not_null
+      - name: machine_name
+        tests:
+          - not_null
+      - name: type_of_machine
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+
+  - name: work_order_gdgs_23
+    description: "all the registered work orders test"
+    columns:
+      - name: work_order_id
+        tests:
+          - not_null
+      - name: work_order_name
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+  
+
+     
+
+  
+
+
+  
+
+
+
+   
+
+
+
+    
+
