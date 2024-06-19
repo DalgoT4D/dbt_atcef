@@ -119,7 +119,7 @@ models:
           - not_null
 
   - name: work_order_gdgs_23
-    description: "all the registered work orders test"
+    description: "All the registered work orders test"
     columns:
       - name: work_order_id
         tests:
@@ -133,6 +133,10 @@ models:
       - name: district
         tests:
           - not_null
+    tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          min_value: 0
+          max_value: 569
 
   - name: encounters_2024
     tests:
