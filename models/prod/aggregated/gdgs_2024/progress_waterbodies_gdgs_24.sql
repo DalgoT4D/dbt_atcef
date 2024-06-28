@@ -10,6 +10,7 @@ WITH waterbodies AS (
         w.village,
         w.district,
         w.taluka,
+        w.ngo_name,
         e.encounter_type,
         e.date_time,
         ROW_NUMBER() OVER (PARTITION BY w.dam ORDER BY e.date_time DESC) AS row_num
@@ -27,6 +28,7 @@ SELECT
     village,
     district,
     taluka,
+    ngo_name,
     encounter_type,
     date_time,
     CASE 

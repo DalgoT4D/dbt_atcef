@@ -10,6 +10,7 @@ SELECT
     s.village,
     s.district,
     s.taluka,
+    w.ngo_name,
     s.dam,
     s.farmer_name,
     s.mobile_number,

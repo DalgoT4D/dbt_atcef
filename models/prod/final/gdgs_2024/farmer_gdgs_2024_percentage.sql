@@ -17,7 +17,8 @@ GROUP BY
     district,
     taluka,
     village,
-    dam
+    dam,
+    ngo_name
 
 UNION ALL
 
@@ -27,6 +28,7 @@ SELECT
     taluka,
     village,
     dam,
+    ngo_name,
     'others' AS farmer_type,
     SUM(semi_medium + medium + large) AS farmers_count
 FROM
@@ -36,11 +38,14 @@ GROUP BY
     district,
     taluka,
     village,
-    dam
+    dam,
+    ngo_name
 
 ORDER BY
     state,
     district,
     taluka,
     village,
-    dam, farmer_type
+    dam, 
+    ngo_name,
+    farmer_type
