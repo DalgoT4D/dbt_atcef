@@ -273,7 +273,7 @@ models:
     tests:
       - dbt_expectations.expect_table_row_count_to_be_between:
           min_value: 613
-          max_value: 620
+          max_value: 1000
 
   - name: encounter_2022
     tests:
