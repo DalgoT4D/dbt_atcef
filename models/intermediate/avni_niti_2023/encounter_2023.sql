@@ -23,6 +23,7 @@ WITH mycte AS (
     observations ->> 'The total farm area on which Silt is spread' AS total_farm_area,
     observations ->> 'Area covered by silt' AS area_covered_by_silt,
     observations ->> 'Number of trolleys carted' AS number_of_trolleys_carted,
+    observations ->> 'Distance from waterbody' as distance_from_waterbody,
     CAST(observations ->> 'The total farm area on which Silt is spread' AS FLOAT) AS total_farm_area_on_which_Silt_is_spread,
     observations ->> 'Total silt excavated by GP (for non-farm purpose)' AS total_silt_excavated_by_GP_for_non_farm_purpose,
     "Voided" as encounter_voided

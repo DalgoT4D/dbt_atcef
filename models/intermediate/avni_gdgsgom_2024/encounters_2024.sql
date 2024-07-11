@@ -22,6 +22,7 @@ with mycte as (SELECT
   observations ->> 'The total farm area on which Silt is spread' AS total_farm_area,
   observations ->> 'Area covered by silt' as area_covered_by_silt,
   observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
+  observations ->> 'Distance from waterbody' as distance_from_waterbody,
   CAST(observations ->> 'The total farm area on which Silt is spread' as FLOAT) as total_farm_area_on_which_Silt_is_spread
   
 FROM {{ source('source_gdgsom_surveys', 'encounters_2024') }}
