@@ -25,3 +25,16 @@ SELECT
     date_time,
     project_status
 FROM {{ref('progress_waterbodies_niti_23')}}
+
+union all 
+
+SELECT 
+    dam,
+    state,
+    village,
+    district,
+    taluka,
+    encounter_type,
+    date_time,
+    project_status
+FROM {{ref('progress_waterbodies_niti_2024')}}
