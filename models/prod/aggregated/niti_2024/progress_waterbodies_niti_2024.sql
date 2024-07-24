@@ -32,7 +32,9 @@ SELECT
     CASE 
         WHEN encounter_type = 'Work order daily Recording - Farmer' THEN 'Ongoing'
         WHEN encounter_type = 'Work order endline' THEN 'Completed'
+        WHEN encounter_type IS NULL THEN 'Not Started'
         ELSE NULL
     END AS project_status
 FROM waterbodies
 WHERE row_num = 1
+OR (encounter_type IS NULL AND row_num = 1)

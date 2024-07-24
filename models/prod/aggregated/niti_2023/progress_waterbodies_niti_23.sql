@@ -16,8 +16,8 @@ WITH waterbodies AS (
     FROM {{ ref('work_order_niti_2023') }} AS w
     LEFT JOIN {{ ref('encounter_2023') }} AS e 
         ON e.subject_id = w.work_order_id
-    WHERE e.encounter_type = 'Work order daily Recording - Farmer' 
-       OR e.encounter_type = 'Work order endline'
+        AND (e.encounter_type = 'Work order daily Recording - Farmer' 
+             OR e.encounter_type = 'Work order endline')
 )
 
 SELECT 
@@ -32,7 +32,9 @@ SELECT
     CASE 
         WHEN encounter_type = 'Work order daily Recording - Farmer' THEN 'Ongoing'
         WHEN encounter_type = 'Work order endline' THEN 'Completed'
+        WHEN encounter_type IS NULL THEN 'Not Started'
         ELSE NULL
     END AS project_status
 FROM waterbodies
 WHERE row_num = 1
+   OR (encounter_type IS NULL AND row_num = 1)
