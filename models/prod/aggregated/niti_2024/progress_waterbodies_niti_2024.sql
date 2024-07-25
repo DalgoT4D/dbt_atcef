@@ -24,9 +24,9 @@ waterbodies AS (
     FROM address_cte AS a
     LEFT JOIN registered_waterbodies AS w ON a.dam = w.dam
     LEFT JOIN {{ ref('encounters_niti_2024') }} AS e ON e.subject_id = w.work_order_id
-)
+),
 
-SELECT 
+waterbodies_active as (SELECT 
     wb.dam,
     wb.work_order_id,
     wb.state,
@@ -43,4 +43,6 @@ SELECT
     END AS project_status
 FROM waterbodies wb
 WHERE row_num = 1
-   OR (wb.encounter_type IS NULL AND row_num = 1)
+   OR (wb.encounter_type IS NULL AND row_num = 1))
+
+select * from waterbodies_active where project_status is not null
