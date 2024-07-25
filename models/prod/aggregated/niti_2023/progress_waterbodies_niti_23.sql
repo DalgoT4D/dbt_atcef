@@ -26,9 +26,9 @@ waterbodies AS (
     LEFT JOIN {{ ref('encounter_2023') }} AS e ON e.subject_id = w.work_order_id
         AND (e.encounter_type = 'Work order daily Recording - Farmer' 
              OR e.encounter_type = 'Work order endline')
-)
+),
 
-SELECT 
+waterbodies_active as (SELECT 
     wb.dam,
     wb.work_order_id,
     wb.state,
@@ -45,4 +45,6 @@ SELECT
     END AS project_status
 FROM waterbodies wb
 WHERE row_num = 1
-   OR (wb.encounter_type IS NULL AND row_num = 1)
+   OR (wb.encounter_type IS NULL AND row_num = 1))
+
+Select * from waterbodies_active where project_status is not null
