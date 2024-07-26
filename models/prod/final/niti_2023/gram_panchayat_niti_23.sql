@@ -9,6 +9,7 @@ select
        district,
        taluka,
        village,
+       ngo_name,
        cast(total_silt_excavated_by_GP_for_non_farm_purpose as numeric) as total_silt_excavated_by_GP_for_non_farm_purpose
 from {{ref('work_order_2023')}}
 where encounter_type = 'Gram Panchayat Endline' and 
