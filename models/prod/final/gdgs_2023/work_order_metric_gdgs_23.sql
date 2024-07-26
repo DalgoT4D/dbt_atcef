@@ -11,11 +11,12 @@
         taluka,
         dam,
         village,
+        ngo_name,
         MAX(silt_target) as silt_target,
         SUM(total_silt_carted) as silt_achieved
     FROM {{ref('farmer_calc_silt_gdgs_23')}}
     WHERE total_silt_carted::text != 'NaN'
     GROUP BY
-        state, district, taluka, dam, village, work_order_name
+        state, district, taluka, dam, village, work_order_name, ngo_name
 
 
