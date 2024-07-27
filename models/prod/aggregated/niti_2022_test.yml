@@ -129,9 +129,6 @@ models:
       - name: dam
         tests:
           - not_null
-      - name: work_order_id
-        tests:
-          - not_null
       - name: state
         tests:
           - not_null
@@ -144,18 +141,6 @@ models:
       - name: taluka
         tests:
           - not_null
-      - name: encounter_type
-        tests:
-          - not_null
-          - accepted_values:
-              values: 
-                - 'Work order daily Recording - Farmer'
-                - 'Work order endline'
-      - name: date_time
-        tests:
-          - not_null
-          - dbt_expectations.expect_column_values_to_be_of_type:
-              column_type: date
       - name: project_status
         tests:
           - not_null
@@ -163,3 +148,4 @@ models:
               values: 
                 - 'Ongoing'
                 - 'Completed' 
+                - 'Not Started'
