@@ -19,6 +19,7 @@ waterbodies AS (
         a.village,
         a.district,
         a.taluka,
+        a.stakeholder_responsible as ngo_name,
         e.encounter_type,
         e.date_time,
         ROW_NUMBER() OVER (PARTITION BY a.dam ORDER BY e.date_time DESC) AS row_num
@@ -35,6 +36,7 @@ waterbodies_active as (SELECT
     wb.village,
     wb.district,
     wb.taluka,
+    wb.ngo_name,
     wb.encounter_type,
     wb.date_time,
     CASE 

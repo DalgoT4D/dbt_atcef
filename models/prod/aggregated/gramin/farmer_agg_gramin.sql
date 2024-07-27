@@ -9,6 +9,7 @@ with cte as (select distinct farmer_id,
        village,
        taluka,
        dam,
+       ngo_name,
        farmer_name,
        mobile_number,
        mobile_verified,
@@ -21,6 +22,7 @@ group by
        village,
        taluka,
        dam,
+       ngo_name,
        farmer_name,
        mobile_number,
        mobile_verified,
@@ -34,6 +36,7 @@ SELECT
     district,
     taluka,
     village,
+    ngo_name,
     SUM(CASE 
             WHEN mobile_verified = 'True' THEN 1 
             ELSE 0 
@@ -56,4 +59,5 @@ GROUP BY
     district,
     taluka,
     village,
-    dam
+    dam,
+    ngo_name
