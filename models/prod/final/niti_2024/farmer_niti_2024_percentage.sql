@@ -42,7 +42,7 @@ GROUP BY
     taluka,
     village,
     dam,
-    ngo_name,
+    ngo_name
 HAVING
     SUM(semi_medium + medium + large) > 0
 
