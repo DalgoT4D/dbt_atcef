@@ -8,6 +8,7 @@ SELECT
     taluka,
     village,
     dam,
+    ngo_name,
     'farmer_niti_2022' AS farmer_type,
     SUM(farmer_niti_2022) AS farmers_count
 FROM
@@ -17,6 +18,7 @@ GROUP BY
     district,
     taluka,
     village,
-    dam
+    dam,
+    ngo_name
 
 
