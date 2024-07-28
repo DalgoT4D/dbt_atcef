@@ -7,6 +7,9 @@ models:
       - name: dam
         tests:
           - not_null
+      - name: ngo_name
+        tests: 
+          - not_null
       - name: date_time
         tests:
           - not_null
@@ -40,6 +43,9 @@ models:
           - not_null
       - name: farmer_id
         tests:
+          - not_null
+      - name: ngo_name
+        tests: 
           - not_null
       - name: work_order_id
         tests:
@@ -131,6 +137,9 @@ models:
           - not_null
       - name: state
         tests:
+          - not_null
+      - name: ngo_name
+        tests: 
           - not_null
       - name: village
         tests:

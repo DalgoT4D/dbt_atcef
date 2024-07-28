@@ -7,6 +7,9 @@ models:
       - name: dam
         tests:
           - not_null
+      - name: ngo_name
+        tests: 
+          - not_null
       - name: date_time
         tests:
           - not_null
@@ -52,6 +55,9 @@ models:
     columns:
       - name: eid
         tests:
+          - not_null
+      - name: ngo_name
+        tests: 
           - not_null
       - name: farmer_id
         tests:
@@ -148,6 +154,9 @@ models:
     columns:
       - name: dam
         tests:
+          - not_null
+      - name: ngo_name
+        tests: 
           - not_null
       - name: state
         tests:
