@@ -9,6 +9,7 @@ with cte as (SELECT
     district,
     taluka,
     dam,
+    ngo_name,
     village,
     SUM(COALESCE(silt_excavated_as_per_MB_recording, 0)) AS silt_excavated_as_per_MB_recording,
     MAX(COALESCE(silt_to_be_excavated_as_per_plan, 0)) AS total_silt_excavated
@@ -19,6 +20,7 @@ group by
 	district,
 	taluka,
 	dam,
+    ngo_name,
 	village)
 
 select * from cte where total_silt_excavated != 0

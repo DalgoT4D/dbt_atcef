@@ -10,6 +10,7 @@ select
     taluka,
     village,
     dam,
+    ngo_name,
     silt_target,
     silt_achieved
 from {{ref('work_order_metric_niti_23')}}
@@ -24,6 +25,7 @@ select
     taluka,
     village,
     dam,
+    ngo_name,
     silt_target,
     silt_achieved
 from {{ref('work_order_metric_niti_22')}}
@@ -38,6 +40,7 @@ select
     taluka,
     village,
     dam,
+    ngo_name,
     silt_target,
     silt_achieved
 from {{ref('work_order_metric_niti_2024')}}

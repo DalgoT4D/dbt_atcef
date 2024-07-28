@@ -10,6 +10,7 @@ SELECT
     taluka,
     encounter_type,
     date_time,
+    ngo_name,
     project_status
 FROM {{ref('progress_waterbodies_niti_22')}}
 
@@ -23,6 +24,7 @@ SELECT
     taluka,
     encounter_type,
     date_time,
+    ngo_name,
     project_status
 FROM {{ref('progress_waterbodies_niti_23')}}
 
@@ -36,5 +38,6 @@ SELECT
     taluka,
     encounter_type,
     date_time,
+    ngo_name,
     project_status
 FROM {{ref('progress_waterbodies_niti_2024')}}

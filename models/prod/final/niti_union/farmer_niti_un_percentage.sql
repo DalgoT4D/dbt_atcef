@@ -9,6 +9,7 @@ select
     taluka,
     village,
     dam,
+    ngo_name,
     farmer_type,
     farmers_count
 from {{ref('farmer_niti_2022_percentage')}}
@@ -21,6 +22,7 @@ select
     taluka,
     village,
     dam,
+    ngo_name,
     farmer_type,
     farmers_count
 from {{ref('farmer_niti_2023_percentage')}}
@@ -33,6 +35,7 @@ select
     taluka,
     village,
     dam,
+    ngo_name,
     farmer_type,
     farmers_count
 from {{ref('farmer_niti_2024_percentage')}}

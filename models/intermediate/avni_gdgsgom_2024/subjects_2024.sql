@@ -27,11 +27,16 @@ WITH cte AS (
         CAST(COALESCE(observations ->> 'Number of trolleys required', '0') AS NUMERIC) AS number_of_trolleys_required,
         CAST(COALESCE(observations ->> 'Number of hywas required', '0') AS NUMERIC) AS number_of_hywas_required,
         INITCAP(COALESCE(observations ->> 'Name of WB')) AS name_of_WB,
-        "Voided" as subject_voided
+        "Voided" as subject_voided,
+         COALESCE(NULLIF(rwb.stakeholder_responsible, ''), 'Unknown') AS ngo_name
     FROM 
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
-    WHERE "Voided" is FALSE
-    AND NOT (LOWER(location->>'Dam') ~ 'voided')
+    LEFT JOIN 
+        {{ref('address_gdgs_23')}} AS rwb 
+    ON
+         location->>'Dam' = rwb.dam
+    WHERE NOT (LOWER(location->>'Dam') ~ 'voided')
+
 ),
 
 approved_subjects AS (

@@ -6,6 +6,7 @@
 select 
     date_time,
     dam,
+    ngo_name,
     state,
     district,
     taluka, 
@@ -29,6 +30,7 @@ union all
 select 
     date_time,
     dam,
+    ngo_name,
     state,
     district,
     taluka, 
