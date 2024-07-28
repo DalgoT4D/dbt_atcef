@@ -27,6 +27,7 @@ cte as (
     village,
     taluka,
     dam,
+    ngo_name,
     type_of_machine,
     avg_silt_excavated_per_hour,
     CASE

@@ -4,6 +4,7 @@
 
 SELECT 
     dam,
+    ngo_name,
     state,
     village,
     district,
@@ -17,6 +18,7 @@ union all
 
 SELECT 
     dam,
+    ngo_name,
     state,
     village,
     district,
