@@ -11,15 +11,25 @@ WITH waterbodies AS (
         w.district,
         w.taluka,
         w.ngo_name,
-        e.encounter_type,
-        e.date_time,
-        ROW_NUMBER() OVER (PARTITION BY w.dam ORDER BY e.date_time DESC) AS row_num
+        MAX(CASE WHEN e.encounter_type = 'Work order endline' THEN e.date_time END) AS endline_date,
+        MAX(CASE WHEN e.encounter_type = 'Work order daily Recording - Farmer' THEN e.date_time END) AS farmer_date
     FROM {{ ref('work_order_niti_22') }} AS w
     LEFT JOIN {{ ref('encounter_2022') }} AS e 
         ON e.subject_id = w.work_order_id
-    WHERE e.encounter_type = 'Work order daily Recording - Farmer' 
-       OR e.encounter_type = 'Work order endline'
+    WHERE (e.encounter_type IN ('Work order daily Recording - Farmer', 'Work order endline')
+           OR e.encounter_type IS NULL)  -- Ensure work orders with no encounters are included
+       AND w.work_order_voided != TRUE
+    GROUP BY 
+        w.dam,
+        w.work_order_id,
+        w.state,
+        w.village,
+        w.district,
+        w.taluka,
+        e.subject_id,
+        w.ngo_name
 )
+
 
 SELECT 
     dam,
@@ -29,14 +39,15 @@ SELECT
     district,
     taluka,
     ngo_name,
-    encounter_type,
-    date_time,
+    endline_date,
+    farmer_date,
     CASE 
-        WHEN encounter_type = 'Work order daily Recording - Farmer' THEN 'Ongoing'
-        WHEN encounter_type = 'Work order endline' THEN 'Completed'
-        WHEN encounter_type IS NULL THEN 'Not Started'
-        ELSE NULL
-    END AS project_status
+        WHEN endline_date IS NOT NULL THEN 'Completed'
+        WHEN farmer_date IS NOT NULL THEN 'Ongoing'
+        ELSE 'Not Started'
+    END AS project_status,
+    CASE 
+        WHEN endline_date IS NOT NULL THEN 'Endline Done'
+        ELSE 'Endline Not Done'
+    END AS work_order_endline_status 
 FROM waterbodies
-WHERE row_num = 1
-OR (encounter_type IS NULL AND row_num = 1)
