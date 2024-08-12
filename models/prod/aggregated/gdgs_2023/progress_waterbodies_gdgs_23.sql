@@ -36,10 +36,8 @@ SELECT
     village,
     district,
     taluka,
-    COALESCE(
-        endline_date,
-        farmer_date
-    ) AS latest_encounter_date,
+    endline_date,
+    farmer_date,
     CASE 
         WHEN endline_date IS NOT NULL THEN 'Completed'
         WHEN farmer_date IS NOT NULL THEN 'Ongoing'
