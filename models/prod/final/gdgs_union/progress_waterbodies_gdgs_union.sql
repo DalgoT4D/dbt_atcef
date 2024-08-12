@@ -9,8 +9,8 @@ SELECT
     village,
     district,
     taluka,
-    encounter_type,
-    date_time,
+    endline_date,
+    farmer_date,
     project_status
 FROM {{ref('progress_waterbodies_gdgs_23')}}
 
@@ -23,7 +23,7 @@ SELECT
     village,
     district,
     taluka,
-    encounter_type,
-    date_time,
+    endline_date,
+    farmer_date,
     project_status
 FROM {{ref('progress_waterbodies_gdgs_24')}}

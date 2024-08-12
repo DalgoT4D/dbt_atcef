@@ -10,6 +10,7 @@ WITH waterbodies AS (
         w.village,
         w.district,
         w.taluka,
+        w.ngo_name,
         MAX(CASE WHEN e.encounter_type = 'Work order endline' THEN e.date_time END) AS endline_date,
         MAX(CASE WHEN e.encounter_type = 'Work order daily Recording - Farmer' THEN e.date_time END) AS farmer_date
     FROM {{ ref('work_order_gdgs_2024') }} AS w
@@ -25,7 +26,8 @@ WITH waterbodies AS (
         w.village,
         w.district,
         w.taluka,
-        e.subject_id
+        e.subject_id,
+        w.ngo_name
 )
 
 
@@ -36,10 +38,9 @@ SELECT
     village,
     district,
     taluka,
-    COALESCE(
-        endline_date,
-        farmer_date
-    ) AS latest_encounter_date,
+    ngo_name,
+    endline_date,
+    farmer_date,
     CASE 
         WHEN endline_date IS NOT NULL THEN 'Completed'
         WHEN farmer_date IS NOT NULL THEN 'Ongoing'

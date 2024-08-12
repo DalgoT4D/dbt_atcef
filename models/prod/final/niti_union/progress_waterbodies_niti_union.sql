@@ -8,8 +8,8 @@ SELECT
     village,
     district,
     taluka,
-    encounter_type,
-    date_time,
+    endline_date,
+    farmer_date,
     ngo_name,
     project_status
 FROM {{ref('progress_waterbodies_niti_22')}}
@@ -22,8 +22,8 @@ SELECT
     village,
     district,
     taluka,
-    encounter_type,
-    date_time,
+    endline_date,
+    farmer_date,
     ngo_name,
     project_status
 FROM {{ref('progress_waterbodies_niti_23')}}
@@ -36,8 +36,8 @@ SELECT
     village,
     district,
     taluka,
-    encounter_type,
-    date_time,
+    endline_date,
+    farmer_date,
     ngo_name,
     project_status
 FROM {{ref('progress_waterbodies_niti_2024')}}
