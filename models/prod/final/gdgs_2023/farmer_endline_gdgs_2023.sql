@@ -3,7 +3,13 @@
 ) }}
 
 SELECT 
-    m.*,
+    m.farmer_id,
+m.farmer_name,
+m.state,
+m.taluka,
+m.village,
+m.dam,
+m.district,
     CASE 
         WHEN e.encounter_type = 'Farmer Endline' THEN 'Endline Done'
         ELSE 'Endline Not Done'
