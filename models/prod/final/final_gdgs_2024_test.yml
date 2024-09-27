@@ -32,13 +32,12 @@ models:
               values:
                 - 'Marginal (0-2.49 acres)'
                 - 'Small (2.5-4.99 acres)'
-                - 'Semi-medium (5 to 9.99 acre)'
+                - 'Semi-medium (5 to 9.99 acres)'
                 - 'Medium (10-24.99 acres)'
                 - 'Large (above 25 acres)'
                 - 'Widow'
                 - 'Disabled'
                 - 'Family of farmer who committed suicide'
-                - 'NULL'
       - name: mobile_number
         tests:
           - not_null
