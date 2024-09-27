@@ -25,7 +25,7 @@ LEFT JOIN {{ ref('farmer_niti_22') }} AS s
     ON e.farmer_sub_id = s.farmer_id
 LEFT JOIN {{ ref('work_order_niti_22') }} AS w 
     ON e.subject_id = w.work_order_id
-WHERE w.work_order_voided != TRUE and s.farmer_voided != TRUE
+WHERE w.work_order_voided != TRUE and s.farmer_voided != TRUE and total_silt_carted::text != 'NaN'
 
 
 

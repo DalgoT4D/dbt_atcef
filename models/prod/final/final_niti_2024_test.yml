@@ -1,0 +1,76 @@
+models:
+  - name: farmer_endline_niti_2024
+    description: "Farmer data compiled with Endline Status from encounters"
+    columns:
+      - name: farmer_id
+        tests:
+          - not_null
+      - name: farmer_name
+        tests:
+          - not_null
+      - name: dam
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: taluka
+        tests:
+          - not_null
+      - name: village
+        tests:
+          - not_null
+      - name: endline_status
+        tests:
+          - accepted_values:
+              values:
+                - 'Endline Done'
+                - 'Endline Not Done'
+
+  - name: machine_endline_niti_2024
+    description: "Machine Data Compiled with Endline Status from encounters"
+    columns:
+      - name: machine_id
+        tests:
+          - not_null
+      - name: machine_name
+        tests:
+          - not_null
+      - name: type_of_machine
+        tests:
+          - not_null
+      - name: dam
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+      - name: subject_type
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: taluka
+        tests:
+          - not_null
+      - name: village
+        tests:
+          - not_null
+      - name: machine_voided
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: machine_approval_status
+        tests:
+          - not_null
+      - name: endline_status
+        tests:
+          - accepted_values:
+              values:
+                - 'Endline Done'
+                - 'Endline Not Done'
