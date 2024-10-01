@@ -11,7 +11,8 @@ SELECT
     taluka,
     endline_date,
     farmer_date,
-    project_status
+    project_status,
+    work_order_endline_status
 FROM {{ref('progress_waterbodies_gdgs_23')}}
 
 union all 
@@ -25,5 +26,6 @@ SELECT
     taluka,
     endline_date,
     farmer_date,
-    project_status
+    project_status,
+    work_order_endline_status
 FROM {{ref('progress_waterbodies_gdgs_24')}}
