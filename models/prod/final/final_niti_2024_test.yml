@@ -74,3 +74,33 @@ models:
               values:
                 - 'Endline Done'
                 - 'Endline Not Done'
+
+  - name: farmer_silt_vulnerable_niti_24
+    description: "Model that calculates silt carted for vulnerable and other farmers"
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+      - name: taluka
+        tests:
+          - not_null
+      - name: village
+        tests:
+          - not_null
+      - name: dam
+        tests:
+          - not_null
+      - name: ngo_name
+        tests:
+          - not_null
+      - name: farmer_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['vulnerable', 'others']
+      - name: total_silt_carted
+        tests:
+          - not_null
