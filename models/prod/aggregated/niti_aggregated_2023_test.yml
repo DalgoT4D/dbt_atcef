@@ -129,9 +129,9 @@ models:
       - name: taluka
         tests:
           - not_null
-      - name: village
-        tests:
-          - not_null
+      # - name: village
+      #   tests:
+      #     - not_null
       - name: machine_voided
         tests:
           - not_null

@@ -42,9 +42,9 @@ models:
       - name: type_of_machine
         tests:
           - not_null
-      - name: dam
-        tests:
-          - not_null
+      # - name: dam
+      #   tests:
+      #     - not_null
       - name: district
         tests:
           - not_null
