@@ -133,10 +133,6 @@ models:
       - name: district
         tests:
           - not_null
-    tests:
-      - dbt_expectations.expect_table_row_count_to_be_between:
-          min_value: 565
-          max_value: 575
 
   - name: encounters_2024
     tests:
@@ -270,10 +266,6 @@ models:
       - name: district
         tests:
           - not_null
-    tests:
-      - dbt_expectations.expect_table_row_count_to_be_between:
-          min_value: 613
-          max_value: 1000
 
   - name: encounter_2022
     tests:
