@@ -5,6 +5,9 @@ models:
       - name: date_time
         tests:
           - not_null
+      - name: project
+        tests:
+          - not_null
       - name: dam
         tests:
           - not_null
@@ -66,6 +69,9 @@ models:
       - name: eid
         tests:
           - not_null
+      - name: project
+        tests:
+          - not_null
       - name: farmer_id
         tests:
           - not_null
@@ -123,6 +129,9 @@ models:
       - name: farmer_id
         tests:
           - not_null
+      - name: project
+        tests:
+          - not_null
       - name: farmer_name
         tests:
           - not_null
@@ -149,6 +158,9 @@ models:
     description: "Percentage of farmers by type"
     columns:
       - name: state
+        tests:
+          - not_null
+      - name: project
         tests:
           - not_null
       - name: district
@@ -181,6 +193,9 @@ models:
       - name: state
         tests:
           - not_null
+      - name: project
+        tests:
+          - not_null
       - name: district
         tests:
           - not_null
@@ -206,6 +221,9 @@ models:
     description: "Machine endline status data"
     columns:
       - name: machine_id
+        tests:
+          - not_null
+      - name: project
         tests:
           - not_null
       - name: machine_name
@@ -247,6 +265,9 @@ models:
       - name: date_time
         tests:
           - not_null
+      - name: project
+        tests:
+          - not_null
       - name: state
         tests:
           - not_null
@@ -275,6 +296,9 @@ models:
       - name: dam
         tests:
           - not_null
+      - name: project
+        tests:
+          - not_null
       - name: state
         tests:
           - not_null
@@ -301,6 +325,9 @@ models:
     description: "Work order metrics for silt targets and achievements"
     columns:
       - name: date_time
+        tests:
+          - not_null
+      - name: project
         tests:
           - not_null
       - name: work_order_name
