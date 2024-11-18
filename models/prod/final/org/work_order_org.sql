@@ -6,11 +6,11 @@ WITH enriched_encounters AS (
     SELECT 
         e.eid AS eid,
         e.date_time AS date_time,
-        wg.state AS state,
-        wg.district AS district,
-        wg.taluka AS taluka,
-        wg.dam AS dam,
-        wg.village AS village,
+        NULL AS state,
+        NULL AS district,
+        NULL AS taluka,
+        NULL AS dam,
+        NULL AS village,
         e.encounter_type AS encounter_type,
         e.total_working_hours_of_machine AS total_working_hours_of_machine,
         e.silt_excavated_as_per_mb_recording AS silt_excavated_as_per_mb_recording,
@@ -22,8 +22,7 @@ WITH enriched_encounters AS (
         e.approval_status AS approval_status,
         'Project A' AS project
     FROM {{ ref('encounters_gramin') }} e
-    LEFT JOIN {{ ref('work_order_gramin') }} wg
-    ON e.eid = wg.work_order_id
+
 ),
 
 niti_data AS (
