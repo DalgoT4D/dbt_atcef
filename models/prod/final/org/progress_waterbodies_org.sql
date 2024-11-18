@@ -13,7 +13,8 @@ SELECT DISTINCT
     n.ngo_name AS ngo_name,
     n.project_status AS project_status,
     n.work_order_endline_status AS work_order_endline_status,
-    NULL AS work_order_id  -- Placeholder for missing column
+    NULL AS work_order_id,  -- Placeholder for missing column
+    'Niti Aayog' AS project
 FROM {{ ref('progress_waterbodies_niti_union') }} n
 
 UNION
@@ -29,7 +30,8 @@ SELECT DISTINCT
     g.ngo_name AS ngo_name,
     g.project_status AS project_status,
     g.work_order_endline_status AS work_order_endline_status,
-    g.work_order_id AS work_order_id  -- Work order ID present in this model
+    g.work_order_id AS work_order_id,  -- Work order ID present in this model
+    'Project A' AS project
 FROM {{ ref('progress_waterbodies_gramin') }} g
 
 UNION
@@ -45,5 +47,6 @@ SELECT DISTINCT
     gd.ngo_name AS ngo_name,
     gd.project_status AS project_status,
     gd.work_order_endline_status AS work_order_endline_status,
-    NULL AS work_order_id  -- Placeholder for missing column
+    NULL AS work_order_id,  -- Placeholder for missing column
+    'GDGS' AS project
 FROM {{ ref('progress_waterbodies_gdgs_union') }} gd

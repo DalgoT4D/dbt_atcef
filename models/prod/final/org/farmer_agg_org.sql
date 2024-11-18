@@ -21,7 +21,12 @@ SELECT DISTINCT
     COALESCE(CAST(n.widow AS NUMERIC), CAST(gd.widow AS NUMERIC), 0) AS widow,
     COALESCE(CAST(n.disabled AS NUMERIC), CAST(gd.disabled AS NUMERIC), 0) AS disabled,
     COALESCE(CAST(n.family_of_farmer_who_committed_suicide AS NUMERIC), CAST(gd.family_of_farmer_who_committed_suicide AS NUMERIC), 0) AS family_of_farmer_who_committed_suicide,
-    COALESCE(n.farmer_niti_22, 0) AS farmer_niti_22
+    COALESCE(n.farmer_niti_22, 0) AS farmer_niti_22,
+    CASE 
+        WHEN n.date_time IS NOT NULL THEN 'Niti Aayog'
+        WHEN g.date_time IS NOT NULL THEN 'GDGS'
+        ELSE 'Project A'
+    END AS project
 FROM 
     {{ ref('farmer_niti_agg_union') }} n
 FULL OUTER JOIN 

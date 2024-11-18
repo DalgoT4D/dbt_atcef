@@ -12,7 +12,8 @@ SELECT DISTINCT
     n.dam AS dam,
     n.ngo_name AS ngo_name,
     COALESCE(n.silt_target, 0) AS silt_target,
-    COALESCE(n.silt_achieved, 0) AS silt_achieved
+    COALESCE(n.silt_achieved, 0) AS silt_achieved,
+    'Niti Aayog' AS project
 FROM {{ ref('work_order_metric_niti_union') }} n
 
 UNION
@@ -27,7 +28,8 @@ SELECT DISTINCT
     s.dam AS dam,
     s.ngo_name AS ngo_name,
     COALESCE(s.silt_target, 0) AS silt_target,
-    COALESCE(s.silt_achieved, 0) AS silt_achieved
+    COALESCE(s.silt_achieved, 0) AS silt_achieved,
+    'Project A' AS project
 FROM {{ ref('work_order_silt_calc') }} s
 
 UNION
@@ -42,5 +44,6 @@ SELECT DISTINCT
     g.dam AS dam,
     g.ngo_name AS ngo_name,
     COALESCE(g.silt_target, 0) AS silt_target,
-    COALESCE(g.silt_achieved, 0) AS silt_achieved
+    COALESCE(g.silt_achieved, 0) AS silt_achieved,
+    'GDGS' AS project
 FROM {{ ref('work_order_metric_gdgs_union') }} g
