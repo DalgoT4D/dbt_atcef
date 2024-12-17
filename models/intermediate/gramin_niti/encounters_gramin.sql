@@ -5,6 +5,7 @@
 WITH subject_locs AS (
     SELECT
         "ID" AS uid,
+        INITCAP(COALESCE(location->>'Dam', '')) AS dam,  
         INITCAP(COALESCE(location->>'District', '')) AS district,  
         CASE  -- Standardize state names
             WHEN LOWER(location->>'State') LIKE '%maharashtra%' THEN 'Maharashtra'

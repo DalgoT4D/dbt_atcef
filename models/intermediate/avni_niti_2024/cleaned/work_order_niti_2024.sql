@@ -6,6 +6,7 @@
 WITH mycte AS (
     SELECT
         "ID" AS work_order_id,
+        "last_modified_at" AS date_time,
         INITCAP(TRIM(COALESCE(observations->>'First name', ''))) AS work_order_name,
         INITCAP(COALESCE(location->>'Dam', '')) AS dam,
         INITCAP(COALESCE(location->>'District', '')) AS district,
@@ -49,7 +50,6 @@ approval_work_orders AS (
     WHERE 
         a.entity_type = 'Subject' 
         AND a.approval_status = 'Approved'
-        and silt_target != 0
 )
 
 {{ dbt_utils.deduplicate(
