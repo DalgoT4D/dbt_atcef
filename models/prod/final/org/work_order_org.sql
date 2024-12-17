@@ -9,7 +9,7 @@ WITH enriched_encounters AS (
         e.state AS state,
         e.district AS district,
         e.taluka AS taluka,
-        NULL AS dam,
+        e.dam AS dam,
         e.village AS village,
         e.encounter_type AS encounter_type,
         e.total_working_hours_of_machine AS total_working_hours_of_machine,
