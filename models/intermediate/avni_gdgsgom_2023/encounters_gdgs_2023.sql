@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["intermediate","intermediate_gdgs_2023"]
 ) }}
 
 
@@ -42,4 +43,3 @@ WHERE a.entity_type = 'Encounter' and a.approval_status = 'Approved'
     order_by='eid desc',
    )
 }})
-
