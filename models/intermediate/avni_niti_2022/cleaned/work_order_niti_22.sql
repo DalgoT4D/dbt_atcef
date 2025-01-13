@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["intermediate","intermediate_niti_2022"]
 ) }}
 
 
@@ -41,7 +42,6 @@ approval_work_orders AS (
     WHERE 
         a.entity_type = 'Subject' 
         AND a.approval_status = 'Approved'
-        and silt_target != 0
 )
 
 {{ dbt_utils.deduplicate(
