@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["aggregated","aggregated_gramin_niti"]
 ) }}
 
 WITH waterbodies AS (
