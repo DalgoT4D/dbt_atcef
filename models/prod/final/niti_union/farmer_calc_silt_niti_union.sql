@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_niti_union"]
 ) }}
 
 select * from {{ref('farmer_calc_silt_niti_22')}} 

@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_gdgs_union"]
 ) }}
 
 SELECT *

@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_org"]
 ) }}
 
 select *, 'GDGS' AS "project" 

@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["intermediate","intermediate_gramin_niti"]
 ) }}
 
 WITH subject_locs AS (

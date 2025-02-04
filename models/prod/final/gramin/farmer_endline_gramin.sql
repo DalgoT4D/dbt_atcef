@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_gramin_niti"]
 ) }}
 
 SELECT 

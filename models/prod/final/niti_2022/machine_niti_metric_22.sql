@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_niti_2022"]
 ) }}
 
 WITH excavated_data AS (
