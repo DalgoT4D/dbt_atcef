@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_gdgs_2024"]
 ) }}
 
 WITH farmer_silt AS (

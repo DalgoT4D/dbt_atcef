@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["intermediate","intermediate_niti_2023"]
 ) }}
 
 WITH cte AS (

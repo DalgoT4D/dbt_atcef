@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["final","final_niti_union"]
 ) }}
 
 SELECT *

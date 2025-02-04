@@ -1,5 +1,6 @@
 {{ config(
-  materialized='table'
+  materialized='table',
+  tags=["intermediate","intermediate_niti_2024"]
 ) }}
 
 with mycte as (SELECT
