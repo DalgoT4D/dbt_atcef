@@ -27,6 +27,9 @@ cte AS (
         "Subject_type" AS subject_type,
         "Encounter_location" AS encounter_location,
         "Encounter_type" AS encounter_type,
+        observations ->> 'Distance from waterbody' as distance_from_waterbody,
+        observations ->> 'Type of land silt is spread on' as type_of_land_silt_is_spread_on,
+        CAST(observations ->> 'The total farm area on which Silt is spread' as NUMERIC) as total_farm_area_silt_is_spread_on,
         observations->>'Excavating Machine' AS machine_sub_id,
         observations->>'Farmer/Beneficiary' AS farmer_sub_id,
         observations->>'Working Hours as per time' AS working_hours_as_per_time,
@@ -35,13 +38,10 @@ cte AS (
         CAST(observations->>'Silt excavated as per MB recording' AS NUMERIC) AS silt_excavated_as_per_MB_recording,
         CAST(observations->>'Total silt excavated' AS NUMERIC) AS total_silt_excavated_encounter,
         CAST(TO_DATE("Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS DATE) AS date_time,
-        CAST(observations->>'Total Silt carted' AS FLOAT) AS total_silt_carted,
+        CAST(observations->>'Total Silt carted' AS NUMERIC) AS total_silt_carted,
         observations->>'Silt carted by farmer - Number of trolleys' AS silt_carted_by_farmer_trolleys,
-        observations->>'The total farm area on which Silt is spread' AS total_farm_area,
         observations->>'Area covered by silt' AS area_covered_by_silt,
         observations->>'Number of trolleys carted' AS number_of_trolleys_carted,
-        observations->>'Distance from waterbody' AS distance_from_waterbody,
-        CAST(observations->>'The total farm area on which Silt is spread' AS FLOAT) AS total_farm_area_on_which_silt_is_spread,
         "Voided" AS voided
     FROM {{ source('source_gramin', 'encounters_gramin') }}
     WHERE "Voided" IS FALSE

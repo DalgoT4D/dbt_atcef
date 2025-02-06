@@ -19,7 +19,7 @@ with cte as (SELECT
     CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target,
     "Voided" as subject_voided
 
-FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} -- Assuming this is a correct reference to a source in dbt
+FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} 
 RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam"
 WHERE NOT (LOWER(location->>'Dam') ~ 'voided')
 ),
