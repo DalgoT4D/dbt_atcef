@@ -24,6 +24,7 @@ Select
   CAST(TO_DATE("Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS date) AS date_time,
   CAST(observations ->> 'Total Silt carted' AS NUMERIC) AS total_silt_carted,
   observations ->> 'Silt carted by farmer - Number of trolleys' AS silt_carted_by_farmer_trolleys,
+      observations ->> 'Total silt excavated by GP (for non-farm purpose)' AS total_silt_excavated_by_GP_for_non_farm_purpose,
   observations ->> 'Area covered by silt' as area_covered_by_silt,
   observations ->> 'Number of trolleys carted' as number_of_trolleys_carted,
   "Voided" as voided

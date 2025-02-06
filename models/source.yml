@@ -28,11 +28,9 @@ sources:
       - name: encounter_2023
         identifier: encounters
         description: "Daily basis action for field workers."
-      
       - name: approval_statuses
         identifier: approvalStatuses
         description: "approval status for subjects and encounters"
-
       - name: address_niti_2023
         identifier: locations
         description: "address api for waterbodies - niti 2023"
@@ -42,14 +40,11 @@ sources:
     tables: 
       - name: subjects_2024
         identifier: subjects 
-
       - name: encounters_2024
         identifier: encounters
-      
       - name: approval_statuses
         identifier: approvalStatuses
         description: "approval status for subjects and encounters"
-      
       - name: address_gdgs_2024
         identifier: locations
         description: "address api for waterbodies - gdgs 2024"
@@ -58,15 +53,12 @@ sources:
     schema: gdgsgom_2023
     tables: 
       - name: subjects_2023
-        identifier: subjects 
-
+        identifier: subjects
       - name: encounters_2023
         identifier: encounters
-      
       - name: approval_statuses
         identifier: approvalStatuses
         description: "approval status for gdgs 2023 subjects and encounters"
-
       - name: address_gdgs_2023
         identifier: locations
         description: "address api for waterbodies - gdgs 2023"
@@ -81,7 +73,6 @@ sources:
       - name: approval_statuses
         identifier: approvalStatuses
         description: "approval status for gdgs gramin subjects and encounters"
-
       - name: address_gramin
         identifier: locations
         description: "address api for waterbodies - gramin"
@@ -96,7 +87,6 @@ sources:
       - name: approval_statuses_niti_2024
         identifier: approvalStatuses
         description: "approval status for niti subjects and encounters"
-
       - name: address_niti_2024
         identifier: locations
         description: "address api for waterbodies - niti2024"

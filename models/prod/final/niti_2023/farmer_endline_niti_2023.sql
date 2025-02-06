@@ -25,7 +25,7 @@ CASE
         AND (e.total_silt_carted / NULLIF(e.total_farm_area_silt_is_spread_on, 0)) >= 420 
         THEN 'Above Benchmark' 
         ELSE 'Below Benchmark' 
-    END AS benchmark_classification,
+    END AS silt_per_acre_benchmark_classification,
 CASE 
         WHEN e.encounter_type = 'Farmer Endline' THEN 'Endline Done'
         ELSE 'Endline Not Done'
