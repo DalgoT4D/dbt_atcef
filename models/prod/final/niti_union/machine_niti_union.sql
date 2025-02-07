@@ -5,43 +5,55 @@
 
 
 with cte as (select 
-date_time,
-state,
-district,
-taluka,
-village,
-dam,
-type_of_machine,
-avg_silt_excavated_per_hour,
-benchmark_classification 
+  machine_id,
+  machine_name,
+  date_time::date,
+  total_silt_carted,
+  total_working_hours,
+  state,
+  district,
+  taluka,
+  village,
+  dam,
+  type_of_machine,
+  avg_silt_excavated_per_hour,
+  benchmark_classification 
 from {{ref('machine_niti_metric_22')}}
 
 union all 
 
 select 
-date_time,
-state,
-district,
-taluka,
-village,
-dam,
-type_of_machine,
-avg_silt_excavated_per_hour,
-benchmark_classification 
+  machine_id,
+  machine_name,
+  date_time::date,
+  total_silt_carted,
+  total_working_hours,
+  state,
+  district,
+  taluka,
+  village,
+  dam,
+  type_of_machine,
+  avg_silt_excavated_per_hour,
+  benchmark_classification 
 from {{ref('machine_niti_metric_23')}}
 
 union all 
 
 select 
-date_time,
-state,
-district,
-taluka,
-village,
-dam,
-type_of_machine,
-avg_silt_excavated_per_hour,
-benchmark_classification 
+  machine_id,
+  machine_name,
+  date_time::date,
+  total_silt_carted,
+  total_working_hours,
+  state,
+  district,
+  taluka,
+  village,
+  dam,
+  type_of_machine,
+  avg_silt_excavated_per_hour,
+  benchmark_classification 
 from {{ref('machine_niti_metric_24')}})
 
 

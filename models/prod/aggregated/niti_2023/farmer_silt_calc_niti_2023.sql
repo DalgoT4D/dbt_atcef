@@ -10,6 +10,7 @@ SELECT
     w.state,
     w.village,
     w.district,
+    e.machine_sub_id,
     w.taluka,
     w.dam,
     w.ngo_name,
