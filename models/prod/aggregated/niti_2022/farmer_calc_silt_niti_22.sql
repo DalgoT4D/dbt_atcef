@@ -11,6 +11,7 @@ SELECT
     w.village,
     w.district,
     w.taluka,
+    e.machine_sub_id,
     w.dam,
     w.ngo_name,
     s.farmer_name,

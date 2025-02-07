@@ -9,6 +9,7 @@ SELECT
     w.work_order_id,
     w.state,
     w.village,
+    e.machine_sub_id,
     w.district,
     w.taluka,
     w.dam,

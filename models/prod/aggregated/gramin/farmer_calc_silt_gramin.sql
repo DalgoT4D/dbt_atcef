@@ -7,6 +7,7 @@ SELECT
     e.eid,
     s.farmer_id,
     w.work_order_id,
+    e.machine_sub_id,
     w.state,
     w.village,
     w.district,

@@ -3,18 +3,57 @@
   tags=["final","final_org"]
 ) }}
 
-SELECT DISTINCT *,
-'Niti Aayog' AS project
+SELECT DISTINCT 
+    machine_id,
+    machine_name,
+    CAST(date_time AS DATE) AS date_time,  -- Explicitly cast to DATE
+    total_silt_carted,
+    total_working_hours,
+    state,
+    district,
+    taluka,
+    village,
+    dam,
+    type_of_machine,
+    avg_silt_excavated_per_hour,
+    benchmark_classification,
+    'Niti Aayog' AS project
 FROM {{ ref('machine_niti_union') }}
 
-UNION
+UNION ALL  -- Use UNION ALL for better performance
 
-SELECT DISTINCT *,
-'Project A' AS project
+SELECT DISTINCT 
+    machine_id,
+    machine_name,
+    CAST(date_time AS DATE) AS date_time,  -- Explicitly cast to DATE
+    total_silt_carted,
+    total_working_hours,
+    state,
+    district,
+    taluka,
+    village,
+    dam,
+    type_of_machine,
+    avg_silt_excavated_per_hour,
+    benchmark_classification,
+    'Project A' AS project
 FROM {{ ref('machine_gramin_metric') }}
 
-UNION
+UNION ALL
 
-SELECT DISTINCT *,
-'GDGS' AS project
+SELECT DISTINCT 
+    machine_id,
+    machine_name,
+    CAST(date_time AS DATE) AS date_time,  -- Explicitly cast to DATE
+    total_silt_carted,
+    total_working_hours,
+    state,
+    district,
+    taluka,
+    village,
+    dam,
+    type_of_machine,
+    avg_silt_excavated_per_hour,
+    benchmark_classification,
+    'GDGS' AS project
 FROM {{ ref('machine_gdgs_union') }}
