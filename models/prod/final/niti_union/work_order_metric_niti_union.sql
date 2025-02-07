@@ -13,7 +13,10 @@ select
     dam,
     ngo_name,
     silt_target,
-    silt_achieved
+    silt_achieved,
+    total_farm_area_silt_is_spread_on,
+    silt_per_acre,
+    silt_per_acre_benchmark_classification
 from {{ref('work_order_metric_niti_23')}}
 
 union all 
@@ -28,7 +31,10 @@ select
     dam,
     ngo_name,
     silt_target,
-    silt_achieved
+    silt_achieved,
+    total_farm_area_silt_is_spread_on,
+    silt_per_acre,
+    silt_per_acre_benchmark_classification
 from {{ref('work_order_metric_niti_22')}}
 
 union all 
@@ -43,5 +49,8 @@ select
     dam,
     ngo_name,
     silt_target,
-    silt_achieved
+    silt_achieved,
+    total_farm_area_silt_is_spread_on,
+    silt_per_acre,
+    silt_per_acre_benchmark_classification
 from {{ref('work_order_metric_niti_2024')}}
