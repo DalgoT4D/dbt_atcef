@@ -30,6 +30,7 @@
     FROM {{ref('farmer_calc_silt_gdgs_23')}} AS fc
     INNER JOIN {{ref('farmer_endline_gdgs_2023')}} AS fe
     ON fe.farmer_id = fc.farmer_id
+
     WHERE total_silt_carted != 'NaN'
     GROUP BY
         fc.state, fc.district, fc.taluka, fc.dam, fc.village, fc.work_order_name, fc.ngo_name
