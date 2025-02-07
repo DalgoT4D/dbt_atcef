@@ -277,9 +277,6 @@ models:
       - name: taluka
         tests:
           - not_null
-      - name: ngo_name
-        tests:
-          - not_null
       - name: type_of_machine
         tests:
           - not_null

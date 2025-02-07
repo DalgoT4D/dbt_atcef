@@ -11,7 +11,10 @@ m.taluka,
 m.village,
 m.dam,
 m.district,
-    CASE 
+e.type_of_land_silt_is_spread_on,
+e.total_farm_area_silt_is_spread_on,
+e.distance_from_waterbody,
+CASE 
         WHEN e.encounter_type = 'Farmer Endline' THEN 'Endline Done'
         ELSE 'Endline Not Done'
     END AS endline_status

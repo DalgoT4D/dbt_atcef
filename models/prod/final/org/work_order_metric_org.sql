@@ -14,6 +14,9 @@ SELECT DISTINCT
     n.ngo_name AS ngo_name,
     COALESCE(n.silt_target, 0) AS silt_target,
     COALESCE(n.silt_achieved, 0) AS silt_achieved,
+    n.total_farm_area_silt_is_spread_on,
+    n.silt_per_acre,
+    n.silt_per_acre_benchmark_classification,
     'Niti Aayog' AS project
 FROM {{ ref('work_order_metric_niti_union') }} n
 
@@ -30,6 +33,9 @@ SELECT DISTINCT
     s.ngo_name AS ngo_name,
     COALESCE(s.silt_target, 0) AS silt_target,
     COALESCE(s.silt_achieved, 0) AS silt_achieved,
+    s.total_farm_area_silt_is_spread_on,
+    s.silt_per_acre,
+    s.silt_per_acre_benchmark_classification,
     'Project A' AS project
 FROM {{ ref('work_order_silt_calc') }} s
 
@@ -46,5 +52,8 @@ SELECT DISTINCT
     g.ngo_name AS ngo_name,
     COALESCE(g.silt_target, 0) AS silt_target,
     COALESCE(g.silt_achieved, 0) AS silt_achieved,
+    g.total_farm_area_silt_is_spread_on,
+    g.silt_per_acre,
+    g.silt_per_acre_benchmark_classification,
     'GDGS' AS project
 FROM {{ ref('work_order_metric_gdgs_union') }} g

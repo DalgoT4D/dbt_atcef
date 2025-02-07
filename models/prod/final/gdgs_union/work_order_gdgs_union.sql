@@ -4,5 +4,5 @@
 ) }}
 
 SELECT * FROM {{ ref('work_order_2024') }} 
-UNION 
+UNION ALL
 SELECT * FROM {{ ref('work_order_gdgs_2023') }} 
