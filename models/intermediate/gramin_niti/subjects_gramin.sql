@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_gramin"]
+  tags=["intermediate","intermediate_gramin", "gramin_niti"]
 ) }}
 
 WITH cte AS (

@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_gdgs_union"]
+  tags=["final","final_gdgs_union", "gdgs"]
 ) }}
 
 select * from {{ref('farmer_calc_silt_gdgs_23')}} 

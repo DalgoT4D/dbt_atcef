@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_gdgs_2023"]
+  tags=["final","final_gdgs_2023", "gdgs_2023", "gdgs"]
 ) }}
 
 SELECT 

@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["aggregated","aggregated_gramin_niti"]
+  tags=["aggregated","aggregated_gramin_niti", "gramin_niti"]
 ) }}
 
 with cte as (select distinct farmer_id, 

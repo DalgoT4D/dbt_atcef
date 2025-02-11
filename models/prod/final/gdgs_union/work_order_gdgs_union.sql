@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_gdgs_union"]
+  tags=["final","final_gdgs_union", "gdgs"]
 ) }}
 
 SELECT * FROM {{ ref('work_order_2024') }} 

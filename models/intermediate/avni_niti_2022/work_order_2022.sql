@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_niti_2022"]
+  tags=["intermediate","intermediate_niti_2022", "niti_2022", "niti"]
 ) }}
 
 -- This part of the query creates a CTE named WorkOrderEncounters which will be used later in the main query.
