@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_niti_2022"]
+  tags=["intermediate","intermediate_niti_2022", "niti_2022", "niti"]
 ) }}
 
 with cte as (SELECT

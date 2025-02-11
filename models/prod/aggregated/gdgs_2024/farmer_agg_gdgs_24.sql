@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["aggregated","aggregated_gdgs_2024"]
+  tags=["aggregated","aggregated_gdgs_2024", "gdgs_2024", "gdgs"]
 ) }}
 
 with cte as (select distinct farmer_id, 

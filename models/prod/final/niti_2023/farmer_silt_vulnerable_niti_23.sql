@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_niti_2023"]
+  tags=["final","final_niti_2023", "niti_2023", "niti"]
 ) }}
 
 WITH farmer_silt AS (

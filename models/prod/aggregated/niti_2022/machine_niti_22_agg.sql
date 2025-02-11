@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["aggregated","aggregated_niti_2022"]
+  tags=["aggregated","aggregated_niti_2022", "niti_2022", "niti"]
 ) }}
 
 

@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_niti_2022"]
+  tags=["final","final_niti_2022", "niti_2022", "niti"]
 ) }}
 
 SELECT 

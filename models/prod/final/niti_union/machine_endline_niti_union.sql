@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_niti_union"]
+  tags=["final","final_niti_union", "niti"]
 ) }}
 
 SELECT DISTINCT *

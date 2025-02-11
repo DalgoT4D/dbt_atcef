@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["final","final_gdgs_2024"]
+  tags=["final","final_gdgs_2024", "gdgs_2024", "gdgs"]
 ) }}
 
 WITH working_hours AS (

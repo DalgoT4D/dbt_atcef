@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate", "intermediate_gdgs_2024"]
+  tags=["intermediate", "intermediate_gdgs_2024", "gdgs_2024", "gdgs"]
 ) }}
 
 

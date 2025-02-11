@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_niti_2023"]
+  tags=["intermediate","intermediate_niti_2023", "niti_2023", "niti"]
 ) }}
 
 
