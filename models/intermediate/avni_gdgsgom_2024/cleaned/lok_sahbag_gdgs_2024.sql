@@ -26,9 +26,14 @@ WITH mycte AS (
         cast(observations->>'Total Silt Excavated' as numeric) AS total_silt_excavated,
         observations->>'Type of Lok Sahbhag' AS lok_sahbhag_type,
         observations->>'Village Code' AS village_code,
-        "Registration_date"::timestamp AS date_time
+        "Registration_date"::timestamp AS date_time,
+        COALESCE(NULLIF(rwb.stakeholder_responsible, ''), 'Unknown') AS ngo_name
     FROM 
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
+    LEFT JOIN 
+        {{ref('address_gdgs_23')}} AS rwb 
+    ON
+        observations->>'Name of WB' = rwb.dam
     WHERE 
        "Subject_type" = 'Lok-sahbhag' and 
         "Voided" = False
