@@ -15,6 +15,7 @@ select
   taluka,
   village,
   dam,
+  ngo_name,
   type_of_machine,
   avg_silt_excavated_per_hour,
   benchmark_classification 
@@ -33,6 +34,7 @@ select
   taluka,
   village,
   dam,
+  ngo_name,
   type_of_machine,
   avg_silt_excavated_per_hour,
   benchmark_classification 

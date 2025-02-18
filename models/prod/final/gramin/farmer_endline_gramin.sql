@@ -11,6 +11,7 @@ m.taluka,
 m.village,
 m.dam,
 m.district,
+w.ngo_name,
 e.type_of_land_silt_is_spread_on,
 e.total_farm_area_silt_is_spread_on,
 e.distance_from_waterbody,
@@ -21,3 +22,7 @@ CASE
 FROM {{ref('farmer_gramin')}} AS m 
 LEFT JOIN {{ref('encounters_gramin')}} AS e 
 ON m.farmer_id = e.subject_id 
+LEFT JOIN 
+    {{ ref('work_order_gramin') }} AS w 
+ON 
+    e.subject_id = w.work_order_id

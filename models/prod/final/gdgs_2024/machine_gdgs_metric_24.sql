@@ -65,6 +65,7 @@ final AS (
         m.dam,
         m.district,
         m.state,
+        m.ngo_name,
         m.taluka,
         m.village,
         m.date_time,

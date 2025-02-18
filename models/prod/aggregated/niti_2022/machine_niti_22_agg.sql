@@ -14,6 +14,7 @@ with cte as (SELECT
     state,
     taluka,
     village,
+    ngo_name,
     SUM(CAST(total_working_hours_of_machine_by_time AS NUMERIC)) AS total_working_hours,
     MAX(date_time) AS date_time
 FROM
@@ -28,7 +29,8 @@ GROUP BY
     subject_type,
     state,
     taluka,
-    village)
+    village,
+    ngo_name)
 
 select * from cte where total_working_hours is not null and total_working_hours != 0
 

@@ -14,9 +14,7 @@ select
     ngo_name,
     silt_target,
     silt_achieved,
-    total_farm_area_silt_is_spread_on,
-    silt_per_acre,
-    silt_per_acre_benchmark_classification
+    total_farm_area_silt_is_spread_on
 from {{ref('work_order_metric_gdgs_23')}}
 
 union all 
@@ -32,7 +30,5 @@ select
     ngo_name,
     silt_target,
     silt_achieved,
-    total_farm_area_silt_is_spread_on,
-    silt_per_acre,
-    silt_per_acre_benchmark_classification
+    total_farm_area_silt_is_spread_on
 from {{ref('work_order_metric_gdgs_24')}}

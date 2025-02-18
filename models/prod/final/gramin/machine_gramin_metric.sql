@@ -67,6 +67,7 @@ final AS (
         m.state,
         m.taluka,
         m.village,
+        m.ngo_name,
         CAST(m.date_time AS DATE) AS date_time,
         b.total_silt_carted,
         b.total_working_hours,
