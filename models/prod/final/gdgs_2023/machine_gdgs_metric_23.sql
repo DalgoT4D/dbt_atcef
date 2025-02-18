@@ -67,6 +67,7 @@ final AS (
         m.state,
         m.taluka,
         m.village,
+        m.ngo_name,
         m.date_time,
         b.total_silt_carted,
         b.total_working_hours,

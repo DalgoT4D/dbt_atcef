@@ -12,11 +12,13 @@ SELECT DISTINCT
     n.village AS village,
     n.dam AS dam,
     n.ngo_name AS ngo_name,
-    COALESCE(n.silt_target, 0) AS silt_target,
-    COALESCE(n.silt_achieved, 0) AS silt_achieved,
+    n.endline_status AS endline_status,
+    COALESCE(n.silt_achieved_by_endline_farmers, 0) AS silt_achieved_by_endline_farmers,
     n.total_farm_area_silt_is_spread_on,
+    n.silt_per_acre,
+    n.silt_per_acre_benchmark_classification,
     'Niti Aayog' AS project
-FROM {{ ref('work_order_metric_niti_union') }} n
+FROM {{ ref('silt_per_acre_niti_union') }} n
 
 UNION
 
@@ -29,11 +31,13 @@ SELECT DISTINCT
     s.village AS village,
     s.dam AS dam,
     s.ngo_name AS ngo_name,
-    COALESCE(s.silt_target, 0) AS silt_target,
-    COALESCE(s.silt_achieved, 0) AS silt_achieved,
+    s.endline_status AS endline_status,
+    COALESCE(s.silt_achieved_by_endline_farmers, 0) AS silt_achieved_by_endline_farmers,
     s.total_farm_area_silt_is_spread_on,
+    s.silt_per_acre,
+    s.silt_per_acre_benchmark_classification,
     'Project A' AS project
-FROM {{ ref('work_order_silt_calc') }} s
+FROM {{ ref('silt_per_acre_gramin') }} s
 
 UNION
 
@@ -46,8 +50,10 @@ SELECT DISTINCT
     g.village AS village,
     g.dam AS dam,
     g.ngo_name AS ngo_name,
-    COALESCE(g.silt_target, 0) AS silt_target,
-    COALESCE(g.silt_achieved, 0) AS silt_achieved,
+    g.endline_status AS endline_status,
+    COALESCE(g.silt_achieved_by_endline_farmers, 0) AS silt_achieved_by_endline_farmers,
     g.total_farm_area_silt_is_spread_on,
+    g.silt_per_acre,
+    g.silt_per_acre_benchmark_classification,
     'GDGS' AS project
-FROM {{ ref('work_order_metric_gdgs_union') }} g
+FROM {{ ref('silt_per_acre_gdgs_union') }} g

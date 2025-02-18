@@ -68,6 +68,7 @@ final AS (
         m.taluka,
         m.village,
         m.date_time,
+        m.ngo_name,
         b.total_silt_carted,
         b.total_working_hours,
         b.avg_silt_excavated_per_hour,

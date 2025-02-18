@@ -14,6 +14,7 @@ SELECT
     m.state,
     m.taluka,
     m.village,
+    w.ngo_name,
     m.machine_voided,
     m.machine_approval_status,
     e.machine_sub_id,
@@ -25,6 +26,10 @@ JOIN
     {{ref('machine_gdgs_2024')}} m
 ON
     e.machine_sub_id = m.machine_id
+LEFT JOIN 
+    {{ ref('work_order_gdgs_2024') }} AS w 
+ON 
+    e.subject_id = w.work_order_id
 WHERE
     e.working_hours_as_per_time IS NOT NULL
 GROUP BY
@@ -39,7 +44,8 @@ GROUP BY
     m.village,
     m.machine_voided,
     m.machine_approval_status,
-    e.machine_sub_id
+    e.machine_sub_id,
+    w.ngo_name
 
 
 
