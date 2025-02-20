@@ -74,12 +74,16 @@ jobs:
           EOF
           echo "profiles.yml created successfully."
           ls -al /home/runner/.dbt
+      
+      # Step 8: Run dbt clean
+      - name: dbt clean
+        run: dbt clean
 
-      # Step 8: Install dbt dependencies
+      # Step 9: Install dbt dependencies
       - name: Install dbt dependencies
         run: dbt deps
-
-      # Step 9: Run dbt build
+      
+      # Step 10: Run dbt build
       - name: dbt build
         run: dbt build --full-refresh
         env:
@@ -89,7 +93,7 @@ jobs:
           POSTGRES_HOST: 127.0.0.1 # Use localhost since the SSH tunnel forwards the port
           DBT_PROFILES_DIR: /home/runner/.dbt
 
-      # Step 10: Benchmark models using sqlfluff
+      # Step 11: Benchmark models using sqlfluff
       - name: Benchmarking models
         run: sqlfluff lint models --bench
         env:
@@ -98,7 +102,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_HOST: 127.0.0.1
 
-      # Step 11: Lint models using sqlfluff
+      # Step 12: Lint models using sqlfluff
       - name: Lint models
         run: sqlfluff lint models -f human
         env:
