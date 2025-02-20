@@ -105,3 +105,128 @@ models:
       - name: total_silt_carted
         tests:
           - not_null
+  
+  - name: barren_fertile_silt_gdgs_2023
+    description: "Aggregated silt achievement data for farmers who have completed the endline survey."
+    columns:
+      - name: work_order_name
+        tests:
+          - not_null
+
+      - name: date_time
+        tests:
+          - not_null
+
+      - name: state
+        tests:
+          - not_null
+
+      - name: district
+        tests:
+          - not_null
+
+      - name: taluka
+        tests:
+          - not_null
+
+      - name: dam
+        tests:
+          - not_null
+
+      - name: village
+        tests:
+          - not_null
+
+      - name: ngo_name
+        tests:
+          - not_null
+
+      - name: endline_status
+        tests:
+          - accepted_values:
+              values:
+                - 'Endline Done'
+
+      - name: silt_achieved_by_endline_farmers
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "{{ column_name }} > 0"
+
+      - name: total_farm_area_silt_is_spread_on
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "{{ column_name }} >= 0"
+      
+      - name: type_of_land_silt_is_spread_on
+        tests: 
+          - accepted_values:
+              values: ['Fertile', 'Barren']
+
+  - name: silt_per_acre_gdgs_2023
+    description: "Aggregated silt per acre data for farmers with completed endline surveys, including benchmark classification."
+    columns:
+      - name: work_order_name
+        tests:
+          - not_null
+
+      - name: date_time
+        tests:
+          - not_null
+
+      - name: state
+        tests:
+          - not_null
+
+      - name: district
+        tests:
+          - not_null
+
+      - name: taluka
+        tests:
+          - not_null
+
+      - name: dam
+        tests:
+          - not_null
+
+      - name: village
+        tests:
+          - not_null
+
+      - name: ngo_name
+        tests:
+          - not_null
+
+      - name: endline_status
+        tests:
+          - accepted_values:
+              values:
+                - 'Endline Done'
+
+      - name: silt_achieved_by_endline_farmers
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "{{ column_name }} > 0"
+
+      - name: total_farm_area_silt_is_spread_on
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "{{ column_name }} >= 0"
+
+      - name: silt_per_acre
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "{{ column_name }} >= 0"
+          
+
+      - name: silt_per_acre_benchmark_classification
+        tests:
+          - accepted_values:
+              values:
+                - 'Above Benchmark'
+                - 'Below Benchmark'

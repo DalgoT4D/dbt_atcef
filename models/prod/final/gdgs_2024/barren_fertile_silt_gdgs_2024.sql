@@ -20,7 +20,7 @@
     FROM {{ref('farmer_calc_silt_gdgs_24')}} AS fc
     INNER JOIN {{ref('farmer_endline')}} AS fe
     ON fe.farmer_id = fc.farmer_id
-    WHERE total_silt_carted::text != 'NaN' AND endline_status = 'Endline Done'
+    WHERE total_silt_carted::text != 'NaN' AND endline_status = 'Endline Done' AND fc.total_silt_carted>0 and fe.total_farm_area_silt_is_spread_on>0
     GROUP BY
         fc.state, fc.district, fc.taluka, fc.dam, fc.village,fc.work_order_name, fc.ngo_name, fe.endline_status, fe.type_of_land_silt_is_spread_on
 
