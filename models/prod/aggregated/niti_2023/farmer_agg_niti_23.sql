@@ -3,58 +3,71 @@
   tags=["aggregated","aggregated_niti_2023", "niti_2023", "niti"]
 ) }}
 
-with cte as (select distinct farmer_id, 
-       max(date_time) as date_time,
-       state,
-       district, 
-       village,
-       taluka,
-       dam,
-       ngo_name,
-       farmer_name,
-       mobile_number,
-       mobile_verified,
-       category_of_farmer
-from {{ref('farmer_silt_calc_niti_2023')}} 
-group by 
-       farmer_id,
-       state,
-       district, 
-       village,
-       taluka,
-       dam,
-       ngo_name,
-       farmer_name,
-       mobile_number,
-       mobile_verified,
-       category_of_farmer)
+with cte as (
+    select
+        farmer_id,
+        state,
+        district,
+        village,
+        taluka,
+        dam,
+        ngo_name,
+        farmer_name,
+        mobile_number,
+        mobile_verified,
+        category_of_farmer,
+        max(date_time) as date_time
+    from {{ ref('farmer_silt_calc_niti_2023') }}
+    group by
+        farmer_id,
+        state,
+        district,
+        village,
+        taluka,
+        dam,
+        ngo_name,
+        farmer_name,
+        mobile_number,
+        mobile_verified,
+        category_of_farmer
+)
 
 
-SELECT
-    distinct dam,
+select
+    dam,
     date_time,
     state,
     district,
     taluka,
     village,
     ngo_name,
-    SUM(CASE 
-            WHEN mobile_verified = 'True' THEN 1 
-            ELSE 0 
-        END) AS verified_farmers,
-    SUM(CASE 
-            WHEN mobile_verified = 'False' THEN 1 
-            ELSE 0 
-        END) AS unverified_farmers,
-    COUNT(*) AS total,
-    COUNT(CASE WHEN category_of_farmer = 'Marginal (0-2.49 acres)' THEN 1 END) AS "vulnerable_marginal",
-    COUNT(CASE WHEN category_of_farmer = 'Small (2.5-4.99 acres)' THEN 1 END) AS "vulnerable_small",
-    COUNT(CASE WHEN category_of_farmer = 'Semi-medium (5-9.55 acres)' THEN 1 END) AS "semi_medium",
-    COUNT(CASE WHEN category_of_farmer = 'Medium (10-24.99 acres)' THEN 1 END) AS "medium",
-    COUNT(CASE WHEN category_of_farmer = 'Large (above 25 acres)' THEN 1 END) AS "large"
-FROM
+    sum(case
+        when mobile_verified = 'True' then 1
+        else 0
+    end) as verified_farmers,
+    sum(case
+        when mobile_verified = 'False' then 1
+        else 0
+    end) as unverified_farmers,
+    count(*) as total,
+    count(
+        case when category_of_farmer = 'Marginal (0-2.49 acres)' then 1 end
+    ) as vulnerable_marginal,
+    count(
+        case when category_of_farmer = 'Small (2.5-4.99 acres)' then 1 end
+    ) as vulnerable_small,
+    count(
+        case when category_of_farmer = 'Semi-medium (5-9.55 acres)' then 1 end
+    ) as semi_medium,
+    count(
+        case when category_of_farmer = 'Medium (10-24.99 acres)' then 1 end
+    ) as medium,
+    count(
+        case when category_of_farmer = 'Large (above 25 acres)' then 1 end
+    ) as large
+from
     cte
-GROUP BY
+group by
     date_time,
     state,
     district,

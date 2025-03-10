@@ -3,7 +3,7 @@
   tags=["final","final_gdgs_union", "gdgs"]
 ) }}
 
-select 
+select
     date_time,
     work_order_name,
     state,
@@ -15,11 +15,11 @@ select
     silt_target,
     silt_achieved,
     total_farm_area_silt_is_spread_on
-from {{ref('work_order_metric_gdgs_23')}}
+from {{ ref('work_order_metric_gdgs_23') }}
 
-union all 
+union all
 
-select 
+select
     date_time,
     work_order_name,
     state,
@@ -31,4 +31,4 @@ select
     silt_target,
     silt_achieved,
     total_farm_area_silt_is_spread_on
-from {{ref('work_order_metric_gdgs_24')}}
+from {{ ref('work_order_metric_gdgs_24') }}

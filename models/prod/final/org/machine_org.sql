@@ -3,7 +3,7 @@
   tags=["final","final_org"]
 ) }}
 
-SELECT DISTINCT 
+SELECT DISTINCT
     machine_id,
     machine_name,
     CAST(date_time AS DATE) AS date_time,  -- Explicitly cast to DATE
@@ -23,7 +23,7 @@ FROM {{ ref('machine_niti_union') }}
 
 UNION ALL  -- Use UNION ALL for better performance
 
-SELECT DISTINCT 
+SELECT DISTINCT
     machine_id,
     machine_name,
     CAST(date_time AS DATE) AS date_time,  -- Explicitly cast to DATE
@@ -43,7 +43,7 @@ FROM {{ ref('machine_gramin_metric') }}
 
 UNION ALL
 
-SELECT DISTINCT 
+SELECT DISTINCT
     machine_id,
     machine_name,
     CAST(date_time AS DATE) AS date_time,  -- Explicitly cast to DATE

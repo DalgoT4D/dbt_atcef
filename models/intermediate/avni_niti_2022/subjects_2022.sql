@@ -3,50 +3,58 @@
   tags=["intermediate","intermediate_niti_2022", "niti_2022", "niti"]
 ) }}
 
-with cte as (SELECT
-    "ID" AS uid, -- Replace 'id' with the actual unique identifier column name if different
-    observations->>'First name' AS first_name,
-    location->>'Dam' AS dam,
-    location->>'District' AS district,
-    location->>'State' AS state,
-    location->>'Taluka' AS taluka,
-    location->>'GP/Village' AS village,
-    NULL AS category_of_farmer,
-    observations ->> 'Type of Machine' AS type_of_machine,
-    observations ->'Mobile Number'->>'phoneNumber' AS mobile_number,
-    (observations ->'Mobile Number'->>'verified')::boolean AS mobile_verified,
-    COALESCE(NULLIF(rwb."Project/NGO", ''), 'Unknown') AS ngo_name,
-    CAST(COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0') AS numeric) AS silt_target,
-    "Voided" as subject_voided
-
-FROM {{ source('source_atecf_surveyss', 'subjects_2022') }} 
-RIGHT JOIN rwb_niti_2022.rwbniti22 AS rwb ON location->>'Dam' = rwb."Dam"
-WHERE NOT (LOWER(location->>'Dam') ~ 'voided')
+with cte as (
+    select
+        s."ID" as uid, -- Replace 'id' with the actual unique identifier column name if different
+        NULL as category_of_farmer,
+        (
+            s.observations -> 'Mobile Number' ->> 'verified'
+        )::boolean as mobile_verified,
+        (
+            COALESCE(NULLIF(rwb."Estimated quantity of Silt", ''), '0')
+        )::numeric as silt_target,
+        s."Voided" as subject_voided,
+        s.observations ->> 'First name' as first_name,
+        s.location ->> 'Dam' as dam,
+        s.location ->> 'District' as district,
+        s.location ->> 'State' as state,
+        s.location ->> 'Taluka' as taluka,
+        s.location ->> 'GP/Village' as village,
+        s.observations ->> 'Type of Machine' as type_of_machine,
+        s.observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number,
+        COALESCE(NULLIF(rwb."Project/NGO", ''), 'Unknown') as ngo_name
+    from rwb_niti_2022.rwbniti22 as rwb
+    left join {{ source('source_atecf_surveyss', 'subjects_2022') }} as s
+        on rwb."Dam" = s.location ->> 'Dam'
+    where not (LOWER(s.location ->> 'Dam') ~ 'voided')
 ),
 
-removing_nulls as (select * from cte where dam IS NOT NULL
-      AND district is not null
-      AND taluka is not null
-      AND state is not null
-      AND village is not null 
-      AND subject_voided = 'false'
-      ),
-
-approved_subjects AS (
-    SELECT r.*
-    FROM removing_nulls r
-    JOIN {{ ref('approval_statuses_niti_2022') }} a 
-    ON r.uid = a.entity_id
-    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
+removing_nulls as (
+    select * from cte
+    where
+        dam is not NULL
+        and district is not NULL
+        and taluka is not NULL
+        and state is not NULL
+        and village is not NULL
+        and subject_voided = 'false'
 ),
 
-deduplicated AS ({{ dbt_utils.deduplicate(
+approved_subjects as (
+    select r.*
+    from removing_nulls as r
+    inner join {{ ref('approval_statuses_niti_2022') }} as a
+        on r.uid = a.entity_id
+    where a.entity_type = 'Subject' and a.approval_status = 'Approved'
+),
+
+deduplicated as ({{ dbt_utils.deduplicate(
     relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )
-}})
+}}
+)
 
-SELECT *
-FROM deduplicated
-
+select *
+from deduplicated

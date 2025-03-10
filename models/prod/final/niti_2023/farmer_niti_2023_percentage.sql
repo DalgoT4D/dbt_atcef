@@ -13,7 +13,7 @@ SELECT
     'vulnerable' AS farmer_type,
     SUM(vulnerable_small + vulnerable_marginal) AS farmers_count
 FROM
-   {{ ref('farmer_agg_niti_23') }}
+    {{ ref('farmer_agg_niti_23') }}
 GROUP BY
     state,
     district,

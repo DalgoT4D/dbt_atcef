@@ -20,15 +20,15 @@ SELECT
     SUM(CAST(e.working_hours_as_per_time AS NUMERIC)) AS total_working_hours,
     MAX(e.date_time) AS date_time
 FROM
-    {{ref('encounter_2023')}} e
-JOIN
-    {{ref('machine_niti_2023')}} m
-ON
-    e.machine_sub_id = m.machine_id
-LEFT JOIN 
-    {{ ref('work_order_niti_2023') }} AS w 
-ON 
-    e.subject_id = w.work_order_id
+    {{ ref('encounter_2023') }} AS e
+INNER JOIN
+    {{ ref('machine_niti_2023') }} AS m
+    ON
+        e.machine_sub_id = m.machine_id
+LEFT JOIN
+    {{ ref('work_order_niti_2023') }} AS w
+    ON
+        e.subject_id = w.work_order_id
 WHERE
     e.working_hours_as_per_time IS NOT NULL
 GROUP BY
@@ -45,5 +45,3 @@ GROUP BY
     m.machine_approval_status,
     e.machine_sub_id,
     w.ngo_name
-
-

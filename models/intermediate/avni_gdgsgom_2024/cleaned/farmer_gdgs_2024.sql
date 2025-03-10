@@ -3,37 +3,53 @@
   tags=["intermediate","intermediate_gdgs_2024", "gdgs_2024", "gdgs"]
 ) }}
 
-with mycte as (SELECT
-        "ID" AS farmer_id,
-        INITCAP(TRIM(COALESCE(observations->>'First name'))) AS farmer_name,  
-        INITCAP(COALESCE(location->>'Dam')) AS dam,  
-        INITCAP(COALESCE(location->>'District')) AS district,  
+with mycte as (
+    select
+        "ID" as farmer_id,
         "Subject_type" as subject_type,
-        CASE  -- Standardize state names
-        WHEN LOWER(location->>'State') LIKE '%maharashtra%' THEN 'Maharashtra'
-        WHEN LOWER(location->>'State') LIKE '%maharshatra%' THEN 'Maharashtra'
-        ELSE INITCAP(COALESCE(location->>'State', ''))
-        END AS state,
-        INITCAP(COALESCE(location->>'Taluka')) AS taluka, 
-        INITCAP(COALESCE(location->>'GP/Village')) AS village, 
-        observations ->> 'Category of farmer' AS category_of_farmer,
-        observations -> 'Mobile Number' ->> 'phoneNumber' AS mobile_number,
-        (observations -> 'Mobile Number' ->> 'verified')::boolean AS mobile_verified,
-        "Voided" as farmer_voided
- FROM 
+        (
+            observations -> 'Mobile Number' ->> 'verified'
+        )::boolean as mobile_verified,
+        "Voided" as farmer_voided,
+        INITCAP(TRIM(COALESCE(observations ->> 'First name'))) as farmer_name,
+        INITCAP(COALESCE(location ->> 'Dam')) as dam,
+        INITCAP(COALESCE(location ->> 'District')) as district,
+        case  -- Standardize state names
+            when
+                LOWER(location ->> 'State') like '%maharashtra%'
+                then 'Maharashtra'
+            when
+                LOWER(location ->> 'State') like '%maharshatra%'
+                then 'Maharashtra'
+            else INITCAP(COALESCE(location ->> 'State', ''))
+        end as state,
+        INITCAP(COALESCE(location ->> 'Taluka')) as taluka,
+        INITCAP(COALESCE(location ->> 'GP/Village')) as village,
+        observations ->> 'Category of farmer' as category_of_farmer,
+        observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number
+    from
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
- Where "Subject_type" = 'Farmer' and "Voided" = 'False' and NOT (LOWER(location->>'Dam') ~ 'voided') ), 
+    where
+        "Subject_type" = 'Farmer'
+        and "Voided" = 'False'
+        and not (LOWER(location ->> 'Dam') ~ 'voided')
+),
 
- approval_farmers AS (
-SELECT d.*, a.approval_status as farmer_approval_status
-FROM mycte d
-JOIN {{ ref('approval_statuses_gdgs_24') }} a ON d.farmer_id = a.entity_id
-WHERE a.entity_type = 'Subject' 
-and a.approval_status = 'Approved'
+approval_farmers as (
+    select
+        d.*,
+        a.approval_status as farmer_approval_status
+    from mycte as d
+    inner join {{ ref('approval_statuses_gdgs_24') }} as a
+        on
+            d.farmer_id = a.entity_id
+            and a.entity_type = 'Subject'
+    where
+        a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
       relation='approval_farmers',
       partition_by='farmer_id',
       order_by='farmer_id desc'
-)}}
+) }}

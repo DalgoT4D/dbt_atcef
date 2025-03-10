@@ -4,8 +4,8 @@
 ) }}
 
 
-select 
-    state, 
+select
+    state,
     district,
     taluka,
     village,
@@ -13,17 +13,17 @@ select
     ngo_name,
     farmer_type,
     farmers_count
-from {{ref('farmer_gdgs_2023_percentage')}}
- 
-UNION ALL 
+from {{ ref('farmer_gdgs_2023_percentage') }}
 
-select 
-    state, 
+union all
+
+select
+    state,
     district,
     taluka,
     village,
     dam,
-    ngo_name,  
+    ngo_name,
     farmer_type,
     farmers_count
-from {{ref('farmer_gdgs_2024_percentage')}}
+from {{ ref('farmer_gdgs_2024_percentage') }}

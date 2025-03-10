@@ -3,7 +3,7 @@
   tags=["aggregated","aggregated_gdgs_2024", "gdgs_2024", "gdgs"]
 ) }}
 
-SELECT 
+SELECT
     e.eid,
     s.farmer_id,
     w.work_order_id,
@@ -23,12 +23,8 @@ SELECT
     e.total_silt_carted,
     e.date_time
 FROM {{ ref('encounters_2024') }} AS e
-LEFT JOIN {{ ref('farmer_gdgs_2024') }} AS s 
+LEFT JOIN {{ ref('farmer_gdgs_2024') }} AS s
     ON e.farmer_sub_id = s.farmer_id
-LEFT JOIN {{ ref('work_order_gdgs_2024') }} AS w 
+LEFT JOIN {{ ref('work_order_gdgs_2024') }} AS w
     ON e.subject_id = w.work_order_id
-WHERE w.work_order_voided != TRUE and s.farmer_voided != TRUE
-
-
-
-        
+WHERE w.work_order_voided != TRUE AND s.farmer_voided != TRUE

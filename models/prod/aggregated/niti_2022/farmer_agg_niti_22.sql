@@ -3,54 +3,59 @@
   tags=["aggregated","aggregated_niti_2022", "niti_2022", "niti"]
 ) }}
 
-with cte as (select distinct farmer_id, 
-       max(date_time) as date_time,
-       state,
-       district, 
-       village,
-       taluka,
-       dam,
-       ngo_name,
-       farmer_name,
-       mobile_number,
-       mobile_verified,
-       category_of_farmer
-from {{ref('farmer_calc_silt_niti_22')}} 
-group by 
-       farmer_id,
-       state,
-       district, 
-       village,
-       taluka,
-       dam,
-       ngo_name,
-       farmer_name,
-       mobile_number,
-       mobile_verified,
-       category_of_farmer)
+with cte as (
+    select
+        farmer_id,
+        state,
+        district,
+        village,
+        taluka,
+        dam,
+        ngo_name,
+        farmer_name,
+        mobile_number,
+        mobile_verified,
+        category_of_farmer,
+        max(date_time) as date_time
+    from {{ ref('farmer_calc_silt_niti_22') }}
+    group by
+        farmer_id,
+        state,
+        district,
+        village,
+        taluka,
+        dam,
+        ngo_name,
+        farmer_name,
+        mobile_number,
+        mobile_verified,
+        category_of_farmer
+)
 
 
-SELECT
-    distinct dam,
+select
+    dam,
     date_time,
     state,
     district,
     taluka,
     village,
     ngo_name,
-    SUM(CASE 
-            WHEN mobile_verified = 'True' THEN 1 
-            ELSE 0 
-        END) AS verified_farmers,
-    SUM(CASE 
-            WHEN mobile_verified = 'False' THEN 1 
-            ELSE 0 
-        END) AS unverified_farmers,
-    COUNT(*) AS total,
-    COUNT(CASE WHEN category_of_farmer = 'farmer_niti_2022' THEN 1 END) AS "farmer_niti_2022"
-FROM
+    sum(case
+        when mobile_verified = 'True' then 1
+        else 0
+    end) as verified_farmers,
+    sum(case
+        when mobile_verified = 'False' then 1
+        else 0
+    end) as unverified_farmers,
+    count(*) as total,
+    count(
+        case when category_of_farmer = 'farmer_niti_2022' then 1 end
+    ) as farmer_niti_2022
+from
     cte
-GROUP BY
+group by
     date_time,
     state,
     district,

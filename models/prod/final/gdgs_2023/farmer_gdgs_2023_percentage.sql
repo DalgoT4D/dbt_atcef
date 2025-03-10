@@ -11,9 +11,15 @@ SELECT
     dam,
     ngo_name,
     'vulnerable' AS farmer_type,
-    SUM(vulnerable_small + vulnerable_marginal + widow + disabled + family_of_farmer_who_committed_suicide) AS farmers_count
+    SUM(
+        vulnerable_small
+        + vulnerable_marginal
+        + widow
+        + disabled
+        + family_of_farmer_who_committed_suicide
+    ) AS farmers_count
 FROM
-    {{ref('farmer_agg_gdgs_23')}}
+    {{ ref('farmer_agg_gdgs_23') }}
 GROUP BY
     state,
     district,
@@ -34,7 +40,7 @@ SELECT
     'others' AS farmer_type,
     SUM(semi_medium + medium + large) AS farmers_count
 FROM
-    {{ref('farmer_agg_gdgs_23')}}
+    {{ ref('farmer_agg_gdgs_23') }}
 GROUP BY
     state,
     district,
@@ -48,6 +54,6 @@ ORDER BY
     district,
     taluka,
     village,
-    dam, 
+    dam,
     ngo_name,
     farmer_type

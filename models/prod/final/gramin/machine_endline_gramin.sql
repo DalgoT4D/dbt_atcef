@@ -3,15 +3,15 @@
   tags=["final","final_gramin_niti", "gramin_niti"]
 ) }}
 
-SELECT 
+SELECT
     m.*,
     a.ngo_name,
-    CASE 
+    CASE
         WHEN e.encounter_type = 'Excavating Machine Endline' THEN 'Endline Done'
         ELSE 'Endline Not Done'
     END AS endline_status
-FROM {{ref('machine_gramin')}} AS m 
-LEFT JOIN {{ref('encounters_gramin')}} AS e 
-ON m.machine_id = e.subject_id
-JOIN {{ref('machine_gramin_aggregated')}} a
-        ON m.machine_id = a.machine_sub_id
+FROM {{ ref('machine_gramin') }} AS m
+LEFT JOIN {{ ref('encounters_gramin') }} AS e
+    ON m.machine_id = e.subject_id
+INNER JOIN {{ ref('machine_gramin_aggregated') }} AS a
+    ON m.machine_id = a.machine_sub_id

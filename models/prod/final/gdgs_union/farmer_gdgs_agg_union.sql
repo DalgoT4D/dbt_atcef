@@ -4,13 +4,13 @@
 ) }}
 
 
-select 
+select
     date_time,
     dam,
     ngo_name,
     state,
     district,
-    taluka, 
+    taluka,
     village,
     verified_farmers,
     unverified_farmers,
@@ -24,17 +24,17 @@ select
     disabled,
     family_of_farmer_who_committed_suicide
 
-from {{ref('farmer_agg_gdgs_23')}}
+from {{ ref('farmer_agg_gdgs_23') }}
 
-union all 
+union all
 
-select 
+select
     date_time,
     dam,
     ngo_name,
     state,
     district,
-    taluka, 
+    taluka,
     village,
     verified_farmers,
     unverified_farmers,
@@ -48,5 +48,4 @@ select
     disabled,
     family_of_farmer_who_committed_suicide
 
-from {{ref('farmer_agg_gdgs_24')}}
-
+from {{ ref('farmer_agg_gdgs_24') }}

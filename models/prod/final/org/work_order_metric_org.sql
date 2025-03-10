@@ -5,49 +5,49 @@
 
 SELECT DISTINCT
     CAST(n.date_time AS DATE) AS date_time,
-    n.work_order_name AS work_order_name,
-    n.state AS state,
-    n.district AS district,
-    n.taluka AS taluka,
-    n.village AS village,
-    n.dam AS dam,
-    n.ngo_name AS ngo_name,
+    n.work_order_name,
+    n.state,
+    n.district,
+    n.taluka,
+    n.village,
+    n.dam,
+    n.ngo_name,
     COALESCE(n.silt_target, 0) AS silt_target,
     COALESCE(n.silt_achieved, 0) AS silt_achieved,
     n.total_farm_area_silt_is_spread_on,
     'Niti Aayog' AS project
-FROM {{ ref('work_order_metric_niti_union') }} n
+FROM {{ ref('work_order_metric_niti_union') }} AS n
 
 UNION
 
 SELECT DISTINCT
     CAST(s.date_time AS DATE) AS date_time,
-    s.work_order_name AS work_order_name,
-    s.state AS state,
-    s.district AS district,
-    s.taluka AS taluka,
-    s.village AS village,
-    s.dam AS dam,
-    s.ngo_name AS ngo_name,
+    s.work_order_name,
+    s.state,
+    s.district,
+    s.taluka,
+    s.village,
+    s.dam,
+    s.ngo_name,
     COALESCE(s.silt_target, 0) AS silt_target,
     COALESCE(s.silt_achieved, 0) AS silt_achieved,
     s.total_farm_area_silt_is_spread_on,
     'Project A' AS project
-FROM {{ ref('work_order_silt_calc') }} s
+FROM {{ ref('work_order_silt_calc') }} AS s
 
 UNION
 
 SELECT DISTINCT
     CAST(g.date_time AS DATE) AS date_time,
-    g.work_order_name AS work_order_name,
-    g.state AS state,
-    g.district AS district,
-    g.taluka AS taluka,
-    g.village AS village,
-    g.dam AS dam,
-    g.ngo_name AS ngo_name,
+    g.work_order_name,
+    g.state,
+    g.district,
+    g.taluka,
+    g.village,
+    g.dam,
+    g.ngo_name,
     COALESCE(g.silt_target, 0) AS silt_target,
     COALESCE(g.silt_achieved, 0) AS silt_achieved,
     g.total_farm_area_silt_is_spread_on,
     'GDGS' AS project
-FROM {{ ref('work_order_metric_gdgs_union') }} g
+FROM {{ ref('work_order_metric_gdgs_union') }} AS g
