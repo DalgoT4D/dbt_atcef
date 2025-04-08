@@ -26,7 +26,7 @@ SELECT
     total_farm_area_silt_is_spread_on,
     total_silt_excavated_by_gp_for_non_farm_purpose,
     total_working_hours_of_machine,
-    silt_excavated_as_per_MB_recording,
+    silt_excavated_as_per_mb_recording,
     approval_status,
     silt_target,
     total_silt_carted,
@@ -35,7 +35,7 @@ SELECT
     project_not_started,
     project_completed
 FROM
-    {{ ref('work_order_2022') }} 
+    {{ ref('work_order_2022') }}
 UNION ALL
 SELECT
     uid,
@@ -58,7 +58,7 @@ SELECT
     total_farm_area_silt_is_spread_on,
     total_silt_excavated_by_gp_for_non_farm_purpose,
     total_working_hours_of_machine,
-    silt_excavated_as_per_MB_recording,
+    silt_excavated_as_per_mb_recording,
     approval_status,
     silt_target,
     total_silt_carted,
@@ -90,7 +90,7 @@ SELECT
     total_farm_area_silt_is_spread_on,
     total_silt_excavated_by_gp_for_non_farm_purpose,
     total_working_hours_of_machine,
-    silt_excavated_as_per_MB_recording,
+    silt_excavated_as_per_mb_recording,
     approval_status,
     silt_target,
     total_silt_carted,

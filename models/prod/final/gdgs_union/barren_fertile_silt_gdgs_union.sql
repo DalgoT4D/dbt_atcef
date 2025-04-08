@@ -3,7 +3,7 @@
   tags=["final","final_gdgs_union", "gdgs"]
 ) }}
 
-select 
+select
     date_time,
     work_order_name,
     state,
@@ -16,11 +16,11 @@ select
     total_farm_area_silt_is_spread_on,
     type_of_land_silt_is_spread_on,
     endline_status
-from {{ref('barren_fertile_silt_gdgs_2023')}}
+from {{ ref('barren_fertile_silt_gdgs_2023') }}
 
-union all 
+union all
 
-select 
+select
     date_time,
     work_order_name,
     state,
@@ -33,4 +33,4 @@ select
     total_farm_area_silt_is_spread_on,
     type_of_land_silt_is_spread_on,
     endline_status
-from {{ref('barren_fertile_silt_gdgs_2024')}}
+from {{ ref('barren_fertile_silt_gdgs_2024') }}

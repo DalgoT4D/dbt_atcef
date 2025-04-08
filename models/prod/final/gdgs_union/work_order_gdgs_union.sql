@@ -3,6 +3,6 @@
   tags=["final","final_gdgs_union", "gdgs"]
 ) }}
 
-SELECT * FROM {{ ref('work_order_2024') }} 
+SELECT * FROM {{ ref('work_order_2024') }}
 UNION ALL
-SELECT * FROM {{ ref('work_order_gdgs_2023') }} 
+SELECT * FROM {{ ref('work_order_gdgs_2023') }}

@@ -3,7 +3,7 @@
   tags=["final","final_gdgs_union", "gdgs"]
 ) }}
 
-select 
+select
     date_time,
     work_order_name,
     state,
@@ -17,11 +17,11 @@ select
     total_farm_area_silt_is_spread_on,
     silt_per_acre,
     silt_per_acre_benchmark_classification
-from {{ref('silt_per_acre_gdgs_2023')}}
+from {{ ref('silt_per_acre_gdgs_2023') }}
 
-union all 
+union all
 
-select 
+select
     date_time,
     work_order_name,
     state,
@@ -35,4 +35,4 @@ select
     total_farm_area_silt_is_spread_on,
     silt_per_acre,
     silt_per_acre_benchmark_classification
-from {{ref('silt_per_acre_gdgs_2024')}}
+from {{ ref('silt_per_acre_gdgs_2024') }}

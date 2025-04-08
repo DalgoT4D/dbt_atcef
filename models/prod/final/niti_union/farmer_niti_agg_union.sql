@@ -4,12 +4,12 @@
 ) }}
 
 
-select 
+select
     date_time,
     dam,
     state,
     district,
-    taluka, 
+    taluka,
     village,
     ngo_name,
     verified_farmers,
@@ -25,16 +25,16 @@ select
     null as family_of_farmer_who_committed_suicide,
     null as farmer_niti_22
 
-from {{ref('farmer_agg_niti_23')}}
+from {{ ref('farmer_agg_niti_23') }}
 
-union all 
+union all
 
-select 
+select
     date_time,
     dam,
     state,
     district,
-    taluka, 
+    taluka,
     village,
     ngo_name,
     verified_farmers,
@@ -50,16 +50,16 @@ select
     null as family_of_farmer_who_committed_suicide,
     farmer_niti_2022
 
-from {{ref('farmer_agg_niti_22')}}
+from {{ ref('farmer_agg_niti_22') }}
 
-union all 
+union all
 
-select 
+select
     date_time,
     dam,
     state,
     district,
-    taluka, 
+    taluka,
     village,
     ngo_name,
     verified_farmers,
@@ -75,4 +75,4 @@ select
     null as family_of_farmer_who_committed_suicide,
     null as farmer_niti_22
 
-from {{ref('farmer_agg_niti_2024')}}
+from {{ ref('farmer_agg_niti_2024') }}

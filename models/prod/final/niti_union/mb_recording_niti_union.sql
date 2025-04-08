@@ -5,21 +5,23 @@
 
 
 SELECT
-    max(date_time) as date_time,
-    state, 
+    state,
     district,
     taluka,
     dam,
     ngo_name,
     village,
-    SUM(COALESCE(silt_excavated_as_per_MB_recording, 0)) AS silt_excavated_as_per_MB_recording,
-    MAX(COALESCE(silt_target, 0)) AS total_silt_excavated
+    max(date_time) AS date_time,
+    sum(
+        coalesce(silt_excavated_as_per_mb_recording, 0)
+    ) AS silt_excavated_as_per_mb_recording,
+    max(coalesce(silt_target, 0)) AS total_silt_excavated
 FROM
-   {{ref('work_order_niti_union')}}
-group by 
-  state,
-	district,
-	taluka,
-	dam,
-  ngo_name,
-	village
+    {{ ref('work_order_niti_union') }}
+GROUP BY
+    state,
+    district,
+    taluka,
+    dam,
+    ngo_name,
+    village

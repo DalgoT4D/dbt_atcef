@@ -4,8 +4,8 @@
 ) }}
 
 
-select 
-    state, 
+select
+    state,
     district,
     taluka,
     village,
@@ -13,12 +13,12 @@ select
     ngo_name,
     farmer_type,
     farmers_count
-from {{ref('farmer_niti_2022_percentage')}}
- 
-UNION ALL 
+from {{ ref('farmer_niti_2022_percentage') }}
 
-select 
-    state, 
+union all
+
+select
+    state,
     district,
     taluka,
     village,
@@ -26,12 +26,12 @@ select
     ngo_name,
     farmer_type,
     farmers_count
-from {{ref('farmer_niti_2023_percentage')}}
+from {{ ref('farmer_niti_2023_percentage') }}
 
-UNION ALL 
+union all
 
-select 
-    state, 
+select
+    state,
     district,
     taluka,
     village,
@@ -39,4 +39,4 @@ select
     ngo_name,
     farmer_type,
     farmers_count
-from {{ref('farmer_niti_2024_percentage')}}
+from {{ ref('farmer_niti_2024_percentage') }}
