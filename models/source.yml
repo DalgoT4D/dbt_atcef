@@ -76,6 +76,17 @@ sources:
       - name: address_gramin
         identifier: locations
         description: "address api for waterbodies - gramin"
+    
+  - name: source_gramin_25
+    schema: staging_project_A
+    tables:
+      - name: subjects_gramin_25
+        identifier: subjects
+      - name: encounters_gramin_25
+        identifier: encounters
+      - name: address_gramin_25
+        identifier: locations
+        description: "address api for waterbodies - gramin"
 
   - name: source_avni_niti_2024
     schema: rwb_niti_2024
