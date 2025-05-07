@@ -45,7 +45,6 @@ WITH waterbodies AS (
         w.ngo_name
 )
 
-
 SELECT
     dam,
     work_order_id,

@@ -105,10 +105,10 @@ sources:
   - name: rwb_niti_2025
     schema: staging_rwb_niti_25_26
     tables:
-      - name: subjects_2025
+      - name: subjects_niti_2025
         identifier: subjects
         description: "Areas of working(example farmers, machine, work order, gram panchyat). We pull limited data from this areas"
-      - name: encounter_2025
+      - name: encounters_niti_2025
         identifier: encounters
         description: "Daily basis action for field workers."
       
@@ -123,9 +123,9 @@ sources:
   - name: gdgs_25_surveys
     schema: staging_gdgs_25_26
     tables: 
-      - name: subjects_2025
+      - name: subjects_gdgs_2025
         identifier: subjects 
-      - name: encounters_2025
+      - name: encounters_gdgs_2025
         identifier: encounters
       - name: approval_statuses
         identifier: approvalStatuses

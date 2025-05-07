@@ -25,11 +25,10 @@ WITH mycte AS (
         INITCAP(COALESCE(location ->> 'Taluka')) AS taluka,
         INITCAP(COALESCE(location ->> 'GP/Village')) AS village
     FROM
-        {{ source('gdgs_25_surveys', 'subjects_2025') }}
+        {{ source('gdgs_25_surveys', 'subjects_gdgs_2025') }}
     WHERE
         "Subject_type" = 'Excavating Machine' AND "Voided" = 'False'
 )
-
 
     {{ dbt_utils.deduplicate(
         relation='mycte',

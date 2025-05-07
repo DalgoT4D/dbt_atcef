@@ -11,11 +11,11 @@ WITH cte AS (
         )::boolean AS mobile_verified,
         "Voided" AS subject_voided,
         observations ->> 'First name' AS first_name,
-        rwb.dam AS dam,
-        rwb.district AS district,
-        rwb.state AS state,
-        rwb.taluka AS taluka,
-        rwb.village AS village,
+        rwb.dam,
+        rwb.district,
+        rwb.state,
+        rwb.taluka,
+        rwb.village,
         observations ->> 'Type of Machine' AS type_of_machine,
         observations ->> 'Category of farmer' AS category_of_farmer,
         observations -> 'Mobile Number' ->> 'phoneNumber' AS mobile_number,
@@ -45,7 +45,7 @@ removing_nulls AS (
         AND state IS NOT NULL
         AND village IS NOT NULL
         AND subject_voided = 'false'
-)
+),
 
 deduplicated AS (
     {{ dbt_utils.deduplicate(

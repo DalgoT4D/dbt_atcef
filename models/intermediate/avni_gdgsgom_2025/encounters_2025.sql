@@ -48,7 +48,7 @@ with mycte as (
         observations
         ->> 'Number of trolleys carted' as number_of_trolleys_carted
 
-    from {{ source('gdgs_25_surveys', 'encounters_2025') }}
+    from {{ source('gdgs_25_surveys', 'encounters_gdgs_2025') }}
     where "Voided" is FALSE
 )
 

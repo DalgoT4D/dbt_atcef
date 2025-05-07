@@ -12,8 +12,8 @@ WITH machines AS (
         subjects."Voided" AS machine_voided,
         INITCAP(TRIM(COALESCE(subjects.observations ->> 'First name'))) AS machine_name,
         subjects.observations ->> 'Type of Machine' AS type_of_machine,
-        rwb.dam AS dam,
-        rwb.district AS district,
+        rwb.dam,
+        rwb.district,
         CASE
             WHEN
                 LOWER(rwb.state) LIKE '%maharashtra%'
@@ -26,15 +26,14 @@ WITH machines AS (
         INITCAP(COALESCE(rwb.taluka)) AS taluka,
         INITCAP(COALESCE(rwb.village)) AS village
     FROM
-        {{ source('source_gramin_25', 'subjects_gramin_25') }} subjects
+        {{ source('source_gramin_25', 'subjects_gramin_25') }} AS subjects
     LEFT JOIN
         {{ ref('address_gramin_25') }} AS rwb
         ON
-            rwb.address_id = subjects."Location_ID"
+            subjects."Location_ID" = rwb.address_id
     WHERE
         "Subject_type" = 'Excavating Machine'
 )
-
 
     {{ dbt_utils.deduplicate(
         relation='machines',

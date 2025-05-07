@@ -34,9 +34,9 @@ WITH mycte AS (
             ) AS float
         ) AS numeric), 2) AS silt_target
     FROM
-        {{ source('source_gdgsom_surveys', 'subjects_2024') }}
+        {{ source('gdgs_25_surveys', 'subjects_gdgs_2025') }}
     LEFT JOIN
-        {{ ref('address_gdgs_2024') }} AS rwb
+        {{ ref('address_gdgs_2025') }} AS rwb
         ON
             location ->> 'Dam' = rwb.dam
     WHERE

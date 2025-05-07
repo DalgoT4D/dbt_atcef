@@ -50,9 +50,8 @@ with cte as (
         observations
         ->> 'Number of trolleys carted' as number_of_trolleys_carted
 
-    from {{ source('source_avni_niti_2025', 'encounters_niti_2025') }}
+    from {{ source('rwb_niti_2025', 'encounters_niti_2025') }}
 )
-
 
 {{ dbt_utils.deduplicate(
       relation='cte',

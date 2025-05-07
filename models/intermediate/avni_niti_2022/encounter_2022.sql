@@ -66,7 +66,6 @@ approval_encounters as (
         and d.encounter_voided = 'false'
 )
 
-
 {{ dbt_utils.deduplicate(
     relation='approval_encounters',
     partition_by='eid',

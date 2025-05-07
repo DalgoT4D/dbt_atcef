@@ -15,3 +15,8 @@ UNION
 
 SELECT DISTINCT *
 FROM {{ ref('farmer_silt_vulnerable_niti_24') }}
+
+UNION
+
+SELECT DISTINCT *
+FROM {{ ref('farmer_silt_vulnerable_niti_25') }}

@@ -25,9 +25,9 @@ WITH mycte AS (
         observations ->> 'Image of site after work' AS image_after_work,
         observations ->> 'Image of site before work' AS image_before_work,
         observations ->> 'Image of site during work' AS image_during_work,
-        rwb.taluka AS taluka,
-        rwb.village AS village,
-        rwb.dam AS dam,
+        rwb.taluka,
+        rwb.village,
+        rwb.dam,
         observations ->> 'Start Date' AS start_date,
         CAST(
             observations ->> 'Total Silt Excavated' AS numeric
@@ -37,9 +37,9 @@ WITH mycte AS (
         CAST("Registration_date" AS timestamp) AS date_time,
         COALESCE(NULLIF(rwb.stakeholder_responsible, ''), 'Unknown') AS ngo_name
     FROM
-        {{ source('source_gdgsom_surveys', 'subjects_2024') }}
+        {{ source('gdgs_25_surveys', 'subjects_gdgs_2025') }}
     LEFT JOIN
-        {{ ref('address_gdgs_25') }} AS rwb
+        {{ ref('address_gdgs_2025') }} AS rwb
         ON
             observations ->> 'Name of WB' = rwb.dam
     WHERE

@@ -28,7 +28,7 @@ with mycte as (
         observations ->> 'Category of farmer' as category_of_farmer,
         observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number
     from
-        {{ source('gdgs_25_surveys', 'subjects_2025') }}
+        {{ source('gdgs_25_surveys', 'subjects_gdgs_2025') }}
     where
         "Subject_type" = 'Farmer'
         and "Voided" = 'False'

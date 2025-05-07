@@ -30,7 +30,7 @@ models:
                 - 'Endline Done'
                 - 'Endline Not Done'
 
-  - name: machine_endline
+  - name: machine_endline_gdgs_25
     description: "Machine Data Compiled with Endline Status from encounters"
     columns:
       - name: machine_id
@@ -65,9 +65,6 @@ models:
           - not_null
           - accepted_values:
               values: [true, false]
-      - name: machine_approval_status
-        tests:
-          - not_null
       - name: endline_status
         tests:
           - accepted_values:
@@ -75,7 +72,7 @@ models:
                 - 'Endline Done'
                 - 'Endline Not Done'
 
-  - name: farmer_silt_vulnerable_gdgs_24
+  - name: farmer_silt_vulnerable_gdgs_25
     description: "Model that calculates silt carted for vulnerable and other farmers"
     columns:
       - name: state

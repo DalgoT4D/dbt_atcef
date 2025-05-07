@@ -55,7 +55,7 @@ WITH cte AS (
         INITCAP(COALESCE(observations ->> 'Name of WB')) AS name_of_wb,
         COALESCE(NULLIF(rwb.stakeholder_responsible, ''), 'Unknown') AS ngo_name
     FROM
-        {{ source('gdgs_25_surveys', 'subjects_2025') }}
+        {{ source('gdgs_25_surveys', 'subjects_gdgs_2025') }}
     LEFT JOIN
         {{ ref('address_gdgs_2025') }} AS rwb
         ON

@@ -16,7 +16,6 @@ SELECT
     m.village,
     w.ngo_name,
     m.machine_voided,
-    m.machine_approval_status,
     e.machine_sub_id,
     SUM(CAST(e.working_hours_as_per_time AS NUMERIC)) AS total_working_hours,
     MAX(e.date_time) AS date_time
@@ -43,6 +42,5 @@ GROUP BY
     m.taluka,
     m.village,
     m.machine_voided,
-    m.machine_approval_status,
     e.machine_sub_id,
     w.ngo_name

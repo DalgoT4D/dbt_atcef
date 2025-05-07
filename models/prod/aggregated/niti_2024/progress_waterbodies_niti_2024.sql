@@ -46,7 +46,6 @@ WITH waterbodies AS (
         e.subject_id
 )
 
-
 SELECT
     dam,
     work_order_id,

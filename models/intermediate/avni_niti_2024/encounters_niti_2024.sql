@@ -53,7 +53,6 @@ with cte as (
     from {{ source('source_avni_niti_2024', 'encounters_niti_2024') }}
 ),
 
-
 approval_encounters as (
     select
         d.*,
@@ -66,8 +65,6 @@ approval_encounters as (
     where
         a.approval_status = 'Approved'
 )
-
-
 
 {{ dbt_utils.deduplicate(
       relation='approval_encounters',

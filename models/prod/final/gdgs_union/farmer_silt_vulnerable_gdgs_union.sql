@@ -10,3 +10,8 @@ UNION
 
 SELECT *
 FROM {{ ref('farmer_silt_vulnerable_gdgs_24') }}
+
+UNION
+
+SELECT *
+FROM {{ ref('farmer_silt_vulnerable_gdgs_25') }}

@@ -32,7 +32,6 @@ with cte as (
         category_of_farmer
 )
 
-
 select
     dam,
     date_time,

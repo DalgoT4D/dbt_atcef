@@ -7,12 +7,12 @@
 WITH work_orders AS (
     SELECT
         subjects."ID" AS work_order_id,
-        subjects."Location_ID" as address_id,
+        subjects."Location_ID" AS address_id,
         subjects."Voided" AS work_order_voided,
         INITCAP(
             TRIM(COALESCE(subjects.observations ->> 'First name', ''))
         ) AS work_order_name,
-        rwb.dam AS dam,
+        rwb.dam,
         INITCAP(COALESCE(subjects.location ->> 'District', '')) AS district,
         CASE  -- Standardize state names
             WHEN
@@ -35,11 +35,11 @@ WITH work_orders AS (
             ) AS float
         ) AS numeric), 2) AS silt_target
     FROM
-        {{ source('source_gramin_25', 'subjects_gramin_25') }}  subjects
+        {{ source('source_gramin_25', 'subjects_gramin_25') }} AS subjects
     LEFT JOIN
         {{ ref('address_gramin_25') }} AS rwb
         ON
-            rwb.address_id = subjects."Location_ID"
+            subjects."Location_ID" = rwb.address_id
     WHERE
         "Subject_type" = 'Work Order'
 )
