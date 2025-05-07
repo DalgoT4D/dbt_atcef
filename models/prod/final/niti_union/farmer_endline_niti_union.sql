@@ -15,3 +15,8 @@ UNION
 
 SELECT DISTINCT *
 FROM {{ ref('farmer_endline_niti_2024') }}
+
+UNION
+
+SELECT DISTINCT *
+FROM {{ ref('farmer_endline_niti_2025') }}

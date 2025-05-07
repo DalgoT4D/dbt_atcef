@@ -39,7 +39,7 @@ WITH mycte AS (
     FROM
         {{ source('source_gdgsom_surveys', 'subjects_2024') }}
     LEFT JOIN
-        {{ ref('address_gdgs_23') }} AS rwb
+        {{ ref('address_gdgs_2024') }} AS rwb
         ON
             observations ->> 'Name of WB' = rwb.dam
     WHERE

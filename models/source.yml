@@ -101,6 +101,38 @@ sources:
       - name: address_niti_2024
         identifier: locations
         description: "address api for waterbodies - niti2024"
+    
+  - name: rwb_niti_2025
+    schema: staging_rwb_niti_25_26
+    tables:
+      - name: subjects_niti_2025
+        identifier: subjects
+        description: "Areas of working(example farmers, machine, work order, gram panchyat). We pull limited data from this areas"
+      - name: encounters_niti_2025
+        identifier: encounters
+        description: "Daily basis action for field workers."
+      
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for subjects and encounters"
+
+      - name: address_niti_2025
+        identifier: locations
+        description: "address api for waterbodies - niti 2025"
+
+  - name: gdgs_25_surveys
+    schema: staging_gdgs_25_26
+    tables: 
+      - name: subjects_gdgs_2025
+        identifier: subjects 
+      - name: encounters_gdgs_2025
+        identifier: encounters
+      - name: approval_statuses
+        identifier: approvalStatuses
+        description: "approval status for subjects and encounters"
+      - name: address_gdgs_2025
+        identifier: locations
+        description: "address api for waterbodies - gdgs 2024"
 
 
   

@@ -40,3 +40,16 @@ select
     farmer_type,
     farmers_count
 from {{ ref('farmer_niti_2024_percentage') }}
+
+union all
+
+select
+    state,
+    district,
+    taluka,
+    village,
+    dam,
+    ngo_name,
+    farmer_type,
+    farmers_count
+from {{ ref('farmer_niti_2025_percentage') }}

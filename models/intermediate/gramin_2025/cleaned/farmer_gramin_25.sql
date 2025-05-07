@@ -13,8 +13,8 @@ with farmers as (
         )::boolean as mobile_verified,
         subjects."Voided" as farmer_voided,
         INITCAP(TRIM(COALESCE(subjects.observations ->> 'First name'))) as farmer_name,
-        rwb.dam as dam,
-        rwb.district as district,
+        rwb.dam,
+        rwb.district,
         case  -- Standardize state names
             when
                 LOWER(rwb.state) like '%maharashtra%'
@@ -24,16 +24,16 @@ with farmers as (
                 then 'Maharashtra'
             else INITCAP(COALESCE(rwb.state, ''))
         end as state,
-        rwb.taluka as taluka,
-        rwb.village as village,
+        rwb.taluka,
+        rwb.village,
         subjects.observations ->> 'Category of farmer' as category_of_farmer,
         subjects.observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number
     from
-        {{ source('source_gramin_25', 'subjects_gramin_25') }} subjects
-    LEFT JOIN
-        {{ ref('address_gramin_25') }} AS rwb
-        ON
-            rwb.address_id = subjects."Location_ID"
+        {{ source('source_gramin_25', 'subjects_gramin_25') }} as subjects
+    left join
+        {{ ref('address_gramin_25') }} as rwb
+        on
+            subjects."Location_ID" = rwb.address_id
     where
         "Subject_type" = 'Farmer'
 )

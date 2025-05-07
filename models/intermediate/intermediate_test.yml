@@ -585,6 +585,91 @@ models:
       - name: district
         tests:
           - not_null
+  
+  - name: encounters_niti_2025
+    tests:
+      - not_null:
+          column_name: date_time
+      - not_null:
+          column_name: subject_type
+      - not_null:
+          column_name: eid
+      - accepted_values:
+          column_name: subject_type
+          values: ['Work Order', 'Excavating Machine', 'Farmer', 'Gram panchayat']
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: working_hours_as_per_time
+          column_type: text
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: total_working_hours_of_machine
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: silt_excavated_as_per_MB_recording
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: total_silt_excavated
+          column_type: numeric
+      - dbt_expectations.expect_column_values_to_be_of_type:
+          column_name: date_time
+          column_type: date
+
+  - name: work_order_niti_2025
+    tests: 
+      - not_null: 
+          column_name: dam
+      - not_null: 
+          column_name: district
+      - not_null: 
+          column_name: state
+      - not_null: 
+          column_name: taluka
+      - not_null: 
+          column_name: village
+
+  - name: address_niti_2025
+    description: "this test is a case for niti address model"
+    columns:
+      - name: address_id
+        tests:
+          - not_null
+      - name: dam
+        tests:
+          - not_null
+
+  - name: farmer_niti_2025
+    description: "Registered farmer niti 2024 tests"
+    columns:
+      - name: farmer_id
+        tests:
+          - not_null
+      - name: farmer_name
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
+
+  - name: machine_niti_2025
+    description: "machine registered niti 2024 tests"
+    columns:
+      - name: machine_id
+        tests:
+          - not_null
+      - name: machine_name
+        tests:
+          - not_null
+      - name: type_of_machine
+        tests:
+          - not_null
+      - name: state
+        tests:
+          - not_null
+      - name: district
+        tests:
+          - not_null
 
 
 

@@ -41,7 +41,6 @@ approval_machines AS (
     WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 )
 
-
     {{ dbt_utils.deduplicate(
         relation='approval_machines',
         partition_by='machine_id',

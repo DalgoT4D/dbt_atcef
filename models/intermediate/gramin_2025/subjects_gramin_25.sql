@@ -9,14 +9,14 @@ WITH cte AS (
         (
             subjects.observations -> 'Mobile Number' ->> 'verified'
         )::boolean AS mobile_verified,
-        subjects."Location_ID" as address_id,
+        subjects."Location_ID" AS address_id,
         subjects."Voided" AS subject_voided,
         subjects.observations ->> 'First name' AS first_name,
-        rwb.dam AS dam,
-        rwb.district AS district,
-        rwb.state AS state,
-        rwb.taluka AS taluka,
-        rwb.village AS village,
+        rwb.dam,
+        rwb.district,
+        rwb.state,
+        rwb.taluka,
+        rwb.village,
         subjects.observations ->> 'Type of Machine' AS type_of_machine,
         subjects.observations ->> 'Category of farmer' AS category_of_farmer,
         subjects.observations -> 'Mobile Number' ->> 'phoneNumber' AS mobile_number,
@@ -28,18 +28,29 @@ WITH cte AS (
             '0'
         ))::float)::numeric, 2) AS silt_target
     FROM
-        {{ source('source_gramin_25', 'subjects_gramin_25') }} subjects
+        {{ source('source_gramin_25', 'subjects_gramin_25') }} AS subjects
     LEFT JOIN
         {{ ref('address_gramin_25') }} AS rwb
         ON
-            rwb.address_id = subjects."Location_ID"
+            subjects."Location_ID" = rwb.address_id
     WHERE NOT (LOWER(location ->> 'Dam') ~ 'voided')
 ),
 
+removing_nulls AS (
+    SELECT *
+    FROM cte
+    WHERE
+        dam IS NOT NULL
+        AND district IS NOT NULL
+        AND taluka IS NOT NULL
+        AND state IS NOT NULL
+        AND village IS NOT NULL
+        AND subject_voided = 'false'
+),
 
 deduplicated AS (
     {{ dbt_utils.deduplicate(
-    relation='cte',
+    relation='removing_nulls',
     partition_by='uid',
     order_by='uid desc',
    )
