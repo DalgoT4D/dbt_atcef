@@ -1,25 +1,24 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_gramin", "gramin_niti", "gramin_25"]
+  tags=["intermediate","intermediate_niti_2025", "niti_2025", "niti"]
 ) }}
 
 WITH cte AS (
     SELECT
-        subjects."ID" AS uid,
+        "ID" AS uid,
         (
-            subjects.observations -> 'Mobile Number' ->> 'verified'
+            observations -> 'Mobile Number' ->> 'verified'
         )::boolean AS mobile_verified,
-        subjects."Location_ID" as address_id,
-        subjects."Voided" AS subject_voided,
-        subjects.observations ->> 'First name' AS first_name,
+        "Voided" AS subject_voided,
+        observations ->> 'First name' AS first_name,
         rwb.dam AS dam,
         rwb.district AS district,
         rwb.state AS state,
         rwb.taluka AS taluka,
         rwb.village AS village,
-        subjects.observations ->> 'Type of Machine' AS type_of_machine,
-        subjects.observations ->> 'Category of farmer' AS category_of_farmer,
-        subjects.observations -> 'Mobile Number' ->> 'phoneNumber' AS mobile_number,
+        observations ->> 'Type of Machine' AS type_of_machine,
+        observations ->> 'Category of farmer' AS category_of_farmer,
+        observations -> 'Mobile Number' ->> 'phoneNumber' AS mobile_number,
         COALESCE(
             NULLIF(rwb.stakeholder_responsible, ''), 'Unknown'
         ) AS ngo_name,
@@ -28,11 +27,11 @@ WITH cte AS (
             '0'
         ))::float)::numeric, 2) AS silt_target
     FROM
-        {{ source('source_gramin_25', 'subjects_gramin_25') }} subjects
+        {{ source('rwb_niti_2025', 'subjects_niti_2025') }}
     LEFT JOIN
-        {{ ref('address_gramin_25') }} AS rwb
+        {{ ref('address_niti_2025') }} AS rwb
         ON
-            rwb.address_id = subjects."Location_ID"
+            location ->> 'Dam' = rwb.dam
     WHERE NOT (LOWER(location ->> 'Dam') ~ 'voided')
 ),
 
@@ -46,8 +45,7 @@ removing_nulls AS (
         AND state IS NOT NULL
         AND village IS NOT NULL
         AND subject_voided = 'false'
-),
-
+)
 
 deduplicated AS (
     {{ dbt_utils.deduplicate(
