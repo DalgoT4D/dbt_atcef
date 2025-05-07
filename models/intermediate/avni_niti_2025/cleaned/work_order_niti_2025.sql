@@ -12,19 +12,19 @@ WITH mycte AS (
         INITCAP(
             TRIM(COALESCE(observations ->> 'First name', ''))
         ) AS work_order_name,
-        INITCAP(COALESCE(location ->> 'Dam', '')) AS dam,
-        INITCAP(COALESCE(location ->> 'District', '')) AS district,
+        INITCAP(COALESCE(rwb.dam, '')) AS dam,
+        INITCAP(COALESCE(rwb.dam, '')) AS district,
         CASE  -- Standardize state names
             WHEN
-                LOWER(location ->> 'State') LIKE '%maharashtra%'
+                LOWER(rwb.state) LIKE '%maharashtra%'
                 THEN 'Maharashtra'
             WHEN
-                LOWER(location ->> 'State') LIKE '%maharshatra%'
+                LOWER(rwb.state) LIKE '%maharshatra%'
                 THEN 'Maharashtra'
-            ELSE INITCAP(COALESCE(location ->> 'State', ''))
+            ELSE INITCAP(COALESCE(rwb.state, ''))
         END AS state,
-        INITCAP(COALESCE(location ->> 'Taluka', '')) AS taluka,
-        INITCAP(COALESCE(location ->> 'GP/Village', '')) AS village,
+        INITCAP(COALESCE(rwb.taluka, '')) AS taluka,
+        INITCAP(COALESCE(rwb.village, '')) AS village,
         COALESCE(
             NULLIF(rwb.stakeholder_responsible, ''), 'Unknown'
         ) AS ngo_name,
@@ -39,10 +39,9 @@ WITH mycte AS (
     LEFT JOIN
         {{ ref('address_niti_2025') }} AS rwb
         ON
-            location ->> 'Dam' = rwb.dam
+            location ->> 'Nalla' = rwb.dam
     WHERE
-        NOT (LOWER(location ->> 'Dam') ~ 'voided')
-        AND "Subject_type" = 'Work Order'
+        "Subject_type" = 'Work Order'
         AND "Voided" = False
 )
 

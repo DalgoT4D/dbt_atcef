@@ -31,8 +31,8 @@ WITH cte AS (
     LEFT JOIN
         {{ ref('address_niti_2025') }} AS rwb
         ON
-            location ->> 'Dam' = rwb.dam
-    WHERE NOT (LOWER(location ->> 'Dam') ~ 'voided')
+            location ->> 'Nalla' = rwb.dam
+    WHERE NOT (LOWER(location ->> 'Nalla') ~ 'voided')
 ),
 
 removing_nulls AS (
