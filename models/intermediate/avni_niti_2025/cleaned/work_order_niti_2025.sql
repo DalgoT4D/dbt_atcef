@@ -13,7 +13,7 @@ WITH mycte AS (
             TRIM(COALESCE(observations ->> 'First name', ''))
         ) AS work_order_name,
         INITCAP(COALESCE(rwb.dam, '')) AS dam,
-        INITCAP(COALESCE(rwb.dam, '')) AS district,
+        INITCAP(COALESCE(rwb.district, '')) AS district,
         CASE  -- Standardize state names
             WHEN
                 LOWER(rwb.state) LIKE '%maharashtra%'
