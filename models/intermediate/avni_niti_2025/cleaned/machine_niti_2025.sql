@@ -11,25 +11,28 @@ WITH mycte AS (
         "Voided" AS machine_voided,
         INITCAP(TRIM(COALESCE(observations ->> 'First name'))) AS machine_name,
         observations ->> 'Type of Machine' AS type_of_machine,
-        INITCAP(COALESCE(location ->> 'Dam')) AS dam,
-        INITCAP(COALESCE(location ->> 'District')) AS district,
+        INITCAP(COALESCE(rwb.dam, '')) AS dam,
+        INITCAP(COALESCE(rwb.district, '')) AS district,
         CASE
             WHEN
-                LOWER(location ->> 'State') LIKE '%maharashtra%'
+                LOWER(rwb.state) LIKE '%maharashtra%'
                 THEN 'Maharashtra'
             WHEN
-                LOWER(location ->> 'State') LIKE '%maharshatra%'
+                LOWER(rwb.state) LIKE '%maharshatra%'
                 THEN 'Maharashtra'
-            ELSE INITCAP(COALESCE(location ->> 'State', ''))
+            ELSE INITCAP(COALESCE(rwb.state, ''))
         END AS state,
-        INITCAP(COALESCE(location ->> 'Taluka')) AS taluka,
-        INITCAP(COALESCE(location ->> 'GP/Village')) AS village
+        INITCAP(COALESCE(rwb.state, '')) AS taluka,
+        INITCAP(COALESCE(rwb.village, '')) AS village
     FROM
         {{ source('rwb_niti_2025', 'subjects_niti_2025') }}
+    LEFT JOIN
+        {{ ref('address_niti_2025') }} AS rwb
+        ON
+            location ->> 'Nalla' = rwb.dam
     WHERE
         "Subject_type" = 'Excavating Machine'
         AND "Voided" = 'False'
-        AND NOT (LOWER(location ->> 'Dam') ~ 'voided')
 )
 
     {{ dbt_utils.deduplicate(

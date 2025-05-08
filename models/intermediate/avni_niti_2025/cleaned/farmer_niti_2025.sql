@@ -12,27 +12,30 @@ with mycte as (
         )::boolean as mobile_verified,
         "Voided" as farmer_voided,
         INITCAP(TRIM(COALESCE(observations ->> 'First name'))) as farmer_name,
-        INITCAP(COALESCE(location ->> 'Dam')) as dam,
-        INITCAP(COALESCE(location ->> 'District')) as district,
+        INITCAP(COALESCE(rwb.dam, '')) as dam,
+        INITCAP(COALESCE(rwb.district, '')) as district,
         case  -- Standardize state names
             when
-                LOWER(location ->> 'State') like '%maharashtra%'
+                LOWER(rwb.state) like '%maharashtra%'
                 then 'Maharashtra'
             when
-                LOWER(location ->> 'State') like '%maharshatra%'
+                LOWER(rwb.state) like '%maharshatra%'
                 then 'Maharashtra'
-            else INITCAP(COALESCE(location ->> 'State', ''))
+            else INITCAP(COALESCE(rwb.state, ''))
         end as state,
-        INITCAP(COALESCE(location ->> 'Taluka')) as taluka,
-        INITCAP(COALESCE(location ->> 'GP/Village')) as village,
+        INITCAP(COALESCE(rwb.taluka)) as taluka,
+        INITCAP(COALESCE(rwb.village)) as village,
         observations ->> 'Category of farmer' as category_of_farmer,
         observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number
     from
         {{ source('rwb_niti_2025', 'subjects_niti_2025') }}
+    LEFT JOIN
+        {{ ref('address_niti_2025') }} AS rwb
+        ON
+            location ->> 'Nalla' = rwb.dam
     where
         "Subject_type" = 'Farmer'
         and "Voided" = 'False'
-        and not (LOWER(location ->> 'Dam') ~ 'voided')
 )
 
 {{ dbt_utils.deduplicate(
