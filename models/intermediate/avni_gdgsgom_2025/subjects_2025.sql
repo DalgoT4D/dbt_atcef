@@ -62,10 +62,18 @@ WITH cte AS (
             location ->> 'Dam' = rwb.dam
     WHERE NOT (LOWER(location ->> 'Dam') ~ 'voided')
 
+),
+
+approved_subjects AS (
+    SELECT r.*
+    FROM cte AS r
+    INNER JOIN {{ ref('approval_statuses_gdgs_25') }} AS a
+        ON r.uid = a.entity_id
+    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
-    relation='cte',
+    relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )

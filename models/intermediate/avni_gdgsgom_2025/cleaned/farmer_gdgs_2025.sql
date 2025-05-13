@@ -33,10 +33,23 @@ with mycte as (
         "Subject_type" = 'Farmer'
         and "Voided" = 'False'
         and not (LOWER(location ->> 'Dam') ~ 'voided')
+),
+
+approval_farmers as (
+    select
+        d.*,
+        a.approval_status as farmer_approval_status
+    from mycte as d
+    inner join {{ ref('approval_statuses_gdgs_25') }} as a
+        on
+            d.farmer_id = a.entity_id
+            and a.entity_type = 'Subject'
+    where
+        a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
-      relation='mycte',
+      relation='approval_farmers',
       partition_by='farmer_id',
       order_by='farmer_id desc'
 ) }}
