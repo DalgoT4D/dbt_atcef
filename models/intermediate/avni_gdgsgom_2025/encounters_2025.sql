@@ -50,10 +50,24 @@ with mycte as (
 
     from {{ source('gdgs_25_surveys', 'encounters_gdgs_2025') }}
     where "Voided" is FALSE
+),
+
+
+approval_encounters as (
+    select
+        d.*,
+        a.approval_status
+    from mycte as d
+    inner join {{ ref('approval_statuses_gdgs_25') }} as a
+        on
+            d.eid = a.entity_id
+            and a.entity_type = 'Encounter'
+    where
+        a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
-    relation='mycte',
+    relation='approval_encounters',
     partition_by='eid',
     order_by='eid desc',
    )

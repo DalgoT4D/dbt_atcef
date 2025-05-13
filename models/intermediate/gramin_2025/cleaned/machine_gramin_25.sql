@@ -33,10 +33,21 @@ WITH machines AS (
             subjects."Location_ID" = rwb.address_id
     WHERE
         "Subject_type" = 'Excavating Machine'
+),
+
+approval_machines AS (
+    SELECT
+        d.*,
+        a.approval_status AS machine_approval_status
+    FROM machines AS d
+    INNER JOIN
+        {{ ref('approval_status_gramin_25') }} AS a
+        ON d.machine_id = a.entity_id
+    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 )
 
     {{ dbt_utils.deduplicate(
-        relation='machines',
+        relation='approval_machines',
         partition_by='machine_id',
         order_by='machine_id desc'
     ) }}

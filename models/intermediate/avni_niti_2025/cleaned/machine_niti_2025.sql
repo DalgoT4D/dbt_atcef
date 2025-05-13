@@ -33,10 +33,21 @@ WITH mycte AS (
     WHERE
         "Subject_type" = 'Excavating Machine'
         AND "Voided" = 'False'
+),
+
+approval_machines AS (
+    SELECT
+        d.*,
+        a.approval_status AS machine_approval_status
+    FROM mycte AS d
+    INNER JOIN
+        {{ ref('approval_status_niti_2024') }} AS a
+        ON d.machine_id = a.entity_id
+    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 )
 
     {{ dbt_utils.deduplicate(
-        relation='mycte',
+        relation='approval_machines',
         partition_by='machine_id',
         order_by='machine_id desc'
     ) }}

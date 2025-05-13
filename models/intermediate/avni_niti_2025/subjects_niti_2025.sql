@@ -47,9 +47,17 @@ removing_nulls AS (
         AND subject_voided = 'false'
 ),
 
+approved_subjects AS (
+    SELECT r.*
+    FROM removing_nulls AS r
+    INNER JOIN {{ ref('approval_status_niti_2025') }} AS a
+        ON r.uid = a.entity_id
+    WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
+),
+
 deduplicated AS (
     {{ dbt_utils.deduplicate(
-    relation='removing_nulls',
+    relation='approved_subjects',
     partition_by='uid',
     order_by='uid desc',
    )
