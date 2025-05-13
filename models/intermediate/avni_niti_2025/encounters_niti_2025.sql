@@ -51,10 +51,23 @@ with cte as (
         ->> 'Number of trolleys carted' as number_of_trolleys_carted
 
     from {{ source('rwb_niti_2025', 'encounters_niti_2025') }}
+),
+
+approval_encounters as (
+    select
+        d.*,
+        a.approval_status
+    from cte as d
+    inner join {{ ref('approval_status_niti_2025') }} as a
+        on
+            d.eid = a.entity_id
+            and a.entity_type = 'Encounter'
+    where
+        a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
-      relation='cte',
+      relation='approval_encounters',
       partition_by='eid',
       order_by='eid desc'
 ) }}

@@ -71,21 +71,27 @@ cte AS (
     WHERE "Voided" IS FALSE
 ),
 
-encounters AS (
+approval_encounters AS (
     SELECT
         d.*,
+        a.approval_status,
         s.state,
         s.district,
         s.taluka,
         s.village
     FROM cte AS d
+    INNER JOIN {{ ref('approval_status_gramin_25') }} AS a
+        ON d.eid = a.entity_id
     LEFT JOIN subject_locs AS s
         ON
             d.subject_id = s.uid
+            AND a.entity_type = 'Encounter'
+    WHERE
+        a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
-    relation='encounters',
+    relation='approval_encounters',
     partition_by='eid',
     order_by='eid DESC'
 ) }}

@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_gdgs_2024", "gdgs_2024", "gdgs"]
+  tags=["intermediate","intermediate_niti_2024", "niti_2024", "niti"]
 ) }}
 
 
@@ -11,7 +11,7 @@ with converted_statuses as (
         "Entity_type" as entity_type,
         "Approval_status" as approval_status,
         cast("Status_date_time" as timestamp) as status_date
-    from {{ source('gdgs_25_surveys', 'approval_statuses') }}
+    from {{ source('rwb_niti_2025', 'approval_statuses') }}
 ),
 
 latest_entries as (

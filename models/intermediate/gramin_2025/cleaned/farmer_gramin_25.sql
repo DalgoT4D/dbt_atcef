@@ -36,10 +36,23 @@ with farmers as (
             subjects."Location_ID" = rwb.address_id
     where
         "Subject_type" = 'Farmer'
+),
+
+approval_farmers as (
+    select
+        d.*,
+        a.approval_status as farmer_approval_status
+    from farmers as d
+    inner join {{ ref('approval_status_gramin_25') }} as a
+        on
+            d.farmer_id = a.entity_id
+            and a.entity_type = 'Subject'
+    where
+        a.approval_status = 'Approved'
 )
 
 {{ dbt_utils.deduplicate(
-      relation='farmers',
+      relation='approval_farmers',
       partition_by='farmer_id',
       order_by='farmer_id desc'
 ) }}
