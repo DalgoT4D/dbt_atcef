@@ -39,7 +39,7 @@ WITH mycte AS (
     LEFT JOIN
         {{ ref('address_niti_2025') }} AS rwb
         ON
-            location ->> 'Nalla' = rwb.dam
+            subjects."Location_ID" = rwb.address_id
     WHERE
         "Subject_type" = 'Work Order'
         AND "Voided" = False
