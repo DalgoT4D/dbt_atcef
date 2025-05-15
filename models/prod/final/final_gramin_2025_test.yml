@@ -1,5 +1,5 @@
 models:
-  - name: farmer_endline
+  - name: farmer_endline_gramin_25
     description: "Farmer data compiled with Endline Status from encounters"
     columns:
       - name: farmer_id
@@ -30,7 +30,7 @@ models:
                 - 'Endline Done'
                 - 'Endline Not Done'
 
-  - name: machine_endline
+  - name: machine_endline_gramin_25
     description: "Machine Data Compiled with Endline Status from encounters"
     columns:
       - name: machine_id
@@ -74,8 +74,7 @@ models:
               values:
                 - 'Endline Done'
                 - 'Endline Not Done'
-
-  - name: farmer_silt_vulnerable_gdgs_24
+  - name: farmer_silt_vulnerable_gramin_25
     description: "Model that calculates silt carted for vulnerable and other farmers"
     columns:
       - name: state
@@ -104,8 +103,7 @@ models:
       - name: total_silt_carted
         tests:
           - not_null
-  
-  - name: barren_fertile_silt_gdgs_2024
+  - name: barren_fertile_silt_gramin_25
     description: "Summarized silt data for endline farmers merged with work order and location details"
     columns:
       - name: work_order_name
@@ -159,4 +157,3 @@ models:
       - name: total_farm_area_silt_is_spread_on
         tests:
           - not_null
-
