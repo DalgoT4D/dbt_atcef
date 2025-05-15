@@ -90,6 +90,7 @@ final AS (
         ON b.machine_id = m.machine_sub_id
     WHERE
         m.machine_voided = FALSE
+        AND m.machine_approval_status = 'Approved'
 )
 
 SELECT * FROM final
