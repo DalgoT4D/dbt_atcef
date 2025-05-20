@@ -151,6 +151,9 @@ sources:
         identifier: flow_results
       - name: messages_int
         identifier: messages
+      
+      - name: contacts_field_flatten_int
+        identifier: flat_fields
      
 
   
