@@ -143,17 +143,18 @@ sources:
   - name: staging_glific
     schema: staging_glific
     tables: 
-      - name: message_conversations_int
+      - name: message_conversations_stg
         identifier: message_conversations
-      - name: contacts_int
+      - name: contacts_stg
         identifier: contacts
-      - name: flow_results_int
+      - name: flow_results_stg
         identifier: flow_results
-      - name: messages_int
+      - name: messages_stg
         identifier: messages
       
-      - name: contacts_field_flatten_int
+      - name: contacts_field_flatten_stg
         identifier: flat_fields
+      
      
 
   
