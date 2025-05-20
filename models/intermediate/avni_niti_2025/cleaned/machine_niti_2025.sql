@@ -29,7 +29,7 @@ WITH mycte AS (
     LEFT JOIN
         {{ ref('address_niti_2025') }} AS rwb
         ON
-            location ->> 'Nalla' = rwb.dam
+           subjects."Location_ID" = rwb.address_id
     WHERE
         "Subject_type" = 'Excavating Machine'
         AND "Voided" = 'False'
@@ -41,7 +41,7 @@ approval_machines AS (
         a.approval_status AS machine_approval_status
     FROM mycte AS d
     INNER JOIN
-        {{ ref('approval_status_niti_2024') }} AS a
+        {{ ref('approval_status_niti_2025') }} AS a
         ON d.machine_id = a.entity_id
     WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
 )
