@@ -151,9 +151,10 @@ sources:
         identifier: flow_results
       - name: messages_stg
         identifier: messages
-      
       - name: contacts_field_flatten_stg
         identifier: flat_fields
+      - name: tickets_stg
+        identifier: tickets
       
      
 
