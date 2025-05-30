@@ -138,6 +138,24 @@ sources:
       - name: address_gdgs_2025
         identifier: locations
         description: "address api for waterbodies - gdgs 2024"
+  
 
+  - name: staging_glific
+    schema: staging_glific
+    tables: 
+      - name: message_conversations_stg
+        identifier: message_conversations
+      - name: contacts_stg
+        identifier: contacts
+      - name: flow_results_stg
+        identifier: flow_results
+      - name: messages_stg
+        identifier: messages
+      - name: contacts_field_flatten_stg
+        identifier: flat_fields
+      - name: tickets_stg
+        identifier: tickets
+      
+     
 
   
