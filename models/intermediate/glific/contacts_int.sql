@@ -3,7 +3,7 @@
   tags=["glific"]
 ) }}
 
-select 
+with cte as (select 
     id,
     name,
     language,
@@ -13,5 +13,11 @@ select
     user_role,
     CAST(inserted_at AS TIMESTAMPTZ)::DATE AS inserted_date,
     CAST(updated_at AS TIMESTAMPTZ)::DATE AS updated_date
-from {{ source('staging_glific', 'contacts_stg') }}
+from {{ source('staging_glific', 'contacts_stg') }}) 
 
+{{ dbt_utils.deduplicate(
+    relation='cte',
+    partition_by='id',
+    order_by='updated_date desc',
+   )
+}}
