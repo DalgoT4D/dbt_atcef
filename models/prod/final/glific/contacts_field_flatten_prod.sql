@@ -4,8 +4,8 @@
 ) }}
 
 select 
-    id,
-    role,
+    contact_id,
+    "Role" as role,
     phone,
     updated_date,
     inserted_date
