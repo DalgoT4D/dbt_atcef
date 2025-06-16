@@ -28,6 +28,7 @@ base AS (
 
 aggregated AS (
     SELECT DISTINCT
+        row_number() OVER () AS id,
         farmer_district AS district,
         COUNT(DISTINCT dam) AS no_of_waterbodies,
         SUM(DISTINCT silt_target) AS silt_target_cum,
