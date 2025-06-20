@@ -8,7 +8,7 @@ WITH farmer_endline_deduped AS (
         farmer_id,
         total_farm_area_silt_is_spread_on
     FROM {{ ref('farmer_endline_gdgs_25') }}
-    ORDER BY farmer_id DESC  -- or another field to prioritize the latest
+    ORDER BY farmer_id DESC
 ),
 
 base AS (
@@ -26,10 +26,19 @@ base AS (
     WHERE f.total_silt_carted IS NOT NULL AND f.total_silt_carted > 0
 ),
 
+sheet_data AS (
+    SELECT
+        district,
+        total_amount_paid,
+        silt_excavation_paid_lakh,
+        subsidy_paid_lakh
+    FROM {{ ref('mh_dashboard_int') }}
+),
+
 aggregated AS (
     SELECT DISTINCT
-        row_number() OVER () AS id,
-        farmer_district AS district,
+        ROW_NUMBER() OVER () AS id,
+        b.farmer_district AS district,
         COUNT(DISTINCT dam) AS no_of_waterbodies,
         SUM(DISTINCT silt_target) AS silt_target_cum,
         SUM(total_silt_carted) AS total_silt_excavated_cum,
@@ -56,10 +65,9 @@ aggregated AS (
             ) THEN total_silt_carted
             ELSE 0
         END) * 35.75, 2) AS expected_subsidy_payout_lakh,
-        -- Paid columns left blank as they depend on Google Sheet
-        NULL::NUMERIC AS amount_paid_towards_silt_excavation_lakh,
-        NULL::NUMERIC AS amount_paid_towards_subsidy_lakh,
-        NULL::NUMERIC AS total_amount_paid_till_date_lakh,
+        sd.silt_excavation_paid_lakh,
+        sd.subsidy_paid_lakh,
+        sd.total_amount_paid AS total_amount_paid_till_date_lakh,
         ROUND(SUM(total_silt_carted) * 36.89 +
               SUM(CASE
                   WHEN category_of_farmer IN (
@@ -69,8 +77,9 @@ aggregated AS (
                   ELSE 0
               END) * 35.75, 2) AS total_amount_expected_lakh,
         SUM(total_farm_area_silt_is_spread_on) AS total_area_silt_spread_acre
-    FROM base
-    GROUP BY farmer_district
+    FROM base b
+    LEFT JOIN sheet_data sd ON b.farmer_district = sd.district
+    GROUP BY b.farmer_district, sd.silt_excavation_paid_lakh, sd.subsidy_paid_lakh, sd.total_amount_paid
 )
 
 SELECT * FROM aggregated
