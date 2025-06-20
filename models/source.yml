@@ -139,6 +139,13 @@ sources:
         identifier: locations
         description: "address api for waterbodies - gdgs 2024"
   
+  - name: source_google_sheet
+    schema: staging_gdgs_25_26
+    tables:
+      - name: google_sheet_mh_stg
+        identifier: MH_Dashboard 
+        description: "Google sheet data for Maharashtra dashboard"
+        
 
   - name: staging_glific
     schema: staging_glific
