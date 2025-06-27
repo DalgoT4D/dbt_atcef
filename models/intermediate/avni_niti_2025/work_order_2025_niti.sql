@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["intermediate","intermediate_niti_2024", "niti_2024", "niti"]
+  tags=["intermediate","intermediate_niti_2025", "niti_2025", "niti"]
 ) }}
 
 WITH WORKORDERENCOUNTERS AS (

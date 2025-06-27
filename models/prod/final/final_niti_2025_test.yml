@@ -157,3 +157,89 @@ models:
         tests:
           - not_null
 
+  - name: combined_silt_achievement_niti_25
+    description: "Combined silt achievement data from both farmers and gram panchayats"
+    tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          min_value: 1
+          max_value: 1000000
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list: ["state", "district", "taluka", "village", "work_order_name"]
+    columns:
+      - name: state
+        description: "State name"
+        tests:
+          - not_null
+
+      - name: district
+        description: "District name"
+        tests:
+          - not_null
+
+      - name: taluka
+        description: "Taluka name"
+        tests:
+          - not_null
+
+      - name: village
+        description: "Village name"
+        tests:
+          - not_null
+
+      - name: dam_name
+        description: "Name of the dam (may be null for GP-only records)"
+
+      - name: work_order_name
+        description: "Name of the work order"
+        tests:
+          - not_null
+
+      - name: ngo_name
+        description: "Name of the NGO"
+        tests:
+          - not_null
+
+      - name: farmer_silt_achieved
+        description: "Total silt achieved by farmers"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1000000  # Adjust based on realistic maximum
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: total_farm_area_with_silt
+        description: "Total farm area where silt is spread"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100000  # Adjust based on realistic maximum
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: gp_silt_achieved
+        description: "Total silt achieved by gram panchayats"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1000000  # Adjust based on realistic maximum
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: total_silt_achieved
+        description: "Combined total silt achieved by farmers and GPs"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "= (farmer_silt_achieved + gp_silt_achieved)"
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: last_updated
+        description: "Most recent update timestamp"
+        tests:
+          - not_null
+
