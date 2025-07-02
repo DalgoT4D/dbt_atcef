@@ -162,7 +162,20 @@ sources:
         identifier: flat_fields
       - name: tickets_stg
         identifier: tickets
+      - name: flow_contexts
+        identifier: flow_contexts
+        description: "Flow context data from Glific platform"
+        columns:
+          - name: id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: contact_id
+            description: "Foreign key to contacts table"
+            tests:
+              - not_null
+            data_type: bigint
       
-     
 
   
