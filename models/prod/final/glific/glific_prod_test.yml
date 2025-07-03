@@ -1,0 +1,135 @@
+version: 2
+
+models:
+  - name: contact_flow_status_prod
+    description: "{{ doc('glific_prod_models') }}"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_id
+    columns:
+      - name: contact_id
+        tests:
+          - not_null
+      - name: phone
+        tests:
+          - not_null
+      - name: project
+        description: "Project name extracted from username_lms, may be null for contacts without LMS access"
+      - name: avni_gramin_initiated_flow
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: rwb_training_initiated_flow
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: completed_both_trainings
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: avni_training_completed
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: rwb_training_completed
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+  - name: training_split_prod
+    description: "{{ doc('glific_prod_models') }}"
+    columns:
+      - name: training_type
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Avni Training Only'
+                - 'RWB Training Only'
+                - 'Both Trainings'
+                - 'Training Not Started'
+      - name: num_people
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: bigint
+
+  - name: flow_contexts_prod
+    description: "{{ doc('glific_prod_models') }}"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_id
+    columns:
+      - name: contact_id
+        tests:
+          - not_null
+      - name: avni_gramin_initiated_flow
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: rwb_training_initiated_flow
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: completed_both_trainings
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+  - name: active_dormant_users_prod
+    description: "{{ doc('glific_prod_models') }}"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_phone
+    columns:
+      - name: contact_phone
+        tests:
+          - not_null
+          # Test that phone numbers don't contain test pattern
+          - dbt_expectations.expect_column_values_to_not_match_regex:
+              regex: '^987654321'
+      - name: inbound_message_count
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: bigint
+      - name: hi_flow_count
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: bigint
+
+  - name: contacts_field_flatten_prod
+    description: "{{ doc('glific_prod_models') }}"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_id
+    columns:
+      - name: contact_id
+        tests:
+          - not_null
+      - name: phone
+        tests:
+          - not_null
+      - name: role
+        description: "Contact's role in the system, may be null for some contacts"
+      - name: updated_date
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date
+      - name: inserted_date
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date
+
+  - name: message_conversations_prod
+    description: "{{ doc('glific_prod_models') }}"
+
+  - name: messages_prod
+    description: "{{ doc('glific_prod_models') }}" 
