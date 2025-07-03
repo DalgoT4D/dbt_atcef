@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: contact_flow_status_prod
-    description: "Contact training flow status and completion information"
+    description: "{{ doc('glific_prod_models') }}"
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -38,7 +38,7 @@ models:
               values: [0, 1]
 
   - name: training_split_prod
-    description: "Training completion metrics by type"
+    description: "{{ doc('glific_prod_models') }}"
     columns:
       - name: training_type
         tests:
@@ -56,7 +56,7 @@ models:
               column_type: bigint
 
   - name: flow_contexts_prod
-    description: "Flow context information with training completion flags"
+    description: "{{ doc('glific_prod_models') }}"
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -79,7 +79,7 @@ models:
               values: [0, 1]
 
   - name: active_dormant_users_prod
-    description: "User activity metrics based on message counts"
+    description: "{{ doc('glific_prod_models') }}"
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -103,7 +103,7 @@ models:
               column_type: bigint
 
   - name: contacts_field_flatten_prod
-    description: "Flattened contact field information"
+    description: "{{ doc('glific_prod_models') }}"
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -126,4 +126,10 @@ models:
         tests:
           - not_null
           - dbt_expectations.expect_column_values_to_be_of_type:
-              column_type: date 
+              column_type: date
+
+  - name: message_conversations_prod
+    description: "{{ doc('glific_prod_models') }}"
+
+  - name: messages_prod
+    description: "{{ doc('glific_prod_models') }}" 
