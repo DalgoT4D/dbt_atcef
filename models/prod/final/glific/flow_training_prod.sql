@@ -7,7 +7,7 @@ WITH filtered_messages AS (
   SELECT
     id,
     flow_name
-  FROM intermediate_glific.messages_int
+  FROM {{ref('messages_int')}}
   WHERE flow = 'inbound'
     AND flow_name IN ('Hi Flow', 'AVNI Training  flow')
 ),
