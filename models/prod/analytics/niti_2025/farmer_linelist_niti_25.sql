@@ -3,46 +3,50 @@
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti"]
 ) }}
 
-SELECT
-    s.farmer_id,
-    s.farmer_name,
-    w.state,
-    w.district,
-    w.village,
-    w.taluka,
-    w.dam,
-    w.ngo_name,
-    s.mobile_number,
-    s.mobile_verified,
-    s.category_of_farmer,
-    MAX(s.land_holding::NUMERIC) AS land_holding, 
-    SUM(e.total_silt_carted::numeric) AS total_silt_carted,
-    SUM(e.number_of_trolleys_carted::numeric) AS total_trolleys_carted,
-    SUM(e.number_of_hyvasdumper_carted::numeric) AS total_hyvasdumper_carted,
-    MAX(e.area_covered_by_silt::numeric) AS area_covered_by_silt,
-    COALESCE(MAX(a.approval_status)) AS approval_status -- Select the approval status, assumes only approved farmers
 
-FROM {{ ref('encounters_niti_2025') }} AS e
-LEFT JOIN {{ ref('farmer_niti_2025') }} AS s
-    ON e.farmer_sub_id = s.farmer_id
-LEFT JOIN {{ ref('work_order_niti_2025') }} AS w
-    ON e.subject_id = w.work_order_id
--- New Join: To include the approval status
-LEFT JOIN {{ ref('approval_status_niti_2025') }} AS a --new
-    ON s.farmer_id = a.entity_id -- new
 
-WHERE w.work_order_voided != TRUE AND s.farmer_voided != TRUE
 
-GROUP BY
-    s.farmer_id,
-    s.farmer_name,
-    w.state,
-    w.district,
-    w.village,
-    w.taluka,
-    w.dam,
-    w.ngo_name,
-    s.mobile_number,
-    s.mobile_verified,
-    s.category_of_farmer,
-    a.approval_status
+
+
+
+-- SELECT
+--     farmer_sub_id,
+--     approval_status,
+--     mobile_verified,
+--     first_name as farmer_name,
+--             case  -- Standardize state names
+--             when
+--                 LOWER(state) like '%maharashtra%'
+--                 then 'Maharashtra'
+--             when
+--                 LOWER(state) like '%maharshatra%'
+--                 then 'Maharashtra'
+--             else INITCAP(COALESCE(state, ''))
+--         end as state,
+--     district,
+--     taluka,
+--     village,
+--     dam,
+--     category_of_farmer,
+--     ngo_name,
+--     mobile_number,
+--     SUM(COALESCE(total_silt_carted, 0)::numeric) AS total_silt_carted_sum,
+--     SUM(COALESCE(NULLIF(number_of_trolleys_carted, '')::numeric, 0)) AS number_of_trolleys_carted_sum,
+--     MAX(COALESCE(silt_target, 0)::numeric) AS max_silt_target
+-- FROM dev_analytics.work_order_daily_recording_farmer -- placeholder to change
+-- WHERE COALESCE(voided, FALSE) = FALSE
+--   AND COALESCE(subject_voided, FALSE) = FALSE
+-- --   AND first_name IS NOT NULL
+-- GROUP BY
+--     farmer_sub_id,
+--     approval_status,
+--     mobile_verified,
+--     first_name,
+--     dam,
+--     district,
+--     state,
+--     taluka,
+--     village,
+--     category_of_farmer,
+--     ngo_name,
+--     mobile_number
