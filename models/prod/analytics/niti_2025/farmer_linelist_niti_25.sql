@@ -1,52 +1,52 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti"]
+  tags=["analytics", "niti_2025", "niti"]
 ) }}
 
+with farmer_totals as (
 
+  SELECT
+      w.farmer_work_order_sub_id as subject_id,
+      w.farmer_beneficiary_id,
+      SUM(COALESCE(w.trolleys_carted, 0)) AS total_trolleys_carted,
+      SUM(COALESCE(w.hyvas_carted, 0)) AS total_hyvas_carted,
+      SUM(COALESCE(w.silt_carted, 0)) AS total_silt_carted
 
+  FROM {{ ref('work_order_farmer_niti_25') }} AS w
+  WHERE w.farmer_beneficiary_id IS NOT NULL
+  GROUP BY
+      w.farmer_work_order_sub_id,
+      w.farmer_beneficiary_id
+)
 
+SELECT
+  s.farmer_first_name as farmer_name,
+  s.state,
+  s.district,
+  s.taluka,
+  s.gp_village as village,
+  s.dam as dam,
+  s.mobile_number,
+  s.land_holding_acres as land_holding,
+  s.farmer_category,
+  
+  fe.area_silt_spread,
 
+  w.total_trolleys_carted,
+  w.total_hyvas_carted,
+  w.total_silt_carted,  
+  a_farmer.approval_status AS farmer_approval_status,
+  a_workorder.approval_status AS workorder_approval_status
+  
+    FROM farmer_totals AS w
+    LEFT JOIN {{ ref('dim_subjects_farmer_niti_25') }} AS s
+      ON w.farmer_beneficiary_id = s.subject_id
 
+    LEFT JOIN {{ ref('approval_status_niti_25') }} AS a_farmer
+    ON w.farmer_beneficiary_id = a_farmer.entity_id
 
--- SELECT
---     farmer_sub_id,
---     approval_status,
---     mobile_verified,
---     first_name as farmer_name,
---             case  -- Standardize state names
---             when
---                 LOWER(state) like '%maharashtra%'
---                 then 'Maharashtra'
---             when
---                 LOWER(state) like '%maharshatra%'
---                 then 'Maharashtra'
---             else INITCAP(COALESCE(state, ''))
---         end as state,
---     district,
---     taluka,
---     village,
---     dam,
---     category_of_farmer,
---     ngo_name,
---     mobile_number,
---     SUM(COALESCE(total_silt_carted, 0)::numeric) AS total_silt_carted_sum,
---     SUM(COALESCE(NULLIF(number_of_trolleys_carted, '')::numeric, 0)) AS number_of_trolleys_carted_sum,
---     MAX(COALESCE(silt_target, 0)::numeric) AS max_silt_target
--- FROM dev_analytics.work_order_daily_recording_farmer -- placeholder to change
--- WHERE COALESCE(voided, FALSE) = FALSE
---   AND COALESCE(subject_voided, FALSE) = FALSE
--- --   AND first_name IS NOT NULL
--- GROUP BY
---     farmer_sub_id,
---     approval_status,
---     mobile_verified,
---     first_name,
---     dam,
---     district,
---     state,
---     taluka,
---     village,
---     category_of_farmer,
---     ngo_name,
---     mobile_number
+    LEFT JOIN {{ ref('approval_status_niti_25') }} AS a_workorder
+    ON w.subject_id = a_workorder.entity_id
+
+    LEFT JOIN {{ ref('farmer_endline_niti_25') }} AS fe
+    ON w.farmer_beneficiary_id = fe.endline_farmer_sub_id
