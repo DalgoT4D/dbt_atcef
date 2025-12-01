@@ -5,29 +5,28 @@
 
 
 Select
-w.work_order_name,
--- e."ID" as encounter_id,
--- e."Subject_ID" as subject_id,
-w.date_time as work_order_date_time,
-e."Encounter_date_time" as endline_date,
-w.state,
-w.district,
-w.taluka,
-w.village,
-w.dam,
-w.silt_target,
-e.observations ->> 'MB Recording done' as mb_recording,
-e.observations ->> 'Silt excavated as per MB recording' as silt_excavated_mb,
-e.observations ->> 'Total silt excavated' as total_silt_excavated, -- Check, this to be zero sometimes
-e.observations ->> 'NGO Name' as stakeholder_responsible,
-e.observations ->> 'Image 1 of the site' as image_1_of_site,
-e.observations ->> 'Image 2 of the site' as image_2_of_site,
-e.observations ->> 'Document of MB recording' as mb_recording_document
+ws.workorder_first_name as workorder_name,
+ws.updated_workorder_name as updated_workorder_name,
+ws.state,
+ws.district,
+ws.gp_village as village,
+ws.taluka,
+ws.dam,
+ws.ngo_name,
 
-From {{ source('rwb_niti_2025', 'encounters_niti_2025') }} as e
 
-inner join {{ ref('work_order_niti_2025') }} as w
-on
-e."Subject_ID" = w.work_order_id
-Where e."Encounter_type" = 'Work order endline' -- work_order_2025_niti extras here not in this table
 
+we.encounter_date_time,
+we.ngo,
+we.site_video,
+we.mb_recording_done,
+we.site_image_1_url,
+we.site_image_2_url,
+we.total_silt_excavated,
+we.mb_document_url,
+we.silt_excavated_as_per_mb,
+we.is_mb_data_same_as_app_data
+
+FROM {{ ref('work_order_endline_niti_25') }} as we
+Left JOIN {{ ref('dim_subjects_work_order_niti_25') }} AS ws
+    ON we.endline_work_order_sub_id = ws.subject_id

@@ -1,6 +1,6 @@
   {{ config(
     materialized='table',
-    tags=["analytics", "niti_2025", "niti"]
+    tags=["analytics", "niti_2025", "niti", "analytics_intermediate"]
   ) }}
 
   SELECT
@@ -20,4 +20,5 @@
       e.observations ->> 'Is MB recording data same as app data?' AS is_mb_data_same_as_app_data
 
   FROM {{ ref('encounter_type_niti_25') }} e
-  WHERE e.encounter_type = 'Work order endline' and e.voided = false
+  WHERE e.encounter_type = 'Work order endline' 
+  -- and e.voided = false

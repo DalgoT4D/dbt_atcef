@@ -1,6 +1,6 @@
   {{ config(
     materialized='table',
-    tags=["analytics", "niti_2025", "niti"]
+    tags=["analytics", "niti_2025", "niti", "analytics_intermediate"]
   ) }}
 
   SELECT 
@@ -23,5 +23,5 @@
       CAST(e.observations ->> 'Total cost borne by the farmer for spreading/levelling silt on farm (INR)' AS NUMERIC) AS total_spreading_cost
             
   FROM {{ ref('encounter_type_niti_25') }} e
-  -- LEFT JOIN {{ source('rwb_niti_2025', 'subjects_niti_2025') }} s ON e."Subject_ID" = s.uid
-  WHERE e.encounter_type = 'Farmer Endline' and e.voided = false
+  WHERE e.encounter_type = 'Farmer Endline' 
+  -- and e.voided = false

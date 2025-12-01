@@ -1,6 +1,6 @@
   {{ config(
     materialized='table',
-    tags=["analytics", "niti_2025", "niti"]
+    tags=["analytics", "niti_2025", "niti", "analytics_intermediate"]
   ) }}
 
   SELECT
@@ -14,4 +14,5 @@
       CAST(e.observations ->> 'Total working hours' AS NUMERIC) AS total_working_hours,
       CAST(e.observations ->> 'Working Hours as per time' AS NUMERIC) AS working_hours
   FROM {{ ref('encounter_type_niti_25') }} e
-  WHERE e.encounter_type = 'Work order daily Recording - Machine' and e.voided = false
+  WHERE e.encounter_type = 'Work order daily Recording - Machine' 
+--   and e.voided = false

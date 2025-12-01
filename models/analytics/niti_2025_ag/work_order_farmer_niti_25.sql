@@ -1,6 +1,6 @@
   {{ config(
     materialized='table',
-    tags=["analytics", "niti_2025", "niti"]
+    tags=["analytics", "niti_2025", "niti", "analytics_intermediate"]
   ) }}
 
   SELECT
@@ -29,4 +29,5 @@
       CAST(e.observations ->> 'How much silt has been used for non-farm purpose' AS NUMERIC)  AS amt_silt_used_non_farm_purpose
 
   FROM {{ ref('encounter_type_niti_25') }} e
-  WHERE e.encounter_type = 'Work order daily Recording - Farmer' and e.voided = false
+  WHERE e.encounter_type = 'Work order daily Recording - Farmer'
+  --  and e.voided = false

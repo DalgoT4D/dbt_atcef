@@ -1,6 +1,6 @@
   {{ config(
     materialized='table',
-    tags=["analytics", "niti_2025", "niti"]
+    tags=["analytics", "niti_2025", "niti", "analytics_intermediate"]
   ) }}
 
   SELECT
@@ -13,4 +13,5 @@
       CAST(e.observations ->> 'Total working hours of machine' AS NUMERIC) AS total_machine_working_hours
 
   FROM {{ ref('encounter_type_niti_25') }} e
-  WHERE e.encounter_type = 'Excavating Machine Endline' and e.voided = false
+  WHERE e.encounter_type = 'Excavating Machine Endline' 
+--   and e.voided = false

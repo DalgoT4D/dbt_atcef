@@ -7,12 +7,12 @@ WITH work_metrics AS (
     SELECT
         p.work_order_id,
         w.first_name as work_order_name,
-        p.state,
-        p.district,
-        p.village,
-        p.taluka,
-        p.dam,
-        p.ngo_name,
+        -- l.state,
+        -- l.district,
+        -- l.village,
+        -- l.taluka,
+        -- l.dam,
+        -- l.ngo_name,
         w.silt_target,
         SUM(w.working_hours_as_per_time::NUMERIC) AS machine_working_hours, -- cross checked based on source calc
         SUM(w.total_silt_excavated_encounter::NUMERIC) AS total_silt_excavated,

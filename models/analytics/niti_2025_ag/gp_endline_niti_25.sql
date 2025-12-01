@@ -1,6 +1,6 @@
   {{ config(
     materialized='table',
-    tags=["analytics", "niti_2025", "niti"]
+    tags=["analytics", "niti_2025", "niti", "analytics_intermediate"]
   ) }}
 
   SELECT
@@ -26,4 +26,5 @@
       e.observations ->> 'Name of PoC for the committee' AS committee_poc_name
 
   FROM {{ ref('encounter_type_niti_25') }} e
-  WHERE e.encounter_type = 'Gram Panchayat Endline' and e.voided = false
+  WHERE e.encounter_type = 'Gram Panchayat Endline' 
+--   and e.voided = false
