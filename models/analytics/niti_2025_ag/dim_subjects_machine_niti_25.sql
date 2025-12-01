@@ -15,7 +15,6 @@ SELECT
     CAST(s.observations ->> 'Contractor''s Mobile number' AS NUMERIC) AS contractor_mobile_number,
     s."Voided" as voided
 
-
 FROM {{ source('rwb_niti_2025', 'subjects_niti_2025') }} s
 where s."Subject_type" = 'Excavating Machine' 
 -- and s."Voided" = false
