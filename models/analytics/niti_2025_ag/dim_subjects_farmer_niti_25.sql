@@ -21,7 +21,8 @@ SELECT
     CAST(s.observations ->> 'Number of hywas required' AS NUMERIC) AS number_hywas_required,
     CAST(s.observations ->> 'Number of trolleys required' AS NUMERIC) AS number_trolleys_required,
     CAST(s.observations ->> 'Capacity of trolleys in cu.m.' AS NUMERIC) AS capacity_trolleys_cum,
-    CAST(s.observations ->> 'Farmer contribution per trolley' AS NUMERIC) AS farmer_contribution_per_trolley
+    CAST(s.observations ->> 'Farmer contribution per trolley' AS NUMERIC) AS farmer_contribution_per_trolley,
+    s."Voided" as voided
 
 FROM {{ source('rwb_niti_2025', 'subjects_niti_2025') }} s
 where s."Subject_type" = 'Farmer' 

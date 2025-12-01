@@ -17,7 +17,8 @@
       CAST(e.observations ->> 'Total silt excavated' AS NUMERIC) AS total_silt_excavated,
       e.observations ->> 'Document of MB recording' AS mb_document_url,
       CAST(e.observations ->> 'Silt excavated as per MB recording' AS NUMERIC) AS silt_excavated_as_per_mb,
-      e.observations ->> 'Is MB recording data same as app data?' AS is_mb_data_same_as_app_data
+      e.observations ->> 'Is MB recording data same as app data?' AS is_mb_data_same_as_app_data,
+      e.voided
 
   FROM {{ ref('encounter_type_niti_25') }} e
   WHERE e.encounter_type = 'Work order endline' 

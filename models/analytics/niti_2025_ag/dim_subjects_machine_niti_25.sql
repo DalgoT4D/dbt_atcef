@@ -12,7 +12,10 @@ SELECT
     s.observations ->> 'First name' AS machine_name,
     s.observations ->> 'Type of Machine' AS machine_type,
     s.observations ->> 'Contractor''s name' AS contractor_name,
-    CAST(s.observations ->> 'Contractor''s Mobile number' AS NUMERIC) AS contractor_mobile_number
+    CAST(s.observations ->> 'Contractor''s Mobile number' AS NUMERIC) AS contractor_mobile_number,
+    s."Voided" as voided
+
 
 FROM {{ source('rwb_niti_2025', 'subjects_niti_2025') }} s
--- where s."Subject_type" = 'Excavating Machine' and s."Voided" = false
+where s."Subject_type" = 'Excavating Machine' 
+-- and s."Voided" = false

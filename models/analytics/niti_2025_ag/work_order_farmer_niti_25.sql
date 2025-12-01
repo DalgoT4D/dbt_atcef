@@ -26,7 +26,8 @@
         ),
         '"', ''
     ) AS other_purpose_of_carting_silt,
-      CAST(e.observations ->> 'How much silt has been used for non-farm purpose' AS NUMERIC)  AS amt_silt_used_non_farm_purpose
+      CAST(e.observations ->> 'How much silt has been used for non-farm purpose' AS NUMERIC)  AS amt_silt_used_non_farm_purpose,
+      e.voided
 
   FROM {{ ref('encounter_type_niti_25') }} e
   WHERE e.encounter_type = 'Work order daily Recording - Farmer'

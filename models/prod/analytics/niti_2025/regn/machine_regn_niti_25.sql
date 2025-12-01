@@ -4,21 +4,17 @@
 ) }}
 
 SELECT 
-w.*,
--- we.encounter_date_time as endline_date,
+m.*,
 l.*,
 a.approval_status
 
 FROM 
-{{ ref('dim_subjects_work_order_niti_25') }} AS w
+{{ ref('dim_subjects_machine_niti_25') }} AS m
 LEFT JOIN 
 {{ ref('location_niti_25') }} AS l
-    ON w.location_id = l.address_id
+    ON m.location_id = l.address_id
 LEFT JOIN 
 {{ ref('approval_status_niti_25') }} AS a
-    ON w.subject_id = a.entity_id
+    ON m.subject_id = a.entity_id
 
-WHERE w.voided != TRUE
-
-
-
+WHERE m.voided != TRUE

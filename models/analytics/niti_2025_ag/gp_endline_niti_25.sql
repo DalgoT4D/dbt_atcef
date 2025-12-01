@@ -23,7 +23,8 @@
   
       e.observations ->> 'Contact number of PoC for committee' AS committee_poc_contact_number,
       e.observations ->> 'Maintenance plan for the WB' AS has_maintenance_plan,
-      e.observations ->> 'Name of PoC for the committee' AS committee_poc_name
+      e.observations ->> 'Name of PoC for the committee' AS committee_poc_name,
+      e.voided
 
   FROM {{ ref('encounter_type_niti_25') }} e
   WHERE e.encounter_type = 'Gram Panchayat Endline' 
