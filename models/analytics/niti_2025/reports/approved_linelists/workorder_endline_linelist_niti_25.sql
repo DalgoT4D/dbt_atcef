@@ -40,7 +40,8 @@ we.total_silt_excavated,
 we.mb_document_url,
 we.silt_excavated_as_per_mb,
 we.is_mb_data_same_as_app_data,
-we.approval_status
+we.approval_status,
+ws.subject_id as workorder_id
 
 FROM (Select * from latest_records WHERE rn = 1) as we
 LEFT JOIN {{ ref('work_order_regn_niti_25') }} AS ws

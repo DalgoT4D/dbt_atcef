@@ -8,7 +8,7 @@
       e.subject_id as endline_gp_sub_id,
       e.encounter_type,
       e.subject_type,
-      e.encounter_date_time,
+      CAST(e.encounter_date_time AS TIMESTAMP) as encounter_date_time,
       
       e.observations ->> 'GP' AS gp_id,
       e.observations ->> 'Established any water committee' AS established_water_committee,

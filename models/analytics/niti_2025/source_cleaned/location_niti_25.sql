@@ -14,7 +14,12 @@ WITH cte AS (
         "Parent" ->> 'Title' AS village,
         "Parent" -> 'Parent' ->> 'Title' AS taluka,
         "Parent" -> 'Parent' -> 'Parent' ->> 'Title' AS district,
-        "Parent" -> 'Parent' -> 'Parent' -> 'Parent' ->> 'Title' AS state
+        "Parent" -> 'Parent' -> 'Parent' -> 'Parent' ->> 'Title' AS state,
+
+        "customProperties" ->> 'Name of Gram Panchayat' AS gram_panchayat_name,
+        -- CAST("customProperties" ->> 'Estimated quantity of Silt' AS NUMERIC) AS estimated_silt_quantity,
+        CAST("customProperties" ->> 'GPS Coordinates of the site, Latitude' AS NUMERIC) AS site_gps_latitude,
+        CAST("customProperties" ->> 'GPS Coordinates of the site, Longitude' AS NUMERIC) AS site_gps_longitude
     FROM
         {{ source('rwb_niti_2025', 'address_niti_2025') }}
     WHERE
