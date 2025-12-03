@@ -14,6 +14,7 @@ w.district,
 w.taluka,
 w.village,
 w.dam,
+w.stakeholder_responsible,
 w.workorder_first_name as workorder_name,
 w.updated_workorder_name,
 cast(w.registration_date as TIMESTAMP) as work_order_start_date
@@ -98,8 +99,15 @@ GROUP BY t.workorderid)
 -- FINAL TABLE
 
 SELECT
+    wd.workorderid,
     wd.workorder_name,
     wd.updated_workorder_name,
+    wd.state,
+    wd.district,
+    wd.taluka,
+    wd.village,
+    wd.dam,
+    wd.stakeholder_responsible,
     wd.silt_to_be_excavated_as_per_plan,
     fc.total_silt_carted_by_farmers,
     gs.total_silt_excavated_by_gp_non_farm,
@@ -108,8 +116,8 @@ SELECT
     mtc.poclain_count,
     mtc.jcb_count,
     fc.total_number_of_farmers,
-    wd.work_order_start_date AS "Work Order Start Date",
-    we.workorder_endline_date AS "Work Order Endline Date"
+    wd.work_order_start_date,
+    we.workorder_endline_date
 FROM
     workoderdetails AS wd
 LEFT JOIN
