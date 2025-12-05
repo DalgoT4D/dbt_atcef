@@ -1,50 +1,11 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025", "intermediate_reports_niti_2025"]
 ) }}
 
 
--- Workorder details
-with workoderdetails as (
-SELECT
-w.subject_id as workorderid,
-w.silt_to_be_excavated_as_per_plan,
-w.state,
-w.district,
-w.taluka,
-w.village,
-w.dam,
-w.stakeholder_responsible,
-w.workorder_first_name as workorder_name,
-w.updated_workorder_name,
-cast(w.registration_date as TIMESTAMP) as work_order_start_date
-from {{ ref('work_order_regn_niti_25') }} as w
-WHERE w.approval_status = 'Approved'
-),
-
-
-
--- Farmer silt details
-farmer_carted as (
-SELECT
-    wf.farmer_work_order_sub_id as workorderid,
-    SUM(CASE
-            -- Only sum the silt_carted if the record is approved
-            WHEN a.approval_status = 'Approved' THEN COALESCE(wf.silt_carted, 0)
-            ELSE 0
-END) as total_silt_carted_by_farmers,
-    count(distinct wf.farmer_beneficiary_id) as total_number_of_farmers
-
-from {{ ref('work_order_farmer_niti_25') }} as wf
-
-INNER JOIN {{ ref('approval_status_niti_25') }} as a 
-    ON wf.eid = a.entity_id 
-WHERE wf.voided != TRUE
-group by wf.farmer_work_order_sub_id),
-
-
 -- machine type merge
-machine_type as (
+with machine_type as (
 SELECT
 wf.farmer_work_order_sub_id as workorderid,
 wf.silt_carted,
@@ -73,29 +34,6 @@ FROM machine_type_pivot
 GROUP BY 1),
 
 
-
--- GP silt details
-gp_silt as (
-    SELECT
-    ge.endline_gp_sub_id as workorderid,
-    sum(case 
-    when a.approval_status = 'Approved' then COALESCE(ge.total_gp_silt_excavated_non_farm, 0) 
-    else 0 end) as total_silt_excavated_by_gp_non_farm
-    from {{ ref('gp_endline_niti_25') }} as ge
-    INNER JOIN {{ ref('approval_status_niti_25') }} as a 
-    ON ge.eid = a.entity_id 
-    WHERE ge.voided = false 
-    GROUP BY ge.endline_gp_sub_id
-),
-
--- Workorder endline silt details
-workorder_endline as (
-SELECT
-we.workorder_id,
-we.total_silt_excavated,
-cast(we.endline_date as TIMESTAMP) as workorder_endline_date
-from {{ ref('workorder_endline_linelist_niti_25') }} as we 
-),
 
 -- machine details
 machine_silt as (
@@ -174,14 +112,10 @@ SELECT
     ms.poclain_working_hours,
     exc.jcb_excavation,
     exc.poclain_excavation
-FROM
-    workoderdetails AS wd
-LEFT JOIN
-    farmer_carted AS fc ON wd.workorderid = fc.workorderid
-LEFT JOIN
-    gp_silt AS gs ON wd.workorderid = gs.workorderid
-LEFT JOIN
-    workorder_endline AS we ON wd.workorderid = we.workorder_id
+FROM {{ref('work_order_regn_approved_niti_25')}} AS wd
+LEFT JOIN {{ref('farmer_silt_clean_niti_25')}} AS fc ON wd.workorderid = fc.workorderid
+LEFT JOIN {{ref('gp_silt_clean_niti_25')}} AS gs ON wd.workorderid = gs.workorderid
+LEFT JOIN {{ref('work_order_endline_silt_niti_25')}} AS we ON wd.workorderid = we.workorder_id
 LEFT JOIN
     machine_silt AS ms ON wd.workorderid = ms.workorderid
 LEFT JOIN

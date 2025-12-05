@@ -26,7 +26,8 @@ w.amt_silt_used_non_farm_purpose,
 
 w.farmer_work_order_sub_id AS work_order_id,
 ws.approval_status AS work_order_approval_status,
-fs.approval_status AS farmer_approval_status
+fs.approval_status AS farmer_approval_status,
+a.approval_status AS encounter_approval_status
 
 FROM {{ ref('farmer_regn_niti_25') }} AS fs
 LEFT JOIN {{ ref('work_order_farmer_niti_25') }} AS w
@@ -34,5 +35,8 @@ LEFT JOIN {{ ref('work_order_farmer_niti_25') }} AS w
     AND COALESCE(w.voided, FALSE) = FALSE
 LEFT JOIN {{ ref('work_order_regn_niti_25') }} AS ws
     ON w.farmer_work_order_sub_id = ws.subject_id
-    AND ws.approval_status = 'Approved'
-WHERE fs.approval_status = 'Approved'
+    -- AND ws.approval_status = 'Approved'
+LEFT JOIN {{ref('approval_status_niti_25')}} as a
+ON w.eid = a.entity_id
+WHERE fs.approval_status = 'Approved' AND a.approval_status = 'Approved'
+AND ws.approval_status = 'Approved' AND w.voided != TRUE

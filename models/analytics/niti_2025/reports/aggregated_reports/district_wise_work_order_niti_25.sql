@@ -4,11 +4,11 @@
 ) }}
 
 SELECT
-    m.dam,
     m.state, 
     m.district, 
-    m.taluka, 
-    m.village, 
+    count(m.taluka) as number_talukas, 
+    count(m.village) as number_villages, 
+    count(m.dam) as number_waterbodies,
     COUNT(m.workorderid) AS registered_work_orders,
     SUM(CASE WHEN m.workorder_endline_date IS NOT NULL THEN 1 ELSE 0 END) AS work_order_endlines_completed,
     SUM(CASE WHEN m.workorder_endline_date IS NULL THEN 1 ELSE 0 END) AS active_work_orders,
@@ -32,12 +32,8 @@ SELECT
     sum(m.jcb_excavation) as total_jcb_excavation,
     sum(m.poclain_excavation) as total_poclain_excavation
 
-    
 
 FROM {{ref('machine_clean_niti_25')}} AS m
 GROUP BY
-    m.dam,
     m.state, 
-    m.district, 
-    m.taluka, 
-    m.village
+    m.district
