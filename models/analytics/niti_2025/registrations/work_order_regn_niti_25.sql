@@ -1,3 +1,4 @@
+-- Work order registration detail table pairing subject attributes with location and approval data for NITI 2025.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "niti_registrations", "registrations_niti_2025"]
@@ -19,6 +20,5 @@ LEFT JOIN
     ON w.subject_id = a.entity_id
 
 WHERE w.voided != TRUE
-
 
 

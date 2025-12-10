@@ -1,3 +1,4 @@
+-- Joins machine endline encounters with registrations and exposes approval status without filtering it.
 {{ config(
   materialized='table',
   tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

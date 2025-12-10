@@ -1,3 +1,4 @@
+-- Summarizes active_workorder_linelist_niti_25 per work order/dam with silt, farmer, machine totals and elapsed days.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

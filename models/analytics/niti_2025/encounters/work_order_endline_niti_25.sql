@@ -1,3 +1,5 @@
+-- contains information from the encounters staging table filtered for "Work order endline"
+   
   {{ config(
     materialized='table',
     tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "encounters_niti_2025"]

@@ -1,3 +1,6 @@
+  -- Farmer subject dimension that flattens observations 
+  -- (demographics, land holding, contact info, silt requirements) for the NITI 2025 registrations feed.
+ 
   {{ config(
     materialized='table',
     tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "source_cleaned_niti_2025"]

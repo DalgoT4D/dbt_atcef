@@ -1,3 +1,5 @@
+-- Keeps the latest farmer_endline_niti_25 per farmer, adds registration fields, 
+-- and unfiltered approval status.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

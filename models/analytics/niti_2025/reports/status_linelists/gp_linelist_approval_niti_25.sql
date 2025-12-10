@@ -1,3 +1,5 @@
+-- Joins gp_regn_niti_25 with the latest gp_endline_niti_25 per GP to surface readiness responses 
+-- and silt totals with approval status.
 {{ config(
   materialized='table',
   tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

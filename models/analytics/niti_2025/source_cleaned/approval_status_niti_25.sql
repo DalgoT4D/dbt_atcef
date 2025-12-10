@@ -1,3 +1,6 @@
+-- Keeps the latest approval status per entity from the rwb_niti_2025 approval_statuses source 
+-- so downstream models can read a single current status flag.
+
 {{ config(
   materialized='table',
   tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "source_cleaned_niti_2025"]

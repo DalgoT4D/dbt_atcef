@@ -1,3 +1,5 @@
+-- Joins farmer_regn_niti_25 with carting totals and latest endline info
+-- without filtering  approval outcome.
 {{ config(
   materialized='table',
   tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

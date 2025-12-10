@@ -1,3 +1,4 @@
+-- contains information from the encounters staging table filtered for "Work order daily Recording - Farmer"
   {{ config(
     materialized='table',
     tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "encounters_niti_2025"]
@@ -25,10 +26,14 @@
             ']', ''
         ),
         '"', ''
-    ) AS other_purpose_of_carting_silt,
+    ) AS purpose_of_carting_silt,
       CAST(e.observations ->> 'How much silt has been used for non-farm purpose' AS NUMERIC)  AS amt_silt_used_non_farm_purpose,
-      e.voided
-
+      e.voided,
+    
+    e.observations ->> 'Silt taken by' AS silt_taken_by, -- new
+    e.observations ->> 'Other person taking silt' AS other_person_taking_silt, -- new
+    e.observations ->> 'Other purpose of carting silt' AS other_purpose_of_carting_silt -- new
+    
   FROM {{ ref('encounter_type_niti_25') }} e
   WHERE e.encounter_type = 'Work order daily Recording - Farmer'
   --  and e.voided = false

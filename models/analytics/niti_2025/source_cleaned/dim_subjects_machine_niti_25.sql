@@ -1,3 +1,5 @@
+-- Excavating Machine dimension that exposes machine identity,
+-- type, and contractor contact attributes from the subjects table.
   {{ config(
     materialized='table',
     tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "source_cleaned_niti_2025"]

@@ -1,3 +1,4 @@
+-- Joins gp_endline_niti_25 with approval_status_niti_25 and sums approved non-farm silt per work order.
 
 {{ config(
   materialized='table',

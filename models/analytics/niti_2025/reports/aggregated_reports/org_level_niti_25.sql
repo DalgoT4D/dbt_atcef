@@ -1,3 +1,5 @@
+-- Groups machine_clean_niti_25 by stakeholder to measure geographic coverage 
+-- plus active work, silt progress, and machine hours.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

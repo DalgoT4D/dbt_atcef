@@ -1,3 +1,5 @@
+-- Lists machine encounters by joining work_order_machine_niti_25 to machine registrations and approvals
+--  without filtering by status.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

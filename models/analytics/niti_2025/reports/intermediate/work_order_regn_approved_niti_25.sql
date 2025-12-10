@@ -1,3 +1,4 @@
+-- Filters work_order_regn_niti_25 to approved registrations and keeps key location plus start date fields per work order.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025", "intermediate_reports_niti_2025"]

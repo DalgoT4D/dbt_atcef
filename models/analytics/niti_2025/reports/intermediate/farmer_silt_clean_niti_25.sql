@@ -1,3 +1,5 @@
+-- Joins work_order_farmer_niti_25 to approval_status_niti_25 to 
+-- total approved farmer silt carting and distinct farmers per work order.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025", "intermediate_reports_niti_2025"]

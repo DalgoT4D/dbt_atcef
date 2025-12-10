@@ -1,3 +1,5 @@
+  -- Work Order subjects curated with media links, year metadata,
+  -- and planned silt excavation quantities for traceable project tracking.
   {{ config(
     materialized='table',
     tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "source_cleaned_niti_2025"]
@@ -14,6 +16,9 @@ SELECT
     s.observations ->> 'Image 1 of the site' AS site_image_1_url,
     s.observations ->> 'Image 2 of the site' AS site_image_2_url,
     s.observations ->> 'updated workorder name' AS updated_workorder_name,
+    s.observations ->> 'NOC/Work order image' AS noc_workorder_image, -- added from avni
+    s.observations ->> 'Site marking image' AS site_marking_image,-- added from avni
+
     CAST(s.observations ->> 'Silt to be excavated as per plan' AS NUMERIC) AS silt_to_be_excavated_as_per_plan,
     s."Voided" as voided
 

@@ -1,3 +1,5 @@
+-- Keeps the latest work_order_endline_niti_25 per work order and
+-- retains the encounter approval status alongside registration context.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
@@ -23,6 +25,7 @@ WITH latest_records AS (
 
 Select
 ws.workorder_first_name as workorder_name,
+ws.subject_id as workorder_id, -- added
 ws.updated_workorder_name as updated_workorder_name,
 ws.state,
 ws.district,

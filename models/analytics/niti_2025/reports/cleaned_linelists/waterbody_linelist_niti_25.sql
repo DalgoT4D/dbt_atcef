@@ -1,3 +1,4 @@
+-- Projects waterbody attributes from location_niti_25 (dam, hierarchy, silt target, GPS).
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]

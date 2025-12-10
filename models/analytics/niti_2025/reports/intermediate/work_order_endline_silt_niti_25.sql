@@ -1,3 +1,4 @@
+-- Selects workorder_endline_linelist_niti_25 to bring total silt excavated and endline date by work order.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025", "intermediate_reports_niti_2025"]

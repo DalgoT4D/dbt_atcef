@@ -1,3 +1,5 @@
+-- Builds the master work-order and machine performance table by merging approved registrations with farmer/GP silt pulls,
+-- daily machine encounter hours, and machine type counts so downstream aggregates have a single fact grain.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025", "intermediate_reports_niti_2025"]
@@ -122,4 +124,3 @@ LEFT JOIN
     machine_types_counted AS mtc ON wd.workorderid = mtc.workorderid
 LEFT JOIN
 carting_by_machine_type AS exc ON wd.workorderid = exc.workorderid
-

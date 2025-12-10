@@ -1,3 +1,4 @@
+-- Unions the approval linelists for every entity type and counts approved, pending, and rejected records.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025","niti_2025","niti","analytical_models","reports_niti_2025"]

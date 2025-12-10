@@ -1,3 +1,4 @@
+-- Combines work order registrations, latest endline info, and contractor details with approval status.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
@@ -46,6 +47,11 @@ we.encounter_date_time as endline_date,
 ws.site_image_1_url,
 ws.site_image_2_url,
 ws.site_video_url,
+ws.noc_workorder_image, -- new
+ws.site_marking_image, -- new
+
+
+
 mc.contractor_name,
 ws.approval_status
 

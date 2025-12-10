@@ -1,3 +1,4 @@
+-- Uses machine_clean_niti_25 as the active work order linelist and extracting aggregated farmer, machine, and silt fields.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
