@@ -33,6 +33,7 @@ SELECT
     mr.taluka,
     mr.village,
     mr.dam,
+    mr.gram_panchayat_name as gp,
     mr.stakeholder_responsible,
     a.approval_status AS encounter_approval_status,
     ml.log_book_image_machine,

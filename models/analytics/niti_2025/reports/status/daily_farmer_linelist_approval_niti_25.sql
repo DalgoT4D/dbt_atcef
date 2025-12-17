@@ -15,12 +15,13 @@ SELECT
     ws.workorder_first_name AS workorder_name,
     ws.updated_workorder_name AS updated_workorder_name,
     fs.farmer_name,
-
+    fs.subject_id as farmer_id, -- new
     fs.state,
     fs.district,
     fs.village,
     fs.taluka,
     fs.dam,
+    fs.gp,
     fs.stakeholder_responsible,
 
     w.trolleys_carted,

@@ -40,6 +40,7 @@ district,
 taluka,
 village,
 dam,
+gram_panchayat_name as gp,
 stakeholder_responsible,
 approval_status
 from farmer_data

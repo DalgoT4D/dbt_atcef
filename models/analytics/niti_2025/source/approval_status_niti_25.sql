@@ -9,7 +9,7 @@
 
 WITH RankedStatuses AS (
     SELECT
-        "Entity_ID" AS entity_id,
+        "Entity_ID" AS entity_id, -- this can be a workorder, subject or encounter id
         "Entity_type" AS entity_type,
         "Approval_status" AS approval_status,
        cast("Status_date_time" AS timestamp) AS status_date_time,

@@ -38,6 +38,7 @@ ws.district,
 ws.village,
 ws.taluka,
 ws.dam,
+ws.gram_panchayat_name as gp,
 
 ws.silt_to_be_excavated_as_per_plan,
 ws.stakeholder_responsible,

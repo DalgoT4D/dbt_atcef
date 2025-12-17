@@ -6,6 +6,7 @@
 
 Select
 mr.machine_name,
+mr.subject_id as machine_id,
 mr.machine_type,
 cast(me.total_machine_working_hours as NUMERIC) as total_machine_working_hours,
 cast(me.encounter_date_time as TIMESTAMP) as endline_date_time,
@@ -14,6 +15,7 @@ mr.district,
 mr.taluka,
 mr.village,
 mr.dam,
+mr.gram_panchayat_name as gp,
 a.approval_status
 from 
 {{ ref('machine_endline_niti_25') }} as me

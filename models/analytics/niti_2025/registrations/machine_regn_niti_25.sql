@@ -9,6 +9,7 @@ SELECT
   m.registration_date,
   m.subject_type,
   m.location_id,
+  -- m.ngo_name as stakeholder_responsible,
   UPPER(REPLACE(REPLACE(REGEXP_REPLACE(
                 COALESCE(m.machine_name::TEXT, ''),  -- 1. Cast to TEXT for string operations
                 '[-\s]+', -- 2. Target ONE OR MORE hyphens (-) or whitespace characters (\s)

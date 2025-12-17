@@ -29,7 +29,7 @@ SELECT
     aw.work_order_start_date,
     aw.workorder_endline_date
 
-from  {{ref('active_workorder_linelist_niti_25')}} as aw
+from  {{ref('active_work_order_niti_25')}} as aw
 group by 
     aw.dam,
     aw.workorderid,

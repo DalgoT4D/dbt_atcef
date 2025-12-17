@@ -15,12 +15,9 @@ SELECT
     COUNT(m.workorderid) AS registered_work_orders,
     SUM(CASE WHEN m.workorder_endline_date IS NOT NULL THEN 1 ELSE 0 END) AS work_order_endlines_completed,
     SUM(CASE WHEN m.workorder_endline_date IS NULL THEN 1 ELSE 0 END) AS active_work_orders,
-    SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.total_number_of_farmers, 0) ELSE 0
-        END) AS active_farmers,
-    SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.poclain_count, 0)
-    ELSE 0 END) AS active_poclains,
-    SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.jcb_count, 0) ELSE 0
-    END) AS active_jcbs,    
+    sum(m.active_farmers) as active_farmers,
+    sum(m.active_poclains) as active_poclains,
+    sum(m.active_jcbs) as active_jcbs,
     sum(m.silt_to_be_excavated_as_per_plan) as silt_to_be_excavated_as_per_plan,
     sum(m.total_silt_carted_by_farmers) as total_silt_carted_by_farmers,
     sum(m.total_silt_excavated_by_gp_non_farm) as total_silt_excavated_by_gp_non_farm,
@@ -37,7 +34,7 @@ SELECT
     sum(m.poclain_excavation) as total_poclain_excavation
 
 
-FROM {{ref('machine_clean_niti_25')}} AS m
+FROM {{ref('active_work_order_niti_25')}} AS m
 
 GROUP BY
     m.dam,
@@ -45,3 +42,10 @@ GROUP BY
     m.district, 
     m.taluka, 
     m.village
+-- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.total_number_of_farmers, 0) ELSE 0
+    --     END) AS active_farmers,
+    -- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.poclain_count, 0)
+    -- ELSE 0 END) AS active_poclains,
+    -- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.jcb_count, 0) ELSE 0
+    -- END) AS active_jcbs,    
+  

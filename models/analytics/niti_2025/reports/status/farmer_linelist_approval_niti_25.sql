@@ -45,6 +45,8 @@ SELECT
   s.taluka,
   s.village,
   s.dam,
+  s.gp,
+  s.stakeholder_responsible,
   s.mobile_number,
   s.land_holding,
   s.farmer_category,

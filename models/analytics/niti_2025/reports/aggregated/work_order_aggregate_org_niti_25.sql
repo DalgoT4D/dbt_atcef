@@ -20,7 +20,7 @@ SELECT
     sum(aw.total_number_of_farmers) as total_number_of_farmers,
     (CAST(aw.workorder_endline_date AS DATE) - CAST(aw.work_order_start_date AS DATE)) AS active_work_days
 
-from  {{ref('active_workorder_linelist_niti_25')}} as aw
+from  {{ref('active_work_order_niti_25')}} as aw
 group by 
     aw.stakeholder_responsible,
     aw.workorderid,

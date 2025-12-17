@@ -10,7 +10,7 @@ SELECT
     s."Registration_date" as registration_date,
     s."Subject_type" AS subject_type,
     s."Location_ID" AS location_id,
-    -- s.observations ->> 'NGO Name' AS ngo_name,
+    s.observations ->> 'NGO Name' AS ngo_name,
     s.observations ->> 'First name' AS machine_name,
     s.observations ->> 'Type of Machine' AS machine_type,
     s.observations ->> 'Contractor''s name' AS contractor_name,

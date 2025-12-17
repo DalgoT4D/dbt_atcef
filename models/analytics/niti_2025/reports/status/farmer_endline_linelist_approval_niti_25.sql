@@ -30,12 +30,15 @@ farmer_with_status AS (
 
 SELECT
   fr.farmer_name,
+  fr.subject_id as farmer_beneficiary_id,
   fe.encounter_date_time,
   fr.state,
   fr.district,
   fr.taluka,
   fr.village,
   fr.dam,
+  fr.gp,
+  fr.stakeholder_responsible,
   fe.total_silt_excavated,
   fe.area_silt_spread,
   fe.type_of_land_silt_is_spread_on,

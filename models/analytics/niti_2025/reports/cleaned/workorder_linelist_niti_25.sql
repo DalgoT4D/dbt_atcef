@@ -6,5 +6,6 @@
 
 
 SELECT *
+
 FROM {{ ref('workorder_linelist_approval_niti_25') }}
 WHERE approval_status = 'Approved'
