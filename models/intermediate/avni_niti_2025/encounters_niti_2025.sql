@@ -48,8 +48,32 @@ with cte as (
         ->> 'Total silt excavated by GP (for non-farm purpose)' as total_silt_excavated_by_gp_for_non_farm_purpose,
         observations ->> 'Area covered by silt' as area_covered_by_silt,
         observations
-        ->> 'Number of trolleys carted' as number_of_trolleys_carted
+        ->> 'Number of trolleys carted' as number_of_trolleys_carted,
 
+        -- NEW LINES
+        observations
+        ->> 'Number of hyvas/dumper carted' as number_of_hyvasdumper_carted,
+        
+        NULLIF(
+            REGEXP_REPLACE(
+                COALESCE(
+                    observations ->> 'Purpose of carting silt',
+                    ''
+                ),
+                '[\[\]\"]',
+                '',
+
+                'g'
+            ),
+            ''
+        ) as purpose_of_carting_silt,
+        
+        observations
+        ->> 'The silt has been used for non-farm purpose' as silt_used_for_non_farm_purpose,
+
+        observations
+        ->> 'How much silt has been used for non-farm purpose' as amt_used_for_non_farm_purpose
+        
     from {{ source('rwb_niti_2025', 'encounters_niti_2025') }}
 ),
 

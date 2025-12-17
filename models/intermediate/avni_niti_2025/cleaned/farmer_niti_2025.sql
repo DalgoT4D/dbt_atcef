@@ -26,7 +26,8 @@ with mycte as (
         INITCAP(COALESCE(rwb.taluka)) as taluka,
         INITCAP(COALESCE(rwb.village)) as village,
         observations ->> 'Category of farmer' as category_of_farmer,
-        observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number
+        observations -> 'Mobile Number' ->> 'phoneNumber' as mobile_number,
+        observations -> 'Land holding' as land_holding -- new field
     from
         {{ source('rwb_niti_2025', 'subjects_niti_2025') }}
     LEFT JOIN
