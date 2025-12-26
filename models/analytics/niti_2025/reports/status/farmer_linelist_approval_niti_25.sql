@@ -28,7 +28,6 @@ latest_endline AS (
         -- Rank records by submission date/time descending, partitioned by farmer ID
         ROW_NUMBER() OVER (
             PARTITION BY endline_farmer_sub_id
-            -- *** REPLACE 'endline_submission_datetime' with the actual timestamp column ***
             ORDER BY encounter_date_time DESC
         ) AS rn
     FROM {{ ref('farmer_endline_niti_25') }}
@@ -38,7 +37,8 @@ latest_endline AS (
 
 
 SELECT
-  -- w.farmer_beneficiary_id, -- added temp
+  --w.farmer_beneficiary_id, -- added temp
+  s.subject_id AS farmer_id,
   s.farmer_name,
   s.state,
   s.district,

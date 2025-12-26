@@ -42,24 +42,15 @@
 --    SOURCES:
 --      - work_order_regn_niti_25
 --
--- 7. farmer_activity: Determines farmer activity status using farmer endlines.
---    SOURCES:
---      - work_order_farmer_niti_25
---      - approval_status_niti_25
---      - farmer_endline_linelist_niti_25
---
--- 8. active_farmers_by_workorder: Aggregates count of ACTIVE farmers per work order.
---    SOURCES:
---      - farmer_activity (CTE)
---
--- 9. farmer_silt: Aggregates farmer-extracted silt and farmer counts per work order.
---    SOURCES:
---      - work_order_farmer_niti_25
---      - approval_status_niti_25
---
--- 10. farmer_silt_cl: Filters farmer_silt to work orders with non-zero farmer silt.
---     SOURCES:
---       - farmer_silt (CTE)
+-- 7. farmer_silt: Aggregates farmer-extracted silt and farmer counts per work order,
+--      deriving active farmers (> 0 approved silt) and total farmers.
+--      SOURCES:
+--        - work_order_farmer_niti_25
+--        - approval_status_niti_25
+
+-- 8. farmer_silt_cl: Filters farmer_silt to work orders with non-zero farmer silt.
+--      SOURCES:
+--        - farmer_silt (CTE)
 --
 -- 11. gp_silt: Aggregates GP / non-farmer silt excavation per work order.
 --     SOURCES:
@@ -77,13 +68,12 @@
 --   - machine_silt
 --   - machine_types_counted
 --   - carting_by_machine_type
---   - active_farmers_by_workorder
 --
 -- ------------------------------------------------------------
 -- ACTIVITY DEFINITIONS
 -- ------------------------------------------------------------
 -- Active Work Order: workorder_endline_date IS NULL
--- Active Farmer: farmer endline NOT reached
+-- Active Farmer: farmer has approved silt carted > 0
 -- Active Machine: workorder endline NOT reached (to check if this should be revised to machine endline)
 
 
@@ -233,50 +223,36 @@ approved_work_orders AS (
     WHERE w.approval_status = 'Approved'
 ),
 
--- FARMER ACTIVE
-farmer_activity AS (
+-- FARMER SILT
+
+farmer_level_silt AS (
     SELECT
         wf.farmer_work_order_sub_id AS workorderid,
         wf.farmer_beneficiary_id,
-        CASE
-            WHEN fe.encounter_date_time IS NULL THEN 1
-            ELSE 0
-        END AS is_active_farmer
-    FROM {{ ref('work_order_farmer_niti_25') }} wf
-    INNER JOIN {{ ref('approval_status_niti_25') }} a
+        SUM(
+            CASE
+                WHEN a.approval_status = 'Approved' THEN COALESCE(wf.silt_carted, 0)
+                ELSE 0
+            END
+        ) AS approved_silt_carted
+    FROM {{ ref('work_order_farmer_niti_25') }} AS wf
+    INNER JOIN {{ ref('approval_status_niti_25') }} AS a
         ON wf.eid = a.entity_id
-    LEFT JOIN {{ ref('farmer_endline_linelist_niti_25') }} fe
-        ON wf.farmer_beneficiary_id = fe.farmer_beneficiary_id
-    WHERE
-        wf.voided != TRUE
-        AND a.approval_status = 'Approved'
+    WHERE wf.voided != TRUE
+    GROUP BY
+        wf.farmer_work_order_sub_id,
+        wf.farmer_beneficiary_id
 ),
-active_farmers_by_workorder AS (
+
+farmer_silt AS (
     SELECT
         workorderid,
-        COUNT(DISTINCT farmer_beneficiary_id) AS active_farmers
-    FROM farmer_activity
-    WHERE is_active_farmer = 1
+        SUM(approved_silt_carted) AS total_silt_carted_by_farmers,
+        COUNT(DISTINCT CASE WHEN approved_silt_carted > 0 THEN farmer_beneficiary_id END) AS active_farmers,
+        COUNT(DISTINCT farmer_beneficiary_id) AS total_number_of_farmers
+    FROM farmer_level_silt
     GROUP BY workorderid
 ),
-
--- FARMER SILT
-
-farmer_silt as (SELECT
-    wf.farmer_work_order_sub_id as workorderid,
-    SUM(CASE
-            -- Only sum the silt_carted if the record is approved
-            WHEN a.approval_status = 'Approved' THEN COALESCE(wf.silt_carted, 0)
-            ELSE 0
-END) as total_silt_carted_by_farmers,
-    count(distinct wf.farmer_beneficiary_id) as total_number_of_farmers
-
-from {{ ref('work_order_farmer_niti_25') }} as wf
-
-INNER JOIN {{ ref('approval_status_niti_25') }} as a 
-    ON wf.eid = a.entity_id 
-WHERE wf.voided != TRUE 
-group by wf.farmer_work_order_sub_id),
 
 farmer_silt_cl as (Select * from farmer_silt where total_silt_carted_by_farmers > 0),
 
@@ -324,7 +300,7 @@ SELECT
 
     /* ---------------- ACTIVE METRICS ---------------- */
 
-    COALESCE(af.active_farmers, 0) AS active_farmers,
+    COALESCE(fc.active_farmers, 0) AS active_farmers,
 
     -- mtc.active_jcb_count as active_jcbs,
     -- mtc.active_poclain_count as active_poclains,
@@ -353,6 +329,3 @@ LEFT JOIN {{ref('workorder_endline_linelist_niti_25')}} AS we ON wd.workorderid 
 LEFT JOIN   machine_silt AS ms ON wd.workorderid = ms.workorderid
 LEFT JOIN  machine_types_counted AS mtc ON wd.workorderid = mtc.workorderid
 LEFT JOIN carting_by_machine_type AS exc ON wd.workorderid = exc.workorderid
-LEFT JOIN active_farmers_by_workorder as af ON wd.workorderid = af.workorderid
-
-
