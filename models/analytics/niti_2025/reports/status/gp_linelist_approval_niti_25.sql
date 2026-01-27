@@ -17,6 +17,7 @@ with latest_endline_per_gp AS (
 )
 
 SELECT
+ge.endline_gp_sub_id as workorder_id,
 gr.gp_first_name as gp_name,
 gr.state,
 gr.district,
