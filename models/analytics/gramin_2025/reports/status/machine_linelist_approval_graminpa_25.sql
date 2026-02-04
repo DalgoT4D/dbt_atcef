@@ -1,7 +1,7 @@
 -- Lists machine_regn_graminpa_25 records with contractor and location fields, leaving approval status unfiltered.
 {{ config(
   materialized='table',
-  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025"]
+  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 Select

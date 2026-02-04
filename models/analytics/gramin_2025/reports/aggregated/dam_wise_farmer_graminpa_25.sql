@@ -59,18 +59,37 @@ SELECT
     COUNT(Case when de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.farmer_id END) AS semi_medium_farmers,
     COUNT(Case when de.farmer_category = 'Medium (10-24.99 acres)' THEN de.farmer_id END) AS medium_farmers,
     COUNT(Case when de.farmer_category = 'Large (above 25 acres)' THEN de.farmer_id END) AS large_farmers,
+    SUM(CASE WHEN de.farmer_category = 'Disabled' THEN 1 ELSE 0 END) 
+    AS disabled_farmers, -- account for nulls
+    SUM(CASE WHEN de.farmer_category = 'Widow' THEN 1 ELSE 0 END) 
+    AS widow_farmers, -- account for nulls
+    SUM(CASE 
+        WHEN de.farmer_category = 'Family of farmer who committed suicide' 
+        THEN 1 
+        ELSE 0 
+    END) AS family_members_suicide_farmers, -- account for nulls
+    
     /* silt carted by farmers (cu.m) */
     SUM(CASE WHEN de.farmer_category = 'Marginal (0-2.49 acres)' THEN de.silt_carted ELSE 0 END) AS marginal_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Small (2.5-4.99 acres)' THEN de.silt_carted ELSE 0 END) AS small_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.silt_carted ELSE 0 END) AS semi_medium_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Medium (10-24.99 acres)' THEN de.silt_carted ELSE 0 END) AS medium_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Large (above 25 acres)' THEN de.silt_carted ELSE 0 END) AS large_farmers_silt_carted,
+    SUM(CASE WHEN de.farmer_category = 'Disabled' THEN COALESCE(de.silt_carted, 0) ELSE 0 END) AS disabled_farmers_silt_carted, -- account for nulls
+    SUM(CASE WHEN de.farmer_category = 'Widow' THEN COALESCE(de.silt_carted, 0) ELSE 0 END) AS widow_farmers_silt_carted,-- account for nulls
+    SUM(CASE WHEN de.farmer_category = 'Family of farmer who committed suicide' THEN COALESCE(de.silt_carted, 0) ELSE 0 END) AS family_members_suicide_farmers_silt_carted,
+-- account for nulls
+
         /* silt carted for non-farm purpose (cu.m) */
-        SUM(CASE WHEN de.farmer_category = 'Marginal (0-2.49 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS marginal_farmers_silt_for_non_farm_purpose,
-        SUM(CASE WHEN de.farmer_category = 'Small (2.5-4.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS small_farmers_silt_for_non_farm_purpose,
-        SUM(CASE WHEN de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS semi_medium_farmers_silt_for_non_farm_purpose,
-        SUM(CASE WHEN de.farmer_category = 'Medium (10-24.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS medium_farmers_silt_for_non_farm_purpose,
-        SUM(CASE WHEN de.farmer_category = 'Large (above 25 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS large_farmers_silt_for_non_farm_purpose,
+    SUM(CASE WHEN de.farmer_category = 'Marginal (0-2.49 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS marginal_farmers_silt_for_non_farm_purpose,
+    SUM(CASE WHEN de.farmer_category = 'Small (2.5-4.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS small_farmers_silt_for_non_farm_purpose,
+    SUM(CASE WHEN de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS semi_medium_farmers_silt_for_non_farm_purpose,
+    SUM(CASE WHEN de.farmer_category = 'Medium (10-24.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS medium_farmers_silt_for_non_farm_purpose,
+    SUM(CASE WHEN de.farmer_category = 'Large (above 25 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS large_farmers_silt_for_non_farm_purpose,
+  SUM(CASE WHEN de.farmer_category = 'Disabled' THEN COALESCE(de.amt_silt_used_non_farm_purpose, 0) ELSE 0 END) AS disabled_farmers_silt_for_non_farm_purpose,
+SUM(CASE WHEN de.farmer_category = 'Widow' THEN COALESCE(de.amt_silt_used_non_farm_purpose, 0) ELSE 0 END) AS widow_farmers_silt_for_non_farm_purpose,
+SUM(CASE WHEN de.farmer_category = 'Family of farmer who committed suicide' THEN COALESCE(de.amt_silt_used_non_farm_purpose, 0) ELSE 0 END) AS family_members_suicide_farmers_silt_for_non_farm_purpose,
+
     SUM(fe.area_silt_spread) AS area_silt_spread
     FROM daily_summed AS de
     LEFT JOIN {{ ref('farmer_endline_linelist_graminpa_25') }} AS fe

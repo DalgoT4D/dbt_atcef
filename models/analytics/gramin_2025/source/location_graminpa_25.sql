@@ -28,7 +28,7 @@ WITH cte AS (
         -- CAST("customProperties" ->> 'GPS Coordinates of the site, Latitude' AS NUMERIC) AS site_gps_latitude,
         -- CAST("customProperties" ->> 'GPS Coordinates of the site, Longitude' AS NUMERIC) AS site_gps_longitude
     FROM
-        {{ source('source_gramin', 'address_gramin') }}
+        {{ source('source_gramin_25', 'address_gramin_25') }}
     WHERE
         "Title" NOT LIKE '%(voided~%)'
 )

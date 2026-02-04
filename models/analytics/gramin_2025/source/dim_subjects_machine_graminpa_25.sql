@@ -17,6 +17,6 @@ SELECT
     CAST(s.observations ->> 'Contractor''s Mobile number' AS NUMERIC) AS contractor_mobile_number,
     s."Voided" as voided
 
-FROM {{ source('source_gramin', 'subjects_gramin') }} s
+FROM {{ source('source_gramin_25', 'subjects_gramin_25') }} s
 where s."Subject_type" = 'Excavating Machine' 
 -- and s."Voided" = false

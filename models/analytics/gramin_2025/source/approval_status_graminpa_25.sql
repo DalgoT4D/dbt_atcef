@@ -18,7 +18,7 @@ WITH RankedStatuses AS (
             ORDER BY "Status_date_time" DESC
         ) AS rn
     FROM
-        {{ source('source_gramin', 'approval_statuses') }}
+        {{ source('source_gramin_25', 'approval_statuses') }}
 )
 
 SELECT

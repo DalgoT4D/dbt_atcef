@@ -19,6 +19,7 @@ LEFT JOIN
 {{ ref('approval_status_gdgs_25') }} AS a
     ON w.subject_id = a.entity_id
 
-WHERE w.voided != TRUE
+    WHERE w.voided != TRUE
+    AND l.state IS NOT NULL
 
 

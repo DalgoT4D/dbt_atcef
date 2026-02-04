@@ -23,6 +23,6 @@ SELECT
     s."Voided" as voided
 
 
-FROM {{ source('source_gramin', 'subjects_gramin') }} s
+FROM {{ source('source_gramin_25', 'subjects_gramin_25') }} s
 where s."Subject_type" = 'Work Order'
 --  s."Voided" = false

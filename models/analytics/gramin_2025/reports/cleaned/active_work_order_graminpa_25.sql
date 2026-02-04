@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025"]
+  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "cleaned_graminpa_25"]
 ) }}
 
 -- ANALYTICAL TABLE: Work Orders × Farmers × Machines × Silt (graminpa 2025)

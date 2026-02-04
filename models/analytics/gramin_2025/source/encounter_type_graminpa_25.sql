@@ -14,4 +14,4 @@ SELECT
 observations,
 "Voided" as voided
 
-FROM {{ source('source_gramin', 'encounters_gramin') }}
+FROM {{ source('source_gramin_25', 'encounters_gramin_25') }}
