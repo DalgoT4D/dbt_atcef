@@ -1,7 +1,7 @@
 -- Joins farmer registrations, work orders, and non-voided daily encounters with approval flags for review.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025"]
+  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 WITH non_voided_work_orders AS (
