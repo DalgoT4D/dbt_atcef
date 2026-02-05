@@ -1,8 +1,8 @@
--- Groups machine_clean_niti_25 by stakeholder to measure geographic coverage 
+-- Groups machine_clean_graminpa_25 by stakeholder to measure geographic coverage 
 -- plus active work, silt progress, and machine hours.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "aggregated_graminpa_25"]
 ) }}
 
 SELECT
@@ -23,7 +23,7 @@ SELECT
     sum(m.total_machine_working_hours) as total_machine_working_hours
 
 
-FROM {{ref('active_work_order_niti_25')}} AS m
+FROM {{ref('active_work_order_graminpa_25')}} AS m
 GROUP BY
     m.stakeholder_responsible
 

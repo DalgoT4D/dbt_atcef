@@ -1,18 +1,18 @@
 -- Shows approved farmer progress from the status_linelists table.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "cleaned_graminpa_25"]
 ) }}
 
 -- SELECT *
--- FROM {{ ref('farmer_linelist_approval_niti_25') }}
+-- FROM {{ ref('farmer_linelist_approval_graminpa_25') }}
 -- WHERE approval_status = 'Approved'
 
--- Joins farmer_regn_niti_25 with carting totals and latest endline info
+-- Joins farmer_regn_graminpa_25 with carting totals and latest endline info
 -- without filtering  approval outcome.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025"]
 ) }}
 
 with farmer_totals as (
@@ -23,7 +23,7 @@ with farmer_totals as (
       SUM(COALESCE(w.hyvas_carted, 0)) AS total_hyvas_carted,
       SUM(COALESCE(w.silt_carted, 0)) AS total_silt_carted
 
-  FROM {{ ref('daily_farmer_linelist_niti_25') }} AS w
+  FROM {{ ref('daily_farmer_linelist_graminpa_25') }} AS w
   WHERE w.farmer_id IS NOT NULL
   GROUP BY
       w.farmer_id
@@ -38,7 +38,7 @@ latest_endline AS (
             PARTITION BY endline_farmer_sub_id
             ORDER BY encounter_date_time DESC
         ) AS rn
-    FROM {{ ref('farmer_endline_niti_25') }}
+    FROM {{ ref('farmer_endline_graminpa_25') }}
     WHERE
         voided != TRUE -- Only consider non-voided records
 )
@@ -66,7 +66,7 @@ SELECT
   w.total_hyvas_carted,
   w.total_silt_carted
 
-    FROM {{ ref('farmer_regn_niti_25') }} AS s
+    FROM {{ ref('farmer_regn_graminpa_25') }} AS s
     LEFT JOIN  farmer_totals AS w
     ON w.farmer_beneficiary_id = s.subject_id
 

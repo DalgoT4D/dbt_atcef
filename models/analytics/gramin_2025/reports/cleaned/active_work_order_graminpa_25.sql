@@ -1,18 +1,18 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "cleaned_graminpa_25"]
 ) }}
 
--- ANALYTICAL TABLE: Work Orders × Farmers × Machines × Silt (NITI 2025)
+-- ANALYTICAL TABLE: Work Orders × Farmers × Machines × Silt (graminpa 2025)
 --
 -- ------------------------------------------------------------
 -- CTE OVERVIEW WITH SOURCE TABLES
 -- ------------------------------------------------------------
 -- 1. machine_type: Maps farmer-reported silt carting records to machine types.
 --    SOURCES:
---      - work_order_farmer_niti_25
---      - machine_regn_niti_25
---      - approval_status_niti_25
+--      - work_order_farmer_graminpa_25
+--      - machine_regn_graminpa_25
+--      - approval_status_graminpa_25
 --
 -- 2. machine_type_pivot: Aggregates silt carted per work order by machine type.
 --    SOURCES:
@@ -25,31 +25,31 @@
 -- 4. machine_silt: Aggregates approved machine working hours per work order,
 --      including total hours and hours by machine type.
 --    SOURCES:
---      - work_order_machine_niti_25
---      - approval_status_niti_25
---      - machine_regn_niti_25
+--      - work_order_machine_graminpa_25
+--      - approval_status_graminpa_25
+--      - machine_regn_graminpa_25
 --
 -- 5. machine_types_counted: Counts distinct approved machines used per work order,
 --      split by machine type (JCB / Poclain).
 --      Also derives ACTIVE machine counts based on machine endlines.
 --    SOURCES:
---      - work_order_machine_niti_25
---      - machine_regn_niti_25
---      - machine_endline_linelist_niti_25
+--      - work_order_machine_graminpa_25
+--      - machine_regn_graminpa_25
+--      - machine_endline_linelist_graminpa_25
 --
 -- 6. approved_work_orders: Filters to approved work orders and selects core metadata
 --      such as location, stakeholder, planned silt, and start date.
 --    SOURCES:
---      - work_order_regn_niti_25
+--      - work_order_regn_graminpa_25
 --
 -- 7. farmer_silt_cl: Filters farmer_silt to work orders with non-zero farmer silt.
 --      SOURCES:
---        - daily_farmer_linelist_niti_25
+--        - daily_farmer_linelist_graminpa_25
 --
 -- 8. gp_silt: Aggregates GP / non-farmer silt excavation per work order.
 --     SOURCES:
---       - gp_endline_niti_25
---       - approval_status_niti_25
+--       - gp_endline_graminpa_25
+--       - approval_status_graminpa_25
 --
 -- ------------------------------------------------------------
 -- FINAL OUTPUT
@@ -58,13 +58,13 @@
 --   - approved_work_orders
 --   - farmer_silt_cl
 --   - gp_silt
---   - workorder_endline_linelist_niti_25
+--   - workorder_endline_linelist_graminpa_25
 --   - machine_silt
 --   - machine_types_counted
 --   - carting_by_machine_type
 --
 -- ------------------------------------------------------------
--- ACTIVITY DEFINITIONS
+-- ACTIVITY DEFIgraminpaONS
 -- ------------------------------------------------------------
 -- Active Work Order: workorder_endline_date IS NULL
 -- Active Farmer: farmer has approved silt carted > 0
@@ -81,10 +81,10 @@ wf.farmer_work_order_sub_id as workorderid,
 wf.silt_carted,
 wf.machine_sub_id,
 mr.machine_type
-from {{ ref('work_order_farmer_niti_25') }} as wf
-LEFT JOIN {{ref('machine_regn_niti_25')}} as mr
+from {{ ref('work_order_farmer_graminpa_25') }} as wf
+LEFT JOIN {{ref('machine_regn_graminpa_25')}} as mr
 ON mr.subject_id = wf.machine_sub_id
-INNER JOIN {{ ref('approval_status_niti_25') }} as a 
+INNER JOIN {{ ref('approval_status_graminpa_25') }} as a 
 ON wf.eid = a.entity_id ),
 
 machine_type_pivot AS (
@@ -128,11 +128,11 @@ SELECT
              THEN COALESCE(mw.working_hours, 0)
         ELSE 0
     END) as poclain_working_hours
-FROM {{ ref('work_order_machine_niti_25') }} as mw
-INNER JOIN {{ ref('approval_status_niti_25') }} as a 
+FROM {{ ref('work_order_machine_graminpa_25') }} as mw
+INNER JOIN {{ ref('approval_status_graminpa_25') }} as a 
     ON mw.eid = a.entity_id 
 -- Add machine registration table to get machine type
-LEFT JOIN {{ ref('machine_regn_niti_25') }} AS mr
+LEFT JOIN {{ ref('machine_regn_graminpa_25') }} AS mr
     ON mw.excavating_machine_id = mr.subject_id
 WHERE mw.voided != TRUE
 GROUP BY mw.machine_work_order_sub_id
@@ -149,8 +149,8 @@ GROUP BY mw.machine_work_order_sub_id
 --             mw.machine_work_order_sub_id AS workorderid,
 --             mw.excavating_machine_id,
 --             LOWER(mr.machine_type) AS machine_type_lower
---         FROM {{ ref('work_order_machine_niti_25') }} AS mw
---         LEFT JOIN{{ ref('machine_regn_niti_25') }} AS mr
+--         FROM {{ ref('work_order_machine_graminpa_25') }} AS mw
+--         LEFT JOIN{{ ref('machine_regn_graminpa_25') }} AS mr
 --             ON mw.excavating_machine_id = mr.subject_id
 --         WHERE mw.voided != TRUE AND mr.approval_status = 'Approved') AS t
 -- GROUP BY t.workorderid),
@@ -185,14 +185,14 @@ FROM (
         mw.machine_work_order_sub_id AS workorderid,
         mw.excavating_machine_id AS machine_id,
         LOWER(mr.machine_type) AS machine_type_lower
-    FROM {{ ref('work_order_machine_niti_25') }} AS mw
-    LEFT JOIN {{ ref('machine_regn_niti_25') }} AS mr
+    FROM {{ ref('work_order_machine_graminpa_25') }} AS mw
+    LEFT JOIN {{ ref('machine_regn_graminpa_25') }} AS mr
         ON mw.excavating_machine_id = mr.subject_id
     WHERE
         mw.voided != TRUE
         AND mr.approval_status = 'Approved'
 ) t
-LEFT JOIN {{ ref('machine_endline_linelist_niti_25') }} me
+LEFT JOIN {{ ref('machine_endline_linelist_graminpa_25') }} me
     ON t.machine_id = me.machine_id
 GROUP BY t.workorderid
 ),
@@ -213,7 +213,7 @@ approved_work_orders AS (
         w.workorder_first_name AS workorder_name,
         w.updated_workorder_name,
         CAST(w.registration_date AS TIMESTAMP) AS work_order_start_date
-    FROM {{ ref('work_order_regn_niti_25') }} AS w
+    FROM {{ ref('work_order_regn_graminpa_25') }} AS w
     WHERE w.approval_status = 'Approved'
 ),
 
@@ -229,8 +229,8 @@ approved_work_orders AS (
 --                 ELSE 0
 --             END
 --         ) AS approved_silt_carted
---     FROM {{ ref('work_order_farmer_niti_25') }} AS wf
---     INNER JOIN {{ ref('approval_status_niti_25') }} AS a
+--     FROM {{ ref('work_order_farmer_graminpa_25') }} AS wf
+--     INNER JOIN {{ ref('approval_status_graminpa_25') }} AS a
 --         ON wf.eid = a.entity_id
 --     WHERE wf.voided != TRUE
 --     GROUP BY
@@ -256,7 +256,7 @@ farmer_silt_cl as (
         count(distinct farmer_id) as total_number_of_farmers,
         sum(silt_carted) as total_silt_carted_by_farmers,
         count(distinct case when silt_carted > 0 then farmer_id end) as active_farmers
-    from {{ ref('daily_farmer_linelist_niti_25') }}
+    from {{ ref('daily_farmer_linelist_graminpa_25') }}
     group by work_order_id),
     -- having sum(silt_carted) > 0),
 
@@ -267,8 +267,8 @@ farmer_silt_cl as (
     sum(case 
     when a.approval_status = 'Approved' then COALESCE(ge.total_gp_silt_excavated_non_farm, 0) 
     else 0 end) as total_silt_excavated_by_gp_non_farm
-    from {{ ref('gp_endline_niti_25') }} as ge
-    INNER JOIN {{ ref('approval_status_niti_25') }} as a 
+    from {{ ref('gp_endline_graminpa_25') }} as ge
+    INNER JOIN {{ ref('approval_status_graminpa_25') }} as a 
     ON ge.eid = a.entity_id 
     WHERE ge.voided = false 
     GROUP BY ge.endline_gp_sub_id)
@@ -330,7 +330,7 @@ SELECT
 FROM approved_work_orders AS wd
 LEFT JOIN farmer_silt_cl AS fc ON wd.workorderid = fc.work_order_id
 LEFT JOIN gp_silt AS gs ON wd.workorderid = gs.workorderid
-LEFT JOIN {{ref('workorder_endline_linelist_niti_25')}} AS we ON wd.workorderid = we.workorder_id
+LEFT JOIN {{ref('workorder_endline_linelist_graminpa_25')}} AS we ON wd.workorderid = we.workorder_id
 LEFT JOIN   machine_silt AS ms ON wd.workorderid = ms.workorderid
 LEFT JOIN  machine_types_counted AS mtc ON wd.workorderid = mtc.workorderid
 LEFT JOIN carting_by_machine_type AS exc ON wd.workorderid = exc.workorderid

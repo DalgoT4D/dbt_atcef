@@ -26,6 +26,57 @@ dbt_atcef
 │  ├─ .gitkeep
 │  └─ generate_schema_name.sql
 ├─ models
+├── analytics
+│   │   └── niti_2025
+│   │       ├── encounters
+│   │       │   ├── farmer_endline_niti_25.sql
+│   │       │   ├── gp_endline_niti_25.sql
+│   │       │   ├── machine_endline_niti_25.sql
+│   │       │   ├── work_order_endline_niti_25.sql
+│   │       │   ├── work_order_farmer_niti_25.sql
+│   │       │   └── work_order_machine_niti_25.sql
+│   │       ├── registrations
+│   │       │   ├── farmer_regn_niti_25.sql
+│   │       │   ├── gp_regn_niti_25.sql
+│   │       │   ├── machine_regn_niti_25.sql
+│   │       │   └── work_order_regn_niti_25.sql
+│   │       ├── reports
+│   │       │   ├── aggregated
+│   │       │   │   ├── dam_wise_farmer_niti_25.sql
+│   │       │   │   ├── dam_wise_work_order_niti_25.sql
+│   │       │   │   ├── org_level_niti_25.sql
+│   │       │   │   ├── overall_approval_statistics_niti_25.sql
+│   │       │   │   ├── work_order_aggregate_dam_niti_25.sql
+│   │       │   │   └── work_order_aggregate_org_niti_25.sql
+│   │       │   ├── cleaned
+│   │       │   │   ├── active_work_order_niti_25.sql
+│   │       │   │   ├── daily_farmer_linelist_niti_25.sql
+│   │       │   │   ├── daily_machine_linelist_niti_25.sql
+│   │       │   │   ├── farmer_endline_linelist_niti_25.sql
+│   │       │   │   ├── farmer_linelist_niti_25.sql
+│   │       │   │   ├── machine_endline_linelist_niti_25.sql
+│   │       │   │   ├── machine_linelist_niti_25.sql
+│   │       │   │   ├── waterbody_linelist_niti_25.sql
+│   │       │   │   ├── workorder_endline_linelist_niti_25.sql
+│   │       │   │   └── workorder_linelist_niti_25.sql
+│   │       │   └── status
+│   │       │       ├── daily_farmer_linelist_approval_niti_25.sql
+│   │       │       ├── daily_machine_linelist_approval_niti_25.sql
+│   │       │       ├── farmer_endline_linelist_approval_niti_25.sql
+│   │       │       ├── farmer_linelist_approval_niti_25.sql
+│   │       │       ├── gp_linelist_approval_niti_25.sql
+│   │       │       ├── machine_endline_linelist_approval_niti_25.sql
+│   │       │       ├── machine_linelist_approval_niti_25.sql
+│   │       │       ├── workorder_endline_linelist_approval_niti_25.sql
+│   │       │       └── workorder_linelist_approval_niti_25.sql
+│   │       └── source
+│   │           ├── approval_status_niti_25.sql
+│   │           ├── dim_subjects_farmer_niti_25.sql
+│   │           ├── dim_subjects_gp_niti_25.sql
+│   │           ├── dim_subjects_machine_niti_25.sql
+│   │           ├── dim_subjects_work_order_niti_25.sql
+│   │           ├── encounter_type_niti_25.sql
+│   │           └── location_niti_25.sql
 │  ├─ intermediate
 │  │  ├─ avni_gdgsgom_2023
 │  │  │  ├─ approval_statuses_gdgs_2023.sql

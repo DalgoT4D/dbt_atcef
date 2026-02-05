@@ -1,8 +1,8 @@
--- Joins gp_regn_niti_25 with the latest gp_endline_niti_25 per GP to surface readiness responses 
+-- Joins gp_regn_graminpa_25 with the latest gp_endline_graminpa_25 per GP to surface readiness responses 
 -- and silt totals with approval status.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 
@@ -12,7 +12,7 @@ with latest_endline_per_gp AS (
             PARTITION BY gp_id
             ORDER BY encounter_date_time DESC
         ) AS encounter_rank
-    FROM {{ ref('gp_endline_niti_25') }} 
+    FROM {{ ref('gp_endline_graminpa_25') }} 
     WHERE voided = false
 )
 
@@ -36,6 +36,6 @@ gr.silt_usage_execution_plan,
 gr.approval_status,
 CAST(ge.total_gp_silt_excavated_non_farm as numeric) as total_gp_silt_excavated_non_farm
 
-from {{ ref('gp_regn_niti_25') }} as gr
+from {{ ref('gp_regn_graminpa_25') }} as gr
 left join latest_endline_per_gp ge
 on gr.subject_id = ge.gp_id

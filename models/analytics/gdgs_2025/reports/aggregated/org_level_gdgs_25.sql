@@ -1,8 +1,8 @@
--- Groups machine_clean_niti_25 by stakeholder to measure geographic coverage 
+-- Groups machine_clean_gdgs_25 by stakeholder to measure geographic coverage 
 -- plus active work, silt progress, and machine hours.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_gdgs_2025", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "aggregated_gdgs_25"]
 ) }}
 
 SELECT
@@ -18,12 +18,11 @@ SELECT
     sum(m.active_jcbs) as active_jcbs,
     sum(m.silt_to_be_excavated_as_per_plan) as silt_to_be_excavated_as_per_plan,
     sum(m.total_silt_carted_by_farmers) as total_silt_carted_by_farmers,
-    sum(m.total_silt_excavated_by_gp_non_farm) as total_silt_excavated_by_gp_non_farm,
-    sum(m.total_silt_excavated_by_gp_non_farm)+sum(m.total_silt_carted_by_farmers) as total_silt_excavated,
+    sum(m.total_silt_carted_by_farmers) as total_silt_excavated,
     sum(m.total_machine_working_hours) as total_machine_working_hours
 
 
-FROM {{ref('active_work_order_niti_25')}} AS m
+FROM {{ref('active_work_order_gdgs_25')}} AS m
 GROUP BY
     m.stakeholder_responsible
 

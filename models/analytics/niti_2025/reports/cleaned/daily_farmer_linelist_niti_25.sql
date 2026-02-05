@@ -7,6 +7,8 @@
 
 SELECT *
 FROM {{ ref('daily_farmer_linelist_approval_niti_25') }}
-WHERE work_order_approval_status = 'Approved'
-  AND farmer_approval_status = 'Approved'
-  AND encounter_approval_status = 'Approved'
+WHERE 
+-- work_order_approval_status = 'Approved'
+--   AND farmer_approval_status = 'Approved'
+  -- AND 
+  encounter_approval_status = 'Approved'
