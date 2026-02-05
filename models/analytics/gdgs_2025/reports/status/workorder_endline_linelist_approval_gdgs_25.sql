@@ -2,7 +2,7 @@
 -- retains the encounter approval status alongside registration context.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_gdgs_2025", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
+  tags=["analytics","analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
 ) }}
 
 -- assuming there may be multiple entries for work order endline 

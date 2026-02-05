@@ -1,7 +1,7 @@
    -- contains information from the encounters staging table filtered for "Farmer Endline"
   {{ config(
     materialized='table',
-    tags=["analytics", "gdgs_2025", "gdgs", "analytics_intermediate", "analytics_encounters_gdgs_25"]
+    tags=["analytics", "analytics_gdgs_2025", "analytics_intermediate", "analytics_encounters_gdgs_25"]
   ) }}
 
   SELECT 

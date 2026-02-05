@@ -1,7 +1,7 @@
 -- Filters the machine endline approval linelist down to encounters marked Approved.
 {{ config(
   materialized='table',
-  tags=["analytics", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
+  tags=["analytics","analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
 ) }}
 
 SELECT *

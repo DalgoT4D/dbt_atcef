@@ -1,7 +1,7 @@
 -- Joins machine endline encounters with registrations and exposes approval status without filtering it.
 {{ config(
   materialized='table',
-  tags=["analytics", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
+  tags=["analytics", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
 ) }}
 
 Select

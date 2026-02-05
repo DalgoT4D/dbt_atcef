@@ -2,7 +2,7 @@
 -- type, and contractor contact attributes from the subjects table.
   {{ config(
     materialized='table',
-    tags=["analytics", "gdgs_2025", "gdgs", "source", "source_cleaned_gdgs_2025"]
+    tags=["analytics", "source", "source_cleaned_gdgs_2025"]
   ) }}
 
 SELECT
