@@ -1,7 +1,7 @@
 -- Rolls up active_workorder_linelist_gdgs_25 by stakeholder and work order to total silt, farmer, and machine metrics along with active days.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_gdgs_2025", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "aggregated_gdgs_25"]
+  tags=["analytics","analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "aggregated_gdgs_25"]
 ) }}
 
 

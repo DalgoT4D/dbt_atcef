@@ -2,7 +2,7 @@
 --  without filtering by status.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_gdgs_2025", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
+  tags=["analytics","analytics_gdgs_2025","analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
 ) }}
 
 WITH machine_logs AS (

@@ -3,7 +3,7 @@
 
 {{ config(
   materialized='table',
-  tags=["analytics", "gdgs_2025", "gdgs", "analytics_intermediate", "source_cleaned_gdgs_2025"]
+  tags=["analytics", "analytics_intermediate", "source_cleaned_gdgs_2025"]
 ) }}
 
 

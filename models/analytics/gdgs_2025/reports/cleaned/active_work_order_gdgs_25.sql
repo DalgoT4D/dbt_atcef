@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_gdgs_2025", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
+  tags=["analytics","analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
 ) }}
 
 -- ANALYTICAL TABLE: Work Orders × Farmers × Machines × Silt (gdgs 2025)

@@ -1,7 +1,7 @@
 -- Filters the daily machine approval linelist down to encounters where the approval flag is set to Approved.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_gdgs_2025", "gdgs_2025", "gdgs", "analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
+  tags=["analytics","analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
 ) }}
 
 SELECT *
