@@ -2,7 +2,7 @@
 -- and unfiltered approval status.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025", "analytical_models", "reports_niti_2025"]
 ) }}
 
 
@@ -50,7 +50,7 @@ SELECT
 from farmer_with_status as fe
 LEFT JOIN {{ ref('farmer_regn_niti_25') }} AS fr
     ON fe.endline_farmer_sub_id = fr.subject_id
-
+WHERE fr.subject_id IS NOT NULL
 
 
 

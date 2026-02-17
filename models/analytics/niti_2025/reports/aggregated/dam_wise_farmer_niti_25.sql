@@ -2,7 +2,7 @@
 -- non-farm purpose silt, daily recording counts, and endline completion.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025", "analytical_models", "reports_niti_2025"]
 ) }}
 
 

@@ -2,7 +2,7 @@
 -- and silt totals with approval status.
 {{ config(
   materialized='table',
-  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
+  tags=["analytics", "analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 
@@ -18,6 +18,7 @@ with latest_endline_per_gp AS (
 
 SELECT
 ge.endline_gp_sub_id as workorder_id,
+gr.subject_id as gp_id,
 gr.gp_first_name as gp_name,
 gr.state,
 gr.district,

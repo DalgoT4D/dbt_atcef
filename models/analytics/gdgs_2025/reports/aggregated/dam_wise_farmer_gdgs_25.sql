@@ -56,7 +56,7 @@ SELECT
     COUNT(CASE WHEN fe.farmer_beneficiary_id IS NOT NULL THEN fe.farmer_beneficiary_id END) AS farmers_with_endline_done,
     COUNT(Case when de.farmer_category = 'Marginal (0-2.49 acres)' THEN de.farmer_id END) AS marginal_farmers,
     COUNT(Case when de.farmer_category = 'Small (2.5-4.99 acres)' THEN de.farmer_id END) AS small_farmers,
-    COUNT(Case when de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.farmer_id END) AS semi_medium_farmers,
+    COUNT(Case when de.farmer_category = 'Semi-medium (5 to 9.99 acre)' THEN de.farmer_id END) AS semi_medium_farmers,
     COUNT(Case when de.farmer_category = 'Medium (10-24.99 acres)' THEN de.farmer_id END) AS medium_farmers,
     COUNT(Case when de.farmer_category = 'Large (above 25 acres)' THEN de.farmer_id END) AS large_farmers,
     COUNT(Case when de.farmer_category = 'Disabled' THEN de.farmer_id END) AS disabled_farmers,
@@ -66,7 +66,7 @@ SELECT
     /* silt carted by farmers (cu.m) */
     SUM(CASE WHEN de.farmer_category = 'Marginal (0-2.49 acres)' THEN de.silt_carted ELSE 0 END) AS marginal_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Small (2.5-4.99 acres)' THEN de.silt_carted ELSE 0 END) AS small_farmers_silt_carted,
-    SUM(CASE WHEN de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.silt_carted ELSE 0 END) AS semi_medium_farmers_silt_carted,
+    SUM(CASE WHEN de.farmer_category = 'Semi-medium (5 to 9.99 acre)' THEN de.silt_carted ELSE 0 END) AS semi_medium_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Medium (10-24.99 acres)' THEN de.silt_carted ELSE 0 END) AS medium_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Large (above 25 acres)' THEN de.silt_carted ELSE 0 END) AS large_farmers_silt_carted,
     SUM(CASE WHEN de.farmer_category = 'Disabled' THEN de.silt_carted ELSE 0 END) AS disabled_farmers_silt_carted,
@@ -76,7 +76,7 @@ SELECT
         /* silt carted for non-farm purpose (cu.m) */
         SUM(CASE WHEN de.farmer_category = 'Marginal (0-2.49 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS marginal_farmers_silt_for_non_farm_purpose,
         SUM(CASE WHEN de.farmer_category = 'Small (2.5-4.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS small_farmers_silt_for_non_farm_purpose,
-        SUM(CASE WHEN de.farmer_category = 'Semi-medium (5-9.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS semi_medium_farmers_silt_for_non_farm_purpose,
+        SUM(CASE WHEN de.farmer_category = 'Semi-medium (5 to 9.99 acre)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS semi_medium_farmers_silt_for_non_farm_purpose,
         SUM(CASE WHEN de.farmer_category = 'Medium (10-24.99 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS medium_farmers_silt_for_non_farm_purpose,
         SUM(CASE WHEN de.farmer_category = 'Large (above 25 acres)' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS large_farmers_silt_for_non_farm_purpose,
         SUM(CASE WHEN de.farmer_category = 'Disabled' THEN de.amt_silt_used_non_farm_purpose ELSE 0 END) AS disabled_farmers_silt_for_non_farm_purpose,

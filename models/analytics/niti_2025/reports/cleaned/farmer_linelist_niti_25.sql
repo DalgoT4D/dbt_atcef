@@ -1,19 +1,16 @@
 -- Shows approved farmer progress from the status_linelists table.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "analytics_niti_2025",  "analytical_models", "reports_niti_2025"]
 ) }}
 
 -- SELECT *
 -- FROM {{ ref('farmer_linelist_approval_niti_25') }}
 -- WHERE approval_status = 'Approved'
 
+
 -- Joins farmer_regn_niti_25 with carting totals and latest endline info
 -- without filtering  approval outcome.
-{{ config(
-  materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
-) }}
 
 with farmer_totals as (
 
@@ -66,8 +63,8 @@ SELECT
   w.total_hyvas_carted,
   w.total_silt_carted
 
-    FROM {{ ref('farmer_regn_niti_25') }} AS s
-    LEFT JOIN  farmer_totals AS w
+    FROM farmer_totals AS w
+    LEFT JOIN {{ ref('farmer_regn_niti_25') }} AS s
     ON w.farmer_beneficiary_id = s.subject_id
 
     LEFT JOIN latest_endline AS fe

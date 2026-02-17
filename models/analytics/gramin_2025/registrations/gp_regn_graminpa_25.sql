@@ -1,7 +1,7 @@
 -- Gram Panchayat registration snapshot with approval context, location, and subject information for graminpa 2025.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "graminpa_registrations", "registrations_graminpa_2025"]
+  tags=["analytics", "analytics_gramin_2025","graminpa_registrations", "registrations_graminpa_2025"]
 ) }}
 
 SELECT 

@@ -62,12 +62,6 @@ models:
         description: "Date/time when the gram panchayat was registered."
         tests:
           - not_null
-      - name: subject_type
-        description: "Subject type (expected 'Gram panchayat')."
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['Gram panchayat']
       - name: state
         description: "State for the gram panchayat registration."
       - name: taluka

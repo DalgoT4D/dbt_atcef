@@ -1,7 +1,7 @@
 -- Joins machine endline encounters with registrations and exposes approval status without filtering it.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "analytics_niti_2025","analytical_models", "reports_niti_2025"]
 ) }}
 
 Select
@@ -25,3 +25,4 @@ LEFT JOIN {{ ref('approval_status_niti_25') }} as a
 ON a.entity_id = me.eid
 -- WHERE a.approval_status = 'Approved'
 
+WHERE mr.subject_id IS NOT NULL

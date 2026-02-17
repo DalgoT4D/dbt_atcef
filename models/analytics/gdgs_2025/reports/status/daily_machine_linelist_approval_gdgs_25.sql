@@ -2,7 +2,7 @@
 --  without filtering by status.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_gdgs_2025","analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
+  tags=["analytics","analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
 ) }}
 
 WITH machine_logs AS (
@@ -22,7 +22,7 @@ SELECT
     -- ml.eid,
     ml.machine_work_order_sub_id,
     mr.machine_name,
-    -- ml.excavating_machine_id,
+    ml.excavating_machine_id,
     -- ml.total_working_hours,
     ml.encounter_date_time,
     -- mr.machine_type,
@@ -43,6 +43,6 @@ FROM machine_logs AS ml
 LEFT JOIN {{ ref('approval_status_gdgs_25') }} AS a
     ON a.entity_id = ml.eid
 LEFT JOIN {{ ref('machine_regn_gdgs_25') }} AS mr
-    ON mr.subject_id = ml.excavating_machine_id
+    ON mr.subject_id = ml.excavating_machine_id 
 
--- WHERE a.approval_status = 'Approved'
+WHERE mr.approval_status = 'Approved' -- added because only registered machines can have a linelist

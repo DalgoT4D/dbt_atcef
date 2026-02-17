@@ -47,7 +47,6 @@ LEFT JOIN {{ ref('work_order_regn_gdgs_25') }} AS ws   -- Join on the work order
 LEFT JOIN {{ref('approval_status_gdgs_25')}} AS a   -- Join on the encounter/event ID (eid) for approval status
     ON w.eid = a.entity_id
 
--- WHERE 
---     fs.approval_status = 'Approved' 
---     AND ws.approval_status = 'Approved' 
---     AND a.approval_status = 'Approved'
+WHERE fs.approval_status = 'Approved' 
+AND ws.approval_status = 'Approved' 
+--     AND a.approval_status = 'Approved' -- this is the specific encounter approval status

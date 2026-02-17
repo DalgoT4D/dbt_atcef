@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025", "analytical_models", "reports_niti_2025"]
 ) }}
 
 -- ANALYTICAL TABLE: Work Orders × Farmers × Machines × Silt (NITI 2025)
@@ -291,6 +291,8 @@ SELECT
     wd.silt_to_be_excavated_as_per_plan,
     fc.total_silt_carted_by_farmers, -- change the source for this.
     gs.total_silt_excavated_by_gp_non_farm,
+       (COALESCE(fc.total_silt_carted_by_farmers, 0)
+    + COALESCE(gs.total_silt_excavated_by_gp_non_farm, 0)) AS total_silt_carted_nonendline,
     we.total_silt_excavated,
     ms.total_machine_working_hours,
     mtc.poclain_count,

@@ -61,21 +61,6 @@ FROM {{ ref('daily_machine_linelist_approval_gdgs_25') }}
     FROM {{ ref('workorder_endline_linelist_approval_gdgs_25') }}
 )
 
--- SELECT
---     entity,
---     COUNT(*) AS total_registrations,
---     COUNT(*) FILTER (
---         WHERE LOWER(COALESCE(approval_status, '')) = 'approved'
---     ) AS approved_count,
---     COUNT(*) FILTER (
---         WHERE LOWER(COALESCE(approval_status, '')) = 'pending'
---     ) AS pending_count,
---     COUNT(*) FILTER (
---         WHERE LOWER(COALESCE(approval_status, '')) = 'rejected'
---     ) AS rejected_count
--- FROM entity_statuses
--- GROUP BY entity
--- ORDER BY entity
 SELECT
     entity as Characteristic,
     state,

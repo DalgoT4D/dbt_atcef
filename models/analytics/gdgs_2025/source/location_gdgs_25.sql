@@ -2,7 +2,7 @@
 -- village-taluka-district hierarchy, stakeholder info, and GPS plus silt target metrics.
   {{ config(
     materialized='table',
-    tags=["analytics",  "source", "source_cleaned_gdgs_2025"]
+    tags=["analytics", "analytics_gdgs_2025", "source", "source_cleaned_gdgs_2025"]
   ) }}
 
 
