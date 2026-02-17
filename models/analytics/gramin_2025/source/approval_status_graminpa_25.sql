@@ -3,7 +3,7 @@
 
 {{ config(
   materialized='table',
-  tags=["analytics", "gramin_2025", "gramin", "analytics_intermediate", "source_cleaned_gramin_2025"]
+  tags=["analytics", "analytics_gramin_2025", "analytics_intermediate", "source_cleaned_gramin_2025"]
 ) }}
 
 

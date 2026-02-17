@@ -1,7 +1,7 @@
 -- Reuses the machine approval linelist and keeps only approved registrations.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytical_models", "reports_gdgs_2025", "cleaned_gdgs_25"]
+  tags=["analytics", "analytics_gdgs_2025", "reports_gdgs_2025", "cleaned_gdgs_25"]
 ) }}
 
 SELECT *

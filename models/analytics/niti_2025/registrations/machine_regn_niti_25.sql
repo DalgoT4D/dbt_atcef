@@ -1,7 +1,7 @@
 -- Machine registration table with cleaned identifiers, location, and approval metadata for NITI 2025.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "niti_registrations", "registrations_niti_2025"]
+  tags=["analytics","analytics_niti_2025", "niti_registrations", "registrations_niti_2025"]
 ) }}
 
 SELECT 

@@ -2,7 +2,7 @@
 -- without filtering  approval outcome.
 {{ config(
   materialized='table',
-  tags=["analytics", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
+  tags=["analytics", "analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 with farmer_totals as (

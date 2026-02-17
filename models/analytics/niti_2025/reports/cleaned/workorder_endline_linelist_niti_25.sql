@@ -1,7 +1,7 @@
 -- Pulls from the approval linelist and filters to work orders and endlines that are both approved.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025","analytical_models", "reports_niti_2025"]
 ) }}
 
 SELECT *

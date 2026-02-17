@@ -70,11 +70,17 @@ approved_subjects AS (
     INNER JOIN {{ ref('approval_statuses_gdgs_25') }} AS a
         ON r.uid = a.entity_id
     WHERE a.entity_type = 'Subject' AND a.approval_status = 'Approved'
-)
+),
 
-{{ dbt_utils.deduplicate(
+deduped AS -- added a cte for dedupes
+({{ dbt_utils.deduplicate( 
     relation='approved_subjects',
     partition_by='uid',
-    order_by='uid desc',
-   )
-}}
+    order_by='uid desc'
+   ) 
+}}) -- bracket added
+
+-- new select statement - removing where the address does not contain details for subject
+SELECT *
+FROM deduped
+WHERE NULLIF(TRIM(state), '') IS NOT NULL

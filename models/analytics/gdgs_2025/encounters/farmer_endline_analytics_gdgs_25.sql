@@ -22,6 +22,7 @@
       e.observations ->> 'Major crops to be grown on the land where silt is spread' AS major_to_be_grown,
       e.observations ->> 'Is the land-holding information correct? - Farmer Endline' AS land_holding_info_correct,
       CAST(e.observations ->> 'Total cost borne by the farmer for spreading/levelling silt on farm (INR)' AS NUMERIC) AS total_spreading_cost,
+      e.observations ->> 'Has the farmer applied for subsidy' AS farmer_subsidy,
       e.voided
             
   FROM {{ ref('encounter_type_gdgs_25') }} e

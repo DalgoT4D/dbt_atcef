@@ -2,7 +2,7 @@
 -- with normalized location hierarchy and qualitative readiness responses captured in observations.
   {{ config(
     materialized='table',
-    tags=["analytics", "graminpa_2025", "graminpa", "analytics_intermediate", "source_cleaned_graminpa_2025"]
+    tags=["analytics","analytics_gramin_2025", "analytics_intermediate", "source_cleaned_graminpa_2025"]
   ) }}
 
 SELECT

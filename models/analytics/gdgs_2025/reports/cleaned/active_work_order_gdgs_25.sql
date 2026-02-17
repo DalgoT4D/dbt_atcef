@@ -274,6 +274,8 @@ SELECT
     wd.silt_to_be_excavated_as_per_plan,
     fc.total_silt_carted_by_farmers,
     NULL::numeric as total_silt_excavated_by_gp_non_farm, -- added for union compatibility
+    (COALESCE(fc.total_silt_carted_by_farmers, 0)
+    + COALESCE(NULL::numeric, 0)) AS total_silt_carted_nonendline,
     we.total_silt_excavated,
     ms.total_machine_working_hours,
     mtc.poclain_count,

@@ -1,7 +1,7 @@
 -- Machine registration table with cleaned identifiers, location, and approval metadata for graminpa 2025.
 {{ config(
   materialized='table',
-    tags=["analytics","analytics_graminpa_2025", "registrations_graminpa_2025"]
+    tags=["analytics","analytics_gramin_2025", "analytics_graminpa_2025", "registrations_graminpa_2025"]
 ) }}
 
 -- SELECT 

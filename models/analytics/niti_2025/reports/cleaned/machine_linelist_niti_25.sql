@@ -1,7 +1,7 @@
 -- Reuses the machine approval linelist and keeps only approved registrations.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "analytics_niti_2025",  "analytical_models", "reports_niti_2025"]
 ) }}
 
 SELECT *

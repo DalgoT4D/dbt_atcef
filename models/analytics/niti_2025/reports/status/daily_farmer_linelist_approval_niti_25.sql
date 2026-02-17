@@ -1,7 +1,7 @@
 -- Joins farmer registrations, work orders, and non-voided daily encounters with approval flags for review.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025",  "analytical_models", "reports_niti_2025"]
 ) }}
 
 WITH non_voided_work_orders AS (
@@ -33,6 +33,7 @@ SELECT
     w.other_person_taking_silt,
     w.other_purpose_of_carting_silt,
     w.silt_taken_by,
+    w.encounter_date_time,
 
     w.farmer_work_order_sub_id AS work_order_id,
     ws.approval_status AS work_order_approval_status,

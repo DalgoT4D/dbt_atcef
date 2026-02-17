@@ -1,0 +1,266 @@
+version: 2
+
+models:
+  - name: farmer_regn_graminpa_25
+    description: "Farmer registration mart for GraminPA 2025, combining farmer subject attributes with location and latest approval status, deduplicated to the latest record per farmer."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the farmer."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the farmer was registered."
+        tests:
+          - not_null
+      - name: farmer_name
+        description: "Farmer name derived from the subject first name."
+      - name: land_holding
+        description: "Land holding in acres (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: mobile_number
+        description: "Farmer mobile phone number."
+      - name: mobile_verified_status
+        description: "Mobile verification status captured during registration."
+      - name: farmer_category
+        description: "Farmer category captured during registration."
+      - name: total_silt_required
+        description: "Total silt required by the farmer (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: number_hywas_required
+        description: "Number of hyvas required by the farmer (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: number_trolleys_required
+        description: "Number of trolleys required by the farmer (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: capacity_trolleys_cum
+        description: "Capacity of trolleys in cubic meters (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: farmer_contribution_per_trolley
+        description: "Farmer contribution per trolley (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: silt_target
+        description: "Estimated silt target for the associated dam/location."
+      - name: state
+        description: "State for the associated location."
+      - name: district
+        description: "District for the associated location."
+      - name: taluka
+        description: "Taluka for the associated location."
+      - name: village
+        description: "Village for the associated location."
+      - name: dam
+        description: "Dam/waterbody name for the associated location."
+      - name: gp
+        description: "Gram panchayat name for the associated location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: approval_status
+        description: "Most recent approval status for the farmer subject."
+      - name: rn
+        description: "Deduplication row number; this model filters to the latest record (rn=1)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1]
+
+  - name: gp_regn_graminpa_25
+    description: "Gram panchayat registration snapshot for GraminPA 2025 with latest approval status."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the gram panchayat."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the gram panchayat was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Gram panchayat')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Gram panchayat']
+      - name: state
+        description: "State for the gram panchayat registration."
+      - name: taluka
+        description: "Taluka for the gram panchayat registration."
+      - name: district
+        description: "District for the gram panchayat registration."
+      - name: gp_village
+        description: "Gram panchayat/village value captured in the location JSON."
+      - name: gp_first_name
+        description: "Primary name field captured for the gram panchayat record."
+      - name: supervisor_name
+        description: "Supervisor name captured during registration."
+      - name: silt_usage_plans_exist
+        description: "Whether silt usage plans exist, as captured in observations."
+      - name: gp_poc_name
+        description: "Name of point of contact for the gram panchayat."
+      - name: supervisor_contact_number
+        description: "Supervisor contact number captured during registration."
+      - name: water_committee_active
+        description: "Whether any water committee is active for the waterbody."
+      - name: gp_clarity_about_rwb
+        description: "Whether the gram panchayat is clear about the RWB program."
+      - name: gp_poc_contact_number
+        description: "Contact number of the gram panchayat point of contact."
+      - name: silt_usage_execution_plan
+        description: "Text describing how silt usage plans will be executed."
+      - name: plans_to_establish_wb_committee
+        description: "Whether there are plans to establish a committee for the waterbody."
+      - name: voided
+        description: "Whether the subject record is voided (this model filters out voided records)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [false]
+      - name: approval_status
+        description: "Most recent approval status for the gram panchayat subject."
+
+  - name: machine_regn_graminpa_25
+    description: "Machine registration mart for GraminPA 2025, combining machine subject attributes with location and latest approval status."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the excavating machine."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the machine was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Excavating Machine')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Excavating Machine']
+      - name: location_id
+        description: "Location identifier referencing the address/location dimension."
+      - name: machine_name
+        description: "Normalized machine name (uppercased and stripped of separators)."
+      - name: machine_type
+        description: "Type of the excavating machine."
+      - name: contractor_name
+        description: "Name of the contractor associated with the machine."
+      - name: contractor_mobile_number
+        description: "Contractor mobile number (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: voided
+        description: "Whether the subject record is voided (this model filters out voided records)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [false]
+      - name: address_id
+        description: "Unique address/location identifier from the address source."
+      - name: dam
+        description: "Dam/waterbody title."
+      - name: silt_target
+        description: "Estimated silt target for the associated dam/location."
+      - name: customProperties
+        description: "Raw custom properties payload from the address source (JSON)."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: village
+        description: "Village name for the location hierarchy."
+      - name: taluka
+        description: "Taluka name for the location hierarchy."
+      - name: district
+        description: "District name for the location hierarchy."
+      - name: state
+        description: "State name for the location hierarchy."
+      - name: gram_panchayat_name
+        description: "Name of the gram panchayat associated with the location."
+      - name: approval_status
+        description: "Most recent approval status for the machine subject."
+      - name: approval_date_time
+        description: "Timestamp when the latest approval status was recorded for the machine."
+
+  - name: work_order_regn_graminpa_25
+    description: "Work order registration mart for GraminPA 2025, combining work order subject attributes with location and latest approval status, deduplicated to the latest record per work order."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the work order."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the work order was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Work Order')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Work Order']
+      - name: location_id
+        description: "Location identifier referencing the address/location dimension."
+      - name: year
+        description: "Year metadata captured during registration."
+      - name: workorder_first_name
+        description: "Primary name field captured for the work order record."
+      - name: site_video_url
+        description: "URL for the site video captured during registration."
+      - name: site_image_1_url
+        description: "URL for site image 1 captured during registration."
+      - name: site_image_2_url
+        description: "URL for site image 2 captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: noc_workorder_image
+        description: "URL/reference for the NOC/work order image."
+      - name: site_marking_image
+        description: "URL/reference for the site marking image."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: voided
+        description: "Whether the subject record is voided (this model filters out voided records)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [false]
+      - name: address_id
+        description: "Unique address/location identifier from the address source."
+      - name: dam
+        description: "Dam/waterbody title."
+      - name: silt_target
+        description: "Estimated silt target for the associated dam/location."
+      - name: customProperties
+        description: "Raw custom properties payload from the address source (JSON)."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: village
+        description: "Village name for the location hierarchy."
+      - name: taluka
+        description: "Taluka name for the location hierarchy."
+      - name: district
+        description: "District name for the location hierarchy."
+      - name: state
+        description: "State name for the location hierarchy."
+      - name: gram_panchayat_name
+        description: "Name of the gram panchayat associated with the location."
+      - name: approval_status
+        description: "Most recent approval status for the work order subject."
+      - name: rn
+        description: "Deduplication row number; this model filters to the latest record (rn=1)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1]

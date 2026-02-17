@@ -1,7 +1,7 @@
 -- Joins farmer registrations, work orders, and non-voided daily encounters with approval flags for review.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
+  tags=["analytics","analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 WITH non_voided_work_orders AS (
@@ -47,7 +47,7 @@ LEFT JOIN {{ ref('work_order_regn_graminpa_25') }} AS ws   -- Join on the work o
 LEFT JOIN {{ref('approval_status_graminpa_25')}} AS a   -- Join on the encounter/event ID (eid) for approval status
     ON w.eid = a.entity_id
 
--- WHERE 
---     fs.approval_status = 'Approved' 
---     AND ws.approval_status = 'Approved' 
+WHERE 
+fs.approval_status = 'Approved' 
+AND ws.approval_status = 'Approved' 
 --     AND a.approval_status = 'Approved'

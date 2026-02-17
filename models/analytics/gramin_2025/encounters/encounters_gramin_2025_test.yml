@@ -1,0 +1,314 @@
+version: 2
+
+models:
+  - name: farmer_endline_graminpa_25
+    description: "Encounter records filtered to 'Farmer Endline'"
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: endline_farmer_sub_id
+        description: "Subject identifier for the farmer associated with this endline encounter."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label (should be 'Farmer Endline')."
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: land_holding
+        description: "Land holding in acres captured in the endline observations."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: total_silt_excavated
+        description: "Total silt excavated (numeric) captured in the endline observations."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: distance_from_waterbody
+        description: "Distance from the waterbody captured in the endline observations."
+      - name: major_crops_grown
+        description: "Major crops grown on the land captured in the endline observations."
+      - name: type_of_land_silt_is_spread_on
+        description: "Type of land where silt is spread, captured in the endline observations."
+      - name: farmer_category
+        description: "Category of farmer captured in the endline observations."
+      - name: area_silt_spread
+        description: "Total farm area on which silt is spread (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: mgnrega_card_number
+        description: "MGNREGA card number or any other ID card number."
+      - name: total_carting_cost
+        description: "Total cost borne by the farmer for carting silt (INR, numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: major_to_be_grown
+        description: "Major crops to be grown on the land where silt is spread."
+      - name: land_holding_info_correct
+        description: "Whether the land-holding information is correct (as captured in observations)."
+      - name: total_spreading_cost
+        description: "Total cost borne by the farmer for spreading/levelling silt on farm (INR, numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: gp_endline_graminpa_25
+    description: "Encounter records filtered to 'Gram Panchayat Endline'"
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: endline_gp_sub_id
+        description: "Subject identifier for the GP associated with this gram panchayat endline encounter."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label (should be 'Gram Panchayat Endline')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Gram Panchayat Endline']
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: gp_id
+        description: "Gram Panchayat identifier captured in the endline observations."
+      - name: established_water_committee
+        description: "Whether a water committee was established (as captured in observations)."
+      - name: silt_usage_image_1_url
+        description: "URL for the first silt usage image captured during the encounter."
+      - name: silt_usage_image_2_url
+        description: "URL for the second silt usage image captured during the encounter."
+      - name: gp_silt_used_non_farm
+        description: "Whether GP silt was used for non-farm purposes (as captured in observations)."
+      - name: total_gp_silt_excavated_non_farm
+        description: "Total silt excavated by the GP for non-farm purposes (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: gp_poc_name
+        description: "Name of Point of Contact for Gram Panchayat."
+      - name: gp_poc_contact_number
+        description: "Contact number of Point of Contact for Gram Panchayat."
+      - name: committee_poc_contact_number
+        description: "Contact number of Point of Contact for the committee."
+      - name: has_maintenance_plan
+        description: "Maintenance plan for the waterbody (as captured in observations)."
+      - name: committee_poc_name
+        description: "Name of Point of Contact for the committee."
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: machine_endline_graminpa_25
+    description: "Encounter records filtered to 'Excavating Machine Endline'"
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: endline_machine_sub_id
+        description: "Subject identifier for the excavating machine associated with this endline encounter."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label (should be 'Excavating Machine Endline')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Excavating Machine Endline']
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "NGO name captured in the endline observations."
+      - name: total_machine_working_hours
+        description: "Total working hours of the machine captured in the endline observations (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: work_order_endline_graminpa_25
+    description: "Encounter records filtered to 'Work order endline'"
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: endline_work_order_sub_id
+        description: "Subject identifier for the work order associated with this endline encounter."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label (should be 'Work order endline')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Work order endline']
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: ngo
+        description: "NGO name captured in the endline observations."
+      - name: site_video
+        description: "URL for the video of the site captured during the encounter."
+      - name: mb_recording_done
+        description: "Whether MB recording was done (as captured in observations)."
+      - name: site_image_1_url
+        description: "URL for the first site image captured during the encounter."
+      - name: site_image_2_url
+        description: "URL for the second site image captured during the encounter."
+      - name: total_silt_excavated
+        description: "Total silt excavated captured in the endline observations (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: mb_document_url
+        description: "URL for the MB recording document captured during the encounter."
+      - name: silt_excavated_as_per_mb
+        description: "Silt excavated as per MB recording captured in the endline observations (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: is_mb_data_same_as_app_data
+        description: "Whether MB recording data matches app data (as captured in observations)."
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: work_order_farmer_graminpa_25
+    description: "Encounter records filtered to 'Work order daily Recording - Farmer'"
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: farmer_work_order_sub_id
+        description: "Subject identifier for the work order associated with this farmer daily recording encounter."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label (should be 'Work order daily Recording - Farmer')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Work order daily Recording - Farmer']
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: silt_carted
+        description: "Total silt carted in this encounter (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: machine_sub_id
+        description: "Subject identifier for the excavating machine selected in the encounter."
+      - name: farmer_beneficiary_id
+        description: "Identifier for the farmer/beneficiary selected in the encounter."
+      - name: trolleys_carted
+        description: "Number of trolleys carted in this encounter (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: capacity_trolleys
+        description: "Capacity of trolleys in cubic meters (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: hyvas_carted
+        description: "Number of hyvas/dumpers carted in this encounter (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: if_silt_used_non_farm_purpose
+        description: "Whether the silt was used for non-farm purposes (as captured in observations)."
+      - name: purpose_of_carting_silt
+        description: "Purpose(s) of carting silt captured in the encounter."
+      - name: amt_silt_used_non_farm_purpose
+        description: "Amount of silt used for non-farm purposes captured in this encounter (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: silt_taken_by
+        description: "Person/category that took the silt (as captured in observations)."
+      - name: other_person_taking_silt
+        description: "Free-text for other person taking silt (when applicable)."
+      - name: other_purpose_of_carting_silt
+        description: "Free-text for other purpose of carting silt (when applicable)."
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: work_order_machine_graminpa_25
+    description: "Encounter records filtered to 'Work order daily Recording - Machine'"
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: machine_work_order_sub_id
+        description: "Subject identifier for the work order associated with this machine daily recording encounter."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label (should be 'Work order daily Recording - Machine')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Work order daily Recording - Machine']
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: log_book_image_machine
+        description: "URL for the log book image captured during the machine daily recording encounter."
+      - name: excavating_machine_id
+        description: "Identifier for the excavating machine selected in the encounter."
+      - name: total_working_hours
+        description: "Total working hours captured in this encounter (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: working_hours
+        description: "Working hours as per time captured in this encounter (numeric)."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: numeric
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]

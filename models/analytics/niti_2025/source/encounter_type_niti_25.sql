@@ -1,7 +1,7 @@
 -- Raw encounter listing that keeps subject identifiers, encounter types, timestamps, and the JSON observations.
 {{ config(
   materialized='table',
-  tags=["analytics", "niti_2025", "niti", "analytics_intermediate", "source_cleaned_niti_2025"]
+  tags=["analytics", "analytics_niti_2025", "analytics_intermediate", "source_cleaned_niti_2025"]
 ) }}
 
 

@@ -1,7 +1,7 @@
 -- Rolls up active_workorder_linelist_graminpa_25 by stakeholder and work order to total silt, farmer, and machine metrics along with active days.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "aggregated_graminpa_25"]
+  tags=["analytics","analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "aggregated_graminpa_25"]
 ) }}
 
 

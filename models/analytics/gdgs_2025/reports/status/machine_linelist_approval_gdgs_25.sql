@@ -1,13 +1,13 @@
 -- Lists machine_regn_gdgs_25 records with contractor and location fields, leaving approval status unfiltered.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytical_models", "reports_gdgs_2025", "gdgs_25_approval_status"]
+  tags=["analytics", "analytics_gdgs_2025", "reports_gdgs_2025", "gdgs_25_approval_status"]
 ) }}
 
 Select
 m.machine_name,
 m.registration_date, 
-m.subject_id as uuid,
+m.subject_id as machine_id,
 m.state, 
 m.district, 
 m.taluka, 

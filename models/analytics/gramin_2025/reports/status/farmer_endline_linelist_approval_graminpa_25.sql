@@ -2,7 +2,7 @@
 -- and unfiltered approval status.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_graminpa_2025", "graminpa_2025", "graminpa", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
+  tags=["analytics","analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "status_graminpa_25"]
 ) }}
 
 

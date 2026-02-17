@@ -1,7 +1,7 @@
 -- Filters the daily machine approval linelist down to encounters where the approval flag is set to Approved.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_niti_2025","analytical_models", "reports_niti_2025"]
 ) }}
 
 SELECT *

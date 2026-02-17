@@ -1,7 +1,7 @@
 -- contains information from the encounters staging table filtered for "Work order daily Recording - Machine"
   {{ config(
     materialized='table',
-    tags=["analytics", "graminpa_2025", "graminpa", "analytics_intermediate", "analytics_encounters_graminpa_25"]
+    tags=["analytics", "analytics_gramin_2025","analytics_intermediate", "analytics_encounters_graminpa_25"]
   ) }}
 
   SELECT

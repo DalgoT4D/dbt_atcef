@@ -1,7 +1,7 @@
 -- Farmer registration mart combining subject, location, and approval details for NITI 2025.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "niti_2025", "niti", "niti_registrations", "registrations_niti_2025"]
+  tags=["analytics","analytics_niti_2025", "niti_registrations", "registrations_niti_2025"]
 ) }}
 
 with farmer_data as (

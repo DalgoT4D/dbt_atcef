@@ -1,0 +1,270 @@
+version: 2
+
+models:
+  - name: dam_wise_farmer_graminpa_25
+    description: "Dam-level rollup of farmer daily recordings and farmer endlines for GraminPA 2025, split by farmer category and non-farm silt usage."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: gp
+        description: "Gram panchayat name for the dam/location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: total_daily_recordings
+        description: "Total count of farmer daily recording encounters for this dam."
+      - name: mobile_verified_farmers
+        description: "Count of mobile-verified farmers among farmers who have at least one daily recording for this dam."
+      - name: registered_farmers
+        description: "Count of farmers with at least one daily recording for this dam."
+      - name: farmers_with_endline_done
+        description: "Count of farmers with an endline record for this dam."
+      - name: marginal_farmers
+        description: "Count of farmers categorized as Marginal (0-2.49 acres)."
+      - name: small_farmers
+        description: "Count of farmers categorized as Small (2.5-4.99 acres)."
+      - name: semi_medium_farmers
+        description: "Count of farmers categorized as Semi-medium (5-9.99 acres)."
+      - name: medium_farmers
+        description: "Count of farmers categorized as Medium (10-24.99 acres)."
+      - name: large_farmers
+        description: "Count of farmers categorized as Large (above 25 acres)."
+      - name: disabled_farmers
+        description: "Count of farmers categorized as Disabled."
+      - name: widow_farmers
+        description: "Count of farmers categorized as Widow."
+      - name: family_members_suicide_farmers
+        description: "Count of farmers categorized as Family of farmer who committed suicide."
+      - name: marginal_farmers_silt_carted
+        description: "Total silt carted (cu.m) by marginal farmers for this dam."
+      - name: small_farmers_silt_carted
+        description: "Total silt carted (cu.m) by small farmers for this dam."
+      - name: semi_medium_farmers_silt_carted
+        description: "Total silt carted (cu.m) by semi-medium farmers for this dam."
+      - name: medium_farmers_silt_carted
+        description: "Total silt carted (cu.m) by medium farmers for this dam."
+      - name: large_farmers_silt_carted
+        description: "Total silt carted (cu.m) by large farmers for this dam."
+      - name: disabled_farmers_silt_carted
+        description: "Total silt carted (cu.m) by disabled farmers for this dam."
+      - name: widow_farmers_silt_carted
+        description: "Total silt carted (cu.m) by widow farmers for this dam."
+      - name: family_members_suicide_farmers_silt_carted
+        description: "Total silt carted (cu.m) by family-members-suicide farmers for this dam."
+      - name: marginal_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by marginal farmers for this dam."
+      - name: small_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by small farmers for this dam."
+      - name: semi_medium_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by semi-medium farmers for this dam."
+      - name: medium_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by medium farmers for this dam."
+      - name: large_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by large farmers for this dam."
+      - name: disabled_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by disabled farmers for this dam."
+      - name: widow_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by widow farmers for this dam."
+      - name: family_members_suicide_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by family-members-suicide farmers for this dam."
+      - name: area_silt_spread
+        description: "Total farm area where silt was spread (as captured) from farmer endlines for this dam."
+
+  - name: dam_wise_work_order_graminpa_25
+    description: "Dam-level rollup of work orders and activity metrics for GraminPA 2025 derived from active_work_order_graminpa_25."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: registered_work_orders
+        description: "Count of registered work orders for this dam."
+      - name: work_order_endlines_completed
+        description: "Count of work orders with an endline date present."
+      - name: active_work_orders
+        description: "Count of work orders with no endline date (active)."
+      - name: active_farmers
+        description: "Sum of active farmers across work orders for this dam."
+      - name: active_poclains
+        description: "Sum of active poclains across work orders for this dam."
+      - name: active_jcbs
+        description: "Sum of active JCBs across work orders for this dam."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Total planned silt to be excavated (cu.m) across work orders for this dam."
+      - name: total_silt_carted_by_farmers
+        description: "Total silt carted by farmers (cu.m) across work orders for this dam."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Total silt excavated by GP/non-farm (cu.m) across work orders for this dam."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) across work orders for this dam."
+      - name: percent_silt_excavated
+        description: "Percent of planned silt excavated: (total_silt_excavated / silt_to_be_excavated_as_per_plan) * 100."
+      - name: active_work_days
+        description: "Total active work days across work orders for this dam."
+      - name: total_machine_working_hours
+        description: "Total machine working hours across work orders for this dam."
+      - name: jcb_working_hours
+        description: "Total JCB working hours across work orders for this dam."
+      - name: poclain_working_hours
+        description: "Total poclain working hours across work orders for this dam."
+      - name: total_jcb_excavation
+        description: "Total silt excavation attributed to JCBs across work orders for this dam."
+      - name: total_poclain_excavation
+        description: "Total silt excavation attributed to poclains across work orders for this dam."
+
+  - name: org_level_graminpa_25
+    description: "Stakeholder-level rollup of work orders and activity metrics for GraminPA 2025 derived from active_work_order_graminpa_25."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work orders."
+        tests:
+          - not_null
+      - name: number_districts
+        description: "Count of distinct districts covered by the stakeholder."
+      - name: number_waterbodies
+        description: "Count of distinct dams/waterbodies covered by the stakeholder."
+      - name: registered_work_orders
+        description: "Count of registered work orders for the stakeholder."
+      - name: work_order_endlines_completed
+        description: "Count of work orders with an endline date present."
+      - name: active_work_orders
+        description: "Count of work orders with no endline date (active)."
+      - name: active_work_days
+        description: "Total active work days across work orders for the stakeholder."
+      - name: active_farmers
+        description: "Sum of active farmers across work orders for the stakeholder."
+      - name: active_poclains
+        description: "Sum of active poclains across work orders for the stakeholder."
+      - name: active_jcbs
+        description: "Sum of active JCBs across work orders for the stakeholder."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Total planned silt to be excavated (cu.m) across work orders for the stakeholder."
+      - name: total_silt_carted_by_farmers
+        description: "Total silt carted by farmers (cu.m) across work orders for the stakeholder."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Total silt excavated by GP/non-farm (cu.m) across work orders for the stakeholder."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) across work orders for the stakeholder."
+      - name: total_machine_working_hours
+        description: "Total machine working hours across work orders for the stakeholder."
+
+  - name: overall_approval_statistics_graminpa_25
+    description: "Counts records by approval status across entity types (registrations and encounters) for GraminPA 2025, grouped by location hierarchy."
+    columns:
+      - name: Characteristic
+        description: "Entity/characteristic name (e.g., Farmer Registration, Work order endline)."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the entity record."
+      - name: district
+        description: "District for the entity record."
+      - name: taluka
+        description: "Taluka for the entity record."
+      - name: village
+        description: "Village for the entity record."
+      - name: dam
+        description: "Dam/waterbody for the entity record."
+      - name: total_registrations
+        description: "Total number of records observed for the characteristic and location."
+      - name: approved_count
+        description: "Count of records with approval_status = Approved."
+      - name: pending_count
+        description: "Count of records with approval_status = Pending."
+      - name: rejected_count
+        description: "Count of records with approval_status = Rejected."
+
+  - name: work_order_aggregate_dam_graminpa_25
+    description: "Work-order-level summary per dam for GraminPA 2025, aggregating silt, farmer, machine totals and elapsed days from active_work_order_graminpa_25."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name for the work order."
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Silt excavated by GP/non-farm (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_machine_working_hours
+        description: "Total machine working hours for the work order."
+      - name: poclain_count
+        description: "Total distinct poclain machines used for the work order."
+      - name: jcb_count
+        description: "Total distinct JCB machines used for the work order."
+      - name: total_number_of_farmers
+        description: "Total distinct farmers associated with the work order."
+      - name: active_work_days
+        description: "Date difference between work order start date and endline date."
+      - name: work_order_start_date
+        description: "Work order registration date (start date)."
+      - name: workorder_endline_date
+        description: "Work order endline date (NULL if endline not completed)."
+
+  - name: work_order_aggregate_org_graminpa_25
+    description: "Work-order-level summary per stakeholder for GraminPA 2025, aggregating silt, farmer, machine totals and elapsed days from active_work_order_graminpa_25."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order."
+        tests:
+          - not_null
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Silt excavated by GP/non-farm (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_machine_working_hours
+        description: "Total machine working hours for the work order."
+      - name: poclain_count
+        description: "Total distinct poclain machines used for the work order."
+      - name: jcb_count
+        description: "Total distinct JCB machines used for the work order."
+      - name: total_number_of_farmers
+        description: "Total distinct farmers associated with the work order."
+      - name: active_work_days
+        description: "Date difference between work order start date and endline date."

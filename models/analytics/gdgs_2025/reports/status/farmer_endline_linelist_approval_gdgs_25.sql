@@ -16,21 +16,12 @@ WITH farmer_latest_records AS (
         ) AS rn
     FROM {{ ref('farmer_endline_analytics_gdgs_25') }} AS t1 
     WHERE t1.voided != TRUE
-),
-
-farmer_with_status AS (
-    SELECT
-        flr.*,
-        asn.approval_status
-    FROM farmer_latest_records AS flr
-    LEFT JOIN {{ ref('approval_status_gdgs_25') }} AS asn
-        ON flr.eid = asn.entity_id
-    WHERE flr.rn = 1 -- Filter to include only the latest record for each farmer
 )
+
 
 SELECT
   fr.farmer_name,
-  fr.subject_id as farmer_beneficiary_id,
+  fe.endline_farmer_sub_id as farmer_beneficiary_id,
   fe.encounter_date_time,
   fr.state,
   fr.district,
@@ -44,13 +35,19 @@ SELECT
   fe.type_of_land_silt_is_spread_on,
   fe.major_crops_grown,
   fe.major_to_be_grown,
+  fe.farmer_subsidy,
   -- farmers' village is to be added, but it isnt the same as other village?
-  fe.approval_status
+  asn.approval_status
 
-from farmer_with_status as fe
+from farmer_latest_records as fe
 LEFT JOIN {{ ref('farmer_regn_gdgs_25') }} AS fr
     ON fe.endline_farmer_sub_id = fr.subject_id
 
+LEFT JOIN {{ ref('approval_status_gdgs_25') }} AS asn
+    ON fe.eid = asn.entity_id
+
+WHERE asn.approval_status IS NOT NULL
+AND fr.subject_id IS NOT NULL
 
 
 
