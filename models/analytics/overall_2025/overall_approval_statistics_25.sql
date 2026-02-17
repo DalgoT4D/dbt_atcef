@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics", "analytical_models", "reports_overall_2025"]
+  tags=["analytics", "analytical_models", "reports_overall_2025", "analytical_models_overall_2025"]
 ) }}
 
 

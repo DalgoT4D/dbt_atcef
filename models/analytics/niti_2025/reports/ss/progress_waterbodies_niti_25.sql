@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "analytical_models", "reports_niti_2025"]
+  tags=["analytics", "analytical_models", "reports_niti_2025"]
 ) }}
 
 WITH approved_work_orders AS (
@@ -35,7 +35,7 @@ ongoing_work_orders AS (
 
 gp_work_orders AS (
     SELECT DISTINCT
-        work_order_id
+        workorder_id as work_order_id
     FROM {{ ref('gp_linelist_approval_niti_25') }}
 )
 

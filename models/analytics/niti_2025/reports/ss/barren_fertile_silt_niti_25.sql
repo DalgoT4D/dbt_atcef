@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025", "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytical_models", "reports_niti_2025"]
 ) }}
 
 WITH fc_agg AS (
