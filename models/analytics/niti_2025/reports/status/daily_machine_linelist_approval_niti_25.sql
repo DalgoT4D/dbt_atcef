@@ -44,5 +44,9 @@ LEFT JOIN {{ ref('approval_status_niti_25') }} AS a
     ON a.entity_id = ml.eid
 LEFT JOIN {{ ref('machine_regn_niti_25') }} AS mr
     ON mr.subject_id = ml.excavating_machine_id
+INNER JOIN {{ ref('work_order_regn_niti_25')}} AS wr
+    ON ml.machine_work_order_sub_id = wr.subject_id
 
+WHERE mr.approval_status = 'Approved' -- added because only registered machines can have a linelist
+AND wr.subject_id IS NOT NULL -- added that workorder should exist for daily machine linelists to happen
 -- WHERE a.approval_status = 'Approved'
