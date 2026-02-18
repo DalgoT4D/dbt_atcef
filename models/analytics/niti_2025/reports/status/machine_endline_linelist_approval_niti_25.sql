@@ -4,6 +4,12 @@
   tags=["analytics", "analytics_niti_2025","analytical_models", "reports_niti_2025"]
 ) }}
 
+WITH machine_endline_no_void AS (
+    SELECT w.*
+    FROM {{ ref('machine_endline_niti_25') }} AS w
+    WHERE w.voided != TRUE
+)
+
 Select
 mr.machine_name,
 mr.subject_id as machine_id,
@@ -18,7 +24,8 @@ mr.dam,
 mr.gram_panchayat_name as gp,
 a.approval_status
 from 
-{{ ref('machine_endline_niti_25') }} as me
+-- {{ ref('machine_endline_niti_25') }} as me
+machine_endline_no_void as me
 LEFT JOIN {{ ref('machine_regn_niti_25') }} as mr
 ON mr.subject_id = me.endline_machine_sub_id
 LEFT JOIN {{ ref('approval_status_niti_25') }} as a

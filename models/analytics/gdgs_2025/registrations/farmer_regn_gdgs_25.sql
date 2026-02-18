@@ -44,3 +44,4 @@ gram_panchayat_name as gp,
 stakeholder_responsible,
 approval_status
 from farmer_data
+WHERE state IS NOT NULL -- some farmers do not have coresponding location, because there is no silt target attached to those locations

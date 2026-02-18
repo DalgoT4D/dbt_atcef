@@ -3,7 +3,7 @@
  
   {{ config(
     materialized='table',
-    tags=["analytics", "analytics_gramin_2025","source", "source_cleaned_gramin_2025"]
+    tags=["analytics", "analytics_gramin_2025", "source", "source_cleaned_gramin_2025"]
   ) }}
 
 SELECT

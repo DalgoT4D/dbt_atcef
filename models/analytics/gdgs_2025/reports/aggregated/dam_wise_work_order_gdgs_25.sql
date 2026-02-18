@@ -21,6 +21,10 @@ SELECT
     sum(m.silt_to_be_excavated_as_per_plan) as silt_to_be_excavated_as_per_plan,
     sum(m.total_silt_carted_by_farmers) as total_silt_carted_by_farmers,
     sum(m.total_silt_excavated_by_gp_non_farm) AS total_silt_excavated_by_gp_non_farm, -- added for union compatibility
+    SUM(
+        COALESCE(m.total_silt_carted_by_farmers, 0) +
+        COALESCE(m.total_silt_excavated_by_gp_non_farm, 0)
+    ) AS total_silt_overall_excavated, -- new metric combining farmer and GP/non-farm excavation
     sum(m.total_silt_carted_by_farmers) as total_silt_excavated,
     ROUND((sum(m.total_silt_carted_by_farmers)*100
     / NULLIF(sum(m.silt_to_be_excavated_as_per_plan), 0)), 2) AS percent_silt_excavated, -- dam level
