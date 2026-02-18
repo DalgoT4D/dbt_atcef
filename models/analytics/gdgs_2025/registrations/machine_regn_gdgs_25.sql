@@ -36,3 +36,4 @@ LEFT JOIN
     ON m.subject_id = a.entity_id
 
 WHERE m.voided != TRUE
+AND l.state IS NOT NULL -- some machines do not have coresponding location, because there is no silt target attached to those locations

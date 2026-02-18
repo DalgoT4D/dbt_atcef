@@ -8,19 +8,16 @@
 with farmer_totals as (
 
   SELECT
-      -- w.farmer_work_order_sub_id as subject_id,
-      w.farmer_beneficiary_id,
+      w.farmer_id as farmer_beneficiary_id,
       SUM(COALESCE(w.trolleys_carted, 0)) AS total_trolleys_carted,
       SUM(COALESCE(w.hyvas_carted, 0)) AS total_hyvas_carted,
       SUM(COALESCE(w.silt_carted, 0)) AS total_silt_carted
 
-  FROM {{ ref('work_order_farmer_gdgs_25') }} AS w
-  WHERE w.farmer_beneficiary_id IS NOT NULL
+  FROM {{ ref('daily_farmer_linelist_approval_niti_25') }} AS w
+  WHERE w.farmer_id IS NOT NULL
   GROUP BY
-      -- w.farmer_work_order_sub_id,
-      w.farmer_beneficiary_id
+      w.farmer_id
 ),
-
 
 latest_endline AS (
     SELECT
@@ -65,4 +62,6 @@ SELECT
     LEFT JOIN latest_endline AS fe
     ON s.subject_id = fe.endline_farmer_sub_id
     AND fe.rn = 1
+
+
 
