@@ -52,7 +52,7 @@ models:
         description: "Approval status for the work order registration."
       - name: farmer_approval_status
         description: "Approval status for the farmer registration."
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the daily recording encounter."
 
   - name: daily_machine_linelist_approval_niti_25
@@ -84,7 +84,7 @@ models:
         description: "Gram panchayat for the machine location."
       - name: stakeholder_responsible
         description: "Stakeholder responsible for the dam/location."
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the machine encounter."
       - name: log_book_image_machine
         description: "Log book image URL/reference captured for the machine encounter."
