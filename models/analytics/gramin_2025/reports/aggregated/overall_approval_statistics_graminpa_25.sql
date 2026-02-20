@@ -43,14 +43,16 @@ WITH entity_statuses AS (
     SELECT
         'Work order daily recording - Farmer' AS entity,
         state, district, taluka, village, dam, --stakeholder_responsible,
-        COALESCE(encounter_approval_status) AS approval_status
+        approval_status
+        -- COALESCE(encounter_approval_status) AS approval_status
     FROM {{ ref('daily_farmer_linelist_approval_graminpa_25') }}
 
     UNION ALL
 
     SELECT 'Work order daily recording - Machine' AS entity, 
         state, district, taluka, village, dam, --stakeholder_responsible,
-        COALESCE(encounter_approval_status) AS approval_status
+        approval_status
+        -- COALESCE(encounter_approval_status) AS approval_status
 FROM {{ ref('daily_machine_linelist_approval_graminpa_25') }}
 
     UNION ALL
@@ -61,21 +63,7 @@ FROM {{ ref('daily_machine_linelist_approval_graminpa_25') }}
     FROM {{ ref('workorder_endline_linelist_approval_graminpa_25') }}
 )
 
--- SELECT
---     entity,
---     COUNT(*) AS total_registrations,
---     COUNT(*) FILTER (
---         WHERE LOWER(COALESCE(approval_status, '')) = 'approved'
---     ) AS approved_count,
---     COUNT(*) FILTER (
---         WHERE LOWER(COALESCE(approval_status, '')) = 'pending'
---     ) AS pending_count,
---     COUNT(*) FILTER (
---         WHERE LOWER(COALESCE(approval_status, '')) = 'rejected'
---     ) AS rejected_count
--- FROM entity_statuses
--- GROUP BY entity
--- ORDER BY entity
+
 SELECT
     entity as Characteristic,
     state,

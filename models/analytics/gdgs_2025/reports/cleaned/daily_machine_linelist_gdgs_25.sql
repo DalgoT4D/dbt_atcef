@@ -6,4 +6,6 @@
 
 SELECT *
 FROM {{ ref('daily_machine_linelist_approval_gdgs_25') }}
-WHERE encounter_approval_status = 'Approved'
+-- WHERE encounter_approval_status = 'Approved'
+WHERE approval_status = 'Approved' -- this is the specific encounter approval status
+
