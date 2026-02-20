@@ -137,7 +137,7 @@ models:
           - not_null
           - accepted_values:
               values: ["Approved"]
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the daily recording encounter."
         tests:
           - not_null
@@ -173,7 +173,7 @@ models:
         description: "Gram panchayat for the machine/work order location."
       - name: stakeholder_responsible
         description: "Stakeholder responsible for the work order/dam."
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the machine encounter."
         tests:
           - not_null

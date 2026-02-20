@@ -38,7 +38,7 @@ models:
           - not_null
       - name: encounter_date_time
         description: "Timestamp when the machine encounter occurred."
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the machine encounter (may be null/unfiltered)."
 
   - name: farmer_endline_linelist_approval_graminpa_25

@@ -43,7 +43,7 @@ models:
           - not_null
           - accepted_values:
               values: ["Approved"]
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the daily recording encounter."
         tests:
           - not_null
@@ -57,7 +57,7 @@ models:
         description: "Work order subject identifier associated with this machine encounter."
         tests:
           - not_null
-      - name: encounter_approval_status
+      - name: approval_status
         description: "Approval status for the machine encounter."
         tests:
           - not_null
