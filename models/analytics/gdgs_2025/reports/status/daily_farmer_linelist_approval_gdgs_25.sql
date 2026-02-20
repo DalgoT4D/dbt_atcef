@@ -37,7 +37,9 @@ SELECT
     w.farmer_work_order_sub_id AS work_order_id,
     ws.approval_status AS work_order_approval_status,
     fs.approval_status AS farmer_approval_status,
-    a.approval_status AS encounter_approval_status
+    a.approval_status AS approval_status
+    -- a.approval_status AS encounter_approval_status
+
 
 FROM {{ ref('farmer_regn_gdgs_25') }} AS fs
 LEFT JOIN non_voided_work_orders AS w

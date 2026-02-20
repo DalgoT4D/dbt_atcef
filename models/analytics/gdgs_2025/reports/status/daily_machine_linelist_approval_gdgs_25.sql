@@ -35,7 +35,9 @@ SELECT
     mr.dam,
     mr.gram_panchayat_name as gp,
     mr.stakeholder_responsible,
-    a.approval_status AS encounter_approval_status,
+    -- a.approval_status AS encounter_approval_status,
+    a.approval_status AS approval_status,
+
     ml.log_book_image_machine,
     ml.working_hours
 
