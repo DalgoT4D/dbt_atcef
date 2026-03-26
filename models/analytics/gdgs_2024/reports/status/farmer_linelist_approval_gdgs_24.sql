@@ -1,8 +1,8 @@
--- Joins farmer_regn_gdgs_25 with carting totals and latest endline info
+-- Joins farmer_regn_gdgs_24 with carting totals and latest endline info
 -- without filtering  approval outcome.
 {{ config(
   materialized='table',
-  tags=["analytics",  "analytics_gdgs_2025", "reports_gdgs_2025", "gdgs_25_approval_status"]
+  tags=["analytics",  "analytics_gdgs_2024", "reports_gdgs_2024", "gdgs_24_approval_status"]
 ) }}
 
 with farmer_totals as (
@@ -13,7 +13,7 @@ with farmer_totals as (
       SUM(COALESCE(w.hyvas_carted, 0)) AS total_hyvas_carted,
       SUM(COALESCE(w.silt_carted, 0)) AS total_silt_carted
 
-  FROM {{ ref('daily_farmer_linelist_approval_gdgs_25') }} AS w
+  FROM {{ ref('daily_farmer_linelist_approval_gdgs_24') }} AS w
   WHERE w.farmer_id IS NOT NULL
   GROUP BY
       w.farmer_id
@@ -27,7 +27,7 @@ latest_endline AS (
             PARTITION BY endline_farmer_sub_id
             ORDER BY encounter_date_time DESC
         ) AS rn
-    FROM {{ ref('farmer_endline_analytics_gdgs_25') }}
+    FROM {{ ref('farmer_endline_analytics_gdgs_24') }}
     WHERE
         voided != TRUE -- Only consider non-voided records
 )
@@ -60,7 +60,7 @@ SELECT
   w.total_hyvas_carted,
   w.total_silt_carted
 
-    FROM {{ ref('farmer_regn_gdgs_25') }} AS s
+    FROM {{ ref('farmer_regn_gdgs_24') }} AS s
     LEFT JOIN  farmer_totals AS w
     ON w.farmer_beneficiary_id = s.subject_id
 

@@ -160,6 +160,8 @@ models:
         description: "Farmer category captured during registration."
       - name: approval_status
         description: "Approval status for the farmer registration."
+      - name: endline_status
+        description: "Whether a farmer endline exists for the farmer subject: Endline Done or Endline Not Done."
       - name: area_silt_spread
         description: "Area silt spread from the latest endline (if present)."
       - name: total_trolleys_carted

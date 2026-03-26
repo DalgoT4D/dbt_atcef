@@ -1,0 +1,153 @@
+version: 2
+
+models:
+  - name: active_work_order_gdgs_24
+    description: |
+      Work-order-level analytical table for GDGS 2024 (one row per approved work order), joining registrations, approved farmer carting totals, machine working hours, and endline status to compute activity metrics.
+    columns:
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody name for the work order location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order/dam."
+      - name: active_work_orders
+        description: "Active work order flag (1 when endline date is NULL, else 0)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+  - name: daily_farmer_linelist_gdgs_24
+    description: "Cleaned linelist of farmer daily recording encounters for GDGS 2024, filtered to records where farmer, work order, and encounter approvals are all Approved."
+    columns:
+      - name: farmer_id
+        description: "Farmer identifier."
+        tests:
+          - not_null
+      - name: work_order_id
+        description: "Work order identifier."
+        tests:
+          - not_null
+      - name: work_order_approval_status
+        description: "Approval status for the work order."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+      - name: farmer_approval_status
+        description: "Approval status for the farmer."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+      - name: approval_status
+        description: "Approval status for the daily recording encounter."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: daily_machine_linelist_gdgs_24
+    description: "Cleaned linelist of machine daily recording encounters for GDGS 2024, filtered to encounters with encounter_approval_status = Approved."
+    columns:
+      - name: machine_work_order_sub_id
+        description: "Work order subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the machine encounter."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: farmer_endline_linelist_gdgs_24
+    description: "Cleaned linelist of farmer endline encounters for GDGS 2024, keeping only records where approval_status = Approved."
+    columns:
+      - name: farmer_beneficiary_id
+        description: "Farmer subject identifier associated with the endline."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the endline encounter."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: farmer_linelist_gdgs_24
+    description: "Cleaned farmer registration/progress linelist for GDGS 2024, joining farmer registrations with carting totals and latest endline details."
+    columns:
+      - name: farmer_id
+        description: "Farmer subject identifier."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody for the farmer location."
+      - name: total_silt_carted
+        description: "Total silt carted across all included encounters for the farmer (cu.m)."
+
+  - name: machine_endline_linelist_gdgs_24
+    description: "Cleaned machine endline linelist for GDGS 2024, filtered to machine endlines with approval_status = Approved."
+    columns:
+      - name: machine_id
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the machine endline encounter."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: machine_linelist_gdgs_24
+    description: "Cleaned machine registration linelist for GDGS 2024, filtered to machines with approval_status = Approved."
+    columns:
+      - name: machine_id
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the machine registration."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: waterbody_linelist_gdgs_24
+    description: "Cleaned waterbody linelist for GDGS 2024 sourced from location_gdgs_24, exposing location hierarchy and silt target attributes."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: estimated_silt_quantity
+        description: "Estimated silt target/quantity for the waterbody (from silt_target)."
+
+  - name: workorder_endline_linelist_gdgs_24
+    description: "Cleaned work order endline linelist for GDGS 2024, filtered to endlines with approval_status = Approved (latest per work order)."
+    columns:
+      - name: workorder_id
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the endline encounter."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: workorder_linelist_gdgs_24
+    description: "Cleaned work order registration linelist for GDGS 2024, filtered to work orders with approval_status = Approved."
+    columns:
+      - name: approval_status
+        description: "Approval status for the work order registration."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]

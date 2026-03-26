@@ -1,0 +1,148 @@
+version: 2
+
+models:
+  - name: dam_wise_farmer_gdgs_24
+    description: "Dam-level rollup of farmer daily recordings and farmer endlines for GDGS 2024, split by farmer category and non-farm silt usage."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: gp
+        description: "Gram panchayat name for the dam/location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: total_daily_recordings
+        description: "Total count of farmer daily recording encounters for this dam."
+      - name: mobile_verified_farmers
+        description: "Count of mobile-verified farmers among farmers who have at least one daily recording for this dam."
+      - name: registered_farmers
+        description: "Count of farmers with at least one daily recording for this dam."
+      - name: farmers_with_endline_done
+        description: "Count of farmers with an endline record for this dam."
+      - name: area_silt_spread
+        description: "Total farm area where silt was spread (as captured) from farmer endlines for this dam."
+
+  - name: dam_wise_work_order_gdgs_24
+    description: "Dam-level rollup of work orders and activity metrics for GDGS 2024 derived from active_work_order_gdgs_24."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: registered_work_orders
+        description: "Count of registered work orders for this dam."
+      - name: work_order_endlines_completed
+        description: "Count of work orders with an endline date present."
+      - name: active_work_orders
+        description: "Count of work orders with no endline date (active)."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Total planned silt to be excavated (cu.m) across work orders for this dam."
+      - name: total_silt_carted_by_farmers
+        description: "Total silt carted by farmers (cu.m) across work orders for this dam."
+      - name: total_machine_working_hours
+        description: "Total machine working hours across work orders for this dam."
+
+  - name: org_level_gdgs_24
+    description: "Stakeholder-level rollup of work orders and activity metrics for GDGS 2024 derived from active_work_order_gdgs_24."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work orders."
+        tests:
+          - not_null
+      - name: number_districts
+        description: "Count of distinct districts covered by the stakeholder."
+      - name: number_waterbodies
+        description: "Count of distinct dams/waterbodies covered by the stakeholder."
+      - name: registered_work_orders
+        description: "Count of registered work orders for the stakeholder."
+      - name: active_work_orders
+        description: "Count of work orders with no endline date (active)."
+      - name: total_silt_carted_by_farmers
+        description: "Total silt carted by farmers (cu.m) across work orders for the stakeholder."
+      - name: total_machine_working_hours
+        description: "Total machine working hours across work orders for the stakeholder."
+
+  - name: overall_approval_statistics_gdgs_24
+    description: "Counts records by approval status across entity types (registrations and encounters) for GDGS 2024, grouped by location hierarchy."
+    columns:
+      - name: Characteristic
+        description: "Entity/characteristic name (e.g., Farmer Registration, Work order endline)."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the entity record."
+      - name: district
+        description: "District for the entity record."
+      - name: taluka
+        description: "Taluka for the entity record."
+      - name: village
+        description: "Village for the entity record."
+      - name: dam
+        description: "Dam/waterbody for the entity record."
+      - name: total_registrations
+        description: "Total number of records observed for the characteristic and location."
+      - name: approved_count
+        description: "Count of records with approval_status = Approved."
+      - name: pending_count
+        description: "Count of records with approval_status = Pending."
+      - name: rejected_count
+        description: "Count of records with approval_status = Rejected."
+
+  - name: work_order_aggregate_dam_gdgs_24
+    description: "Work-order-level summary per dam for GDGS 2024, aggregating silt, farmer, machine totals and elapsed days from active_work_order_gdgs_24."
+    columns:
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody name for the work order."
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Silt carted by farmers (cu.m) for the work order."
+      - name: total_machine_working_hours
+        description: "Total machine working hours for the work order."
+
+  - name: work_order_aggregate_org_gdgs_24
+    description: "Work-order-level summary per stakeholder for GDGS 2024, aggregating silt, farmer, machine totals and elapsed days from active_work_order_gdgs_24."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order."
+        tests:
+          - not_null
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Silt carted by farmers (cu.m) for the work order."
+      - name: total_machine_working_hours
+        description: "Total machine working hours for the work order."

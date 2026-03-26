@@ -1,8 +1,8 @@
--- Keeps the latest work_order_endline_niti_25 per work order and
+-- Keeps the latest work_order_endline_gdgs_24 per work order and
 -- retains the encounter approval status alongside registration context.
 {{ config(
   materialized='table',
-  tags=["analytics","analytics_niti_2025",  "analytical_models", "reports_niti_2025"]
+  tags=["analytics","analytics_gdgs_2024", "analytical_models", "reports_gdgs_2024", "gdgs_24_approval_status"]
 ) }}
 
 -- assuming there may be multiple entries for work order endline 
@@ -16,8 +16,8 @@ WITH latest_records AS (
             ORDER BY
                 encounter_date_time::timestamp DESC
         ) AS rn
-    FROM {{ ref('work_order_endline_niti_25') }} as we
-    left join {{ ref('approval_status_niti_25') }} as a
+    FROM {{ ref('work_order_endline_gdgs_24') }} as we
+    left join {{ ref('approval_status_gdgs_24') }} as a
     ON we.eid = a.entity_id
     WHERE voided != TRUE
 )
@@ -47,8 +47,8 @@ we.is_mb_data_same_as_app_data,
 we.approval_status
 
 FROM (Select * from latest_records WHERE rn = 1) as we
-LEFT JOIN {{ ref('work_order_regn_niti_25') }} AS ws
+LEFT JOIN {{ ref('work_order_regn_gdgs_24') }} AS ws
     ON we.endline_work_order_sub_id = ws.subject_id
-WHERE ws.subject_id IS NOT NULL
--- WHERE ws.approval_status = 'Approved' AND we.approval_status = 'Approved'
+WHERE ws.approval_status = 'Approved' 
+-- AND we.approval_status = 'Approved'
 -- ONLY returning records with the endline's encounter approval status, not workorder approval status
