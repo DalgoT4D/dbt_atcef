@@ -1,0 +1,255 @@
+version: 2
+
+models:
+  - name: dam_wise_farmer_niti_24
+    description: "Dam-level rollup of approved daily farmer recordings and approved farmer endlines for NITI 2024, split by farmer category and non-farm silt usage."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: gp
+        description: "Gram panchayat name for the dam/location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: total_daily_recordings
+        description: "Total count of approved farmer daily recording encounters for this dam."
+      - name: mobile_verified_farmers
+        description: "Count of farmers with mobile_verified_status = true among farmers who have at least one approved daily recording for this dam."
+      - name: registered_farmers
+        description: "Count of distinct farmers with at least one approved daily recording for this dam."
+      - name: farmers_with_endline_done
+        description: "Count of farmers with an approved endline record for this dam."
+      - name: marginal_farmers
+        description: "Count of farmers categorized as Marginal (0-2.49 acres)."
+      - name: small_farmers
+        description: "Count of farmers categorized as Small (2.5-4.99 acres)."
+      - name: semi_medium_farmers
+        description: "Count of farmers categorized as Semi-medium (5-9.99 acres)."
+      - name: medium_farmers
+        description: "Count of farmers categorized as Medium (10-24.99 acres)."
+      - name: large_farmers
+        description: "Count of farmers categorized as Large (above 25 acres)."
+      - name: marginal_farmers_silt_carted
+        description: "Total silt carted (cu.m) by marginal farmers in approved daily recordings for this dam."
+      - name: small_farmers_silt_carted
+        description: "Total silt carted (cu.m) by small farmers in approved daily recordings for this dam."
+      - name: semi_medium_farmers_silt_carted
+        description: "Total silt carted (cu.m) by semi-medium farmers in approved daily recordings for this dam."
+      - name: medium_farmers_silt_carted
+        description: "Total silt carted (cu.m) by medium farmers in approved daily recordings for this dam."
+      - name: large_farmers_silt_carted
+        description: "Total silt carted (cu.m) by large farmers in approved daily recordings for this dam."
+      - name: marginal_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by marginal farmers in approved daily recordings for this dam."
+      - name: small_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by small farmers in approved daily recordings for this dam."
+      - name: semi_medium_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by semi-medium farmers in approved daily recordings for this dam."
+      - name: medium_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by medium farmers in approved daily recordings for this dam."
+      - name: large_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by large farmers in approved daily recordings for this dam."
+      - name: area_silt_spread
+        description: "Total farm area where silt was spread (acres/hectares as captured) from approved farmer endlines for this dam."
+
+  - name: dam_wise_work_order_niti_24
+    description: "Work-order-level metrics with dam context for NITI 2024, derived from active_work_order_niti_24 and approved farmer activity dates."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: registered_work_orders
+        description: "Work order count flag (1 per approved work order row)."
+      - name: work_order_endlines_completed
+        description: "Completed work order flag (1 when the work order has an endline date)."
+      - name: active_work_orders
+        description: "Active work order flag (1 when the work order has no endline date)."
+      - name: active_farmers
+        description: "Active farmer count for the work order (farmers with > 0 approved silt carted)."
+      - name: active_poclains
+        description: "Active poclain count for the work order."
+      - name: active_jcbs
+        description: "Active JCB count for the work order."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Approved silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Approved silt excavated for GP/non-farm purposes (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_silt_overall_excavated
+        description: "Combined farmer and GP/non-farm excavation metric for the work order."
+      - name: percent_silt_excavated
+        description: "Percent of planned silt excavated for the work order."
+      - name: active_work_days
+        description: "Elapsed days between work order start and endline dates."
+      - name: total_machine_working_hours
+        description: "Total approved machine working hours for the work order."
+      - name: jcb_working_hours
+        description: "Approved JCB working hours for the work order."
+      - name: poclain_working_hours
+        description: "Approved poclain working hours for the work order."
+      - name: total_jcb_excavation
+        description: "Farmer-reported silt carted attributed to JCBs for the work order."
+      - name: total_poclain_excavation
+
+
+  - name: org_level_niti_24
+    description: "Stakeholder-level rollup of geographic coverage and activity metrics for NITI 2024 derived from active_work_order_niti_24."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order/dam."
+        tests:
+          - not_null
+      - name: number_districts
+        description: "Count of distinct districts covered by the stakeholder."
+      - name: number_waterbodies
+        description: "Count of distinct dams/waterbodies covered by the stakeholder."
+      - name: registered_work_orders
+        description: "Count of approved work orders registered under the stakeholder."
+      - name: work_order_endlines_completed
+        description: "Count of work orders under the stakeholder with an endline date present."
+      - name: active_work_orders
+        description: "Count of work orders under the stakeholder with no endline date (active)."
+      - name: active_work_days
+        description: "Sum of elapsed days between start date and endline date across the stakeholder's work orders."
+      - name: active_farmers
+        description: "Sum of active farmers across the stakeholder's work orders."
+      - name: active_poclains
+        description: "Sum of active poclains across the stakeholder's work orders."
+      - name: active_jcbs
+        description: "Sum of active JCBs across the stakeholder's work orders."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Total planned silt to be excavated (cu.m) across the stakeholder's work orders."
+      - name: total_silt_carted_by_farmers
+        description: "Total approved farmer silt carted (cu.m) across the stakeholder's work orders."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Total approved GP/non-farm silt excavated (cu.m) across the stakeholder's work orders."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) across the stakeholder's work orders."
+      - name: total_machine_working_hours
+        description: "Total approved machine working hours across the stakeholder's work orders."
+
+  - name: overall_approval_statistics_niti_24
+    description: "Counts records by approval status across entity types (registrations and encounters) for NITI 2024, grouped by location hierarchy."
+    columns:
+      - name: Characteristic
+        description: "Entity/characteristic name (e.g., Farmer Registration, Work order endline)."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the entity record."
+      - name: district
+        description: "District for the entity record."
+      - name: taluka
+        description: "Taluka for the entity record."
+      - name: village
+        description: "Village for the entity record."
+      - name: dam
+        description: "Dam/waterbody for the entity record."
+      - name: total_registrations
+        description: "Total number of records observed for the characteristic and location."
+      - name: approved_count
+        description: "Count of records with approval_status = Approved."
+      - name: pending_count
+        description: "Count of records with approval_status = Pending."
+      - name: rejected_count
+        description: "Count of records with approval_status = Rejected."
+
+  - name: work_order_aggregate_dam_niti_24
+    description: "Work-order-level summary per dam for NITI 2024, aggregating silt, farmer, machine totals and elapsed days from active_work_order_niti_24."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name for the work order."
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Approved silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Approved silt excavated by GP/non-farm (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_machine_working_hours
+        description: "Total approved machine working hours for the work order."
+      - name: poclain_count
+        description: "Total distinct approved poclain machines used for the work order."
+      - name: jcb_count
+        description: "Total distinct approved JCB machines used for the work order."
+      - name: total_number_of_farmers
+        description: "Total distinct farmers associated with the work order (including 0-silt farmers)."
+      - name: active_work_days
+        description: "Date difference between work order start date and endline date."
+      - name: work_order_start_date
+        description: "Work order registration date (start date)."
+      - name: workorder_endline_date
+        description: "Work order endline date (NULL if endline not completed)."
+
+  - name: work_order_aggregate_org_niti_24
+    description: "Work-order-level summary per stakeholder for NITI 2024, aggregating silt, farmer, machine totals and elapsed days from active_work_order_niti_24."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order."
+        tests:
+          - not_null
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Approved silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Approved silt excavated by GP/non-farm (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_machine_working_hours
+        description: "Total approved machine working hours for the work order."
+      - name: poclain_count
+        description: "Total distinct approved poclain machines used for the work order."
+      - name: jcb_count
+        description: "Total distinct approved JCB machines used for the work order."
+      - name: total_number_of_farmers
+        description: "Total distinct farmers associated with the work order (including 0-silt farmers)."
+      - name: active_work_days
+        description: "Date difference between work order start date and endline date."
+
