@@ -109,6 +109,8 @@ models:
         description: "Number of hyvas/dumpers carted in the encounter."
       - name: silt_carted
         description: "Silt carted in the encounter (cu.m)."
+      - name: machine_id
+        description: "Machine subject identifier associated with the farmer daily recording."
       - name: if_silt_used_non_farm_purpose
         description: "Whether silt was used for non-farm purpose in the encounter."
       - name: purpose_of_carting_silt
@@ -149,6 +151,10 @@ models:
     columns:
       - name: machine_work_order_sub_id
         description: "Work order subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: machine_id
+        description: "Machine subject identifier associated with this machine encounter."
         tests:
           - not_null
       - name: machine_name

@@ -9,34 +9,36 @@
 
 WITH daily_summed AS (
     SELECT
-    d.farmer_name,
-    d.farmer_id,
-    d.state,
-    d.district,
-    d.taluka,
-    d.village, 
-    d.dam,
-    d.gp,
-    d.stakeholder_responsible,
+    fc.farmer_name,
+    fc.subject_id as farmer_id,
+    fc.state,
+    fc.district,
+    fc.taluka,
+    fc.village, 
+    fc.dam,
+    fc.gp,
+    fc.stakeholder_responsible,
     SUM(d.silt_carted) AS silt_carted,
     SUM(d.amt_silt_used_non_farm_purpose) AS amt_silt_used_non_farm_purpose,
     COUNT(d.*) AS total_daily_recordings,
     fc.farmer_category,
     CASE WHEN fc.mobile_verified_status = 'true' THEN 1 ELSE 0 END AS mobile_verified_status
 
-    FROM {{ ref('daily_farmer_linelist_gdgs_25') }} AS d
-    LEFT JOIN {{ ref('farmer_regn_gdgs_25') }} AS fc
+    FROM {{ ref('farmer_regn_gdgs_25') }} AS fc
+    LEFT JOIN {{ ref('daily_farmer_linelist_gdgs_25') }} AS d
         ON d.farmer_id = fc.subject_id
+    WHERE fc.approval_status = 'Approved'
+
     GROUP BY
-    d.farmer_name,
-    d.farmer_id,
-    d.state,
-    d.district,
-    d.taluka, 
-    d.village,
-    d.dam,
-    d.gp,
-    d.stakeholder_responsible,
+    fc.farmer_name,
+    fc.subject_id,
+    fc.state,
+    fc.district,
+    fc.taluka, 
+    fc.village,
+    fc.dam,
+    fc.gp,
+    fc.stakeholder_responsible,
     fc.farmer_category,
     fc.mobile_verified_status
 )
@@ -96,4 +98,3 @@ SELECT
         de.village,
         de.gp,
         de.stakeholder_responsible
-

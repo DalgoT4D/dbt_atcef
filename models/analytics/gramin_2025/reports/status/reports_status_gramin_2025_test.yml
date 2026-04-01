@@ -24,6 +24,8 @@ models:
           - not_null
           - accepted_values:
               values: ["Approved"]
+      - name: machine_id
+        description: "Machine subject identifier associated with the farmer daily recording."
 
   - name: daily_machine_linelist_approval_graminpa_25
     description: "Status linelist of machine daily recording encounters joined to machine registrations and encounter approvals (includes only approved machines)."
@@ -32,8 +34,8 @@ models:
         description: "Work order subject identifier associated with this machine encounter."
         tests:
           - not_null
-      - name: excavating_machine_id
-        description: "Machine subject identifier reported in the encounter."
+      - name: machine_id
+        description: "Machine subject identifier associated with this machine encounter."
         tests:
           - not_null
       - name: encounter_date_time
@@ -74,6 +76,8 @@ models:
           - not_null
       - name: approval_status
         description: "Most recent approval status for the gram panchayat subject."
+      - name: last_gp_update
+        description: "Timestamp of the latest GP endline encounter used in the linelist."
 
   - name: machine_endline_linelist_approval_graminpa_25
     description: "Status linelist joining machine endline encounters with machine registrations and exposing endline encounter approval status (only registered/approved machines can have an endline)."

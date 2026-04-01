@@ -43,6 +43,8 @@ models:
           - not_null
           - accepted_values:
               values: ["Approved"]
+      - name: machine_id
+        description: "Machine subject identifier associated with the farmer daily recording."
       - name: approval_status
         description: "Approval status for the daily recording encounter."
         tests:
@@ -55,6 +57,10 @@ models:
     columns:
       - name: machine_work_order_sub_id
         description: "Work order subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: machine_id
+        description: "Machine subject identifier associated with this machine encounter."
         tests:
           - not_null
       - name: approval_status

@@ -24,6 +24,8 @@ models:
           - not_null
           - accepted_values:
               values: ["Approved"]
+      - name: machine_id
+        description: "Machine subject identifier associated with the farmer daily recording."
 
   - name: daily_machine_linelist_approval_gdgs_25
     description: "Status linelist of machine daily recording encounters joined to machine registrations and encounter approvals (includes only approved machines)."
@@ -32,8 +34,8 @@ models:
         description: "Work order subject identifier associated with this machine encounter."
         tests:
           - not_null
-      - name: excavating_machine_id
-        description: "Machine subject identifier reported in the encounter."
+      - name: machine_id
+        description: "Machine subject identifier associated with this machine encounter."
         tests:
           - not_null
       - name: approval_status
