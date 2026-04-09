@@ -2,7 +2,7 @@
 -- approved daily farmer linelist and registration categories.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytics_niti_2025", "analytical_models", "reports_niti_2025", "ss_niti_2025"]
+  tags=["ss_2025", "ss_niti_2025"]
 ) }}
 
 WITH farmer_activity AS (

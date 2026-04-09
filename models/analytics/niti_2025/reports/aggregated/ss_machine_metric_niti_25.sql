@@ -1,7 +1,7 @@
 -- Machine efficiency metrics for NITI 2025 using analytics lineage only.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytics_niti_2025", "analytical_models", "reports_niti_2025", "ss_niti_2025"]
+  tags=["ss_2025", "ss_niti_2025"]
 ) }}
 
 WITH working_hours AS (

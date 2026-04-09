@@ -47,7 +47,7 @@ we.is_mb_data_same_as_app_data,
 we.approval_status
 
 FROM (Select * from latest_records WHERE rn = 1) as we
-LEFT JOIN {{ ref('work_order_regn_niti_25') }} AS ws
+INNER JOIN {{ ref('work_order_regn_niti_25') }} AS ws
     ON we.endline_work_order_sub_id = ws.subject_id
 WHERE ws.subject_id IS NOT NULL
 -- WHERE ws.approval_status = 'Approved' AND we.approval_status = 'Approved'

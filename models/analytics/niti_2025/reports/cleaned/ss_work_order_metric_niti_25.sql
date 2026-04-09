@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["analytics", "analytics_niti_2025", "analytical_models", "reports_niti_2025", "ss_niti_2025"]
+  tags=["ss_2025", "ss_niti_2025"]
 ) }}
 
 
@@ -38,10 +38,9 @@ SELECT
     fc.dam,
     fc.stakeholder_responsible as ngo_name,
     fc.village,
-    MAX(fc.encounter_date_time) AS date_time,
-    MAX(fc.silt_target) AS silt_target,
-    SUM(fc.silt_carted) AS silt_achieved,
-
+    MAX(fc.encounter_date_time::date) AS date_time,
+    MAX(fc.silt_target::NUMERIC) AS silt_target,
+    SUM(fc.silt_carted::NUMERIC) AS silt_achieved,
     SUM(
         fe.area_silt_spread
     ) AS total_farm_area_silt_is_spread_on

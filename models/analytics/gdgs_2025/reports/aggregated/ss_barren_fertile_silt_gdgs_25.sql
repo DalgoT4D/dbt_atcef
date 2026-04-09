@@ -2,7 +2,7 @@
 -- land type recorded in the farmer endline, using analytics lineage only.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "ss_gdgs_2025"]
+  tags=["ss_2025", "ss_gdgs_2025"]
 ) }}
 
 WITH fc_agg AS (

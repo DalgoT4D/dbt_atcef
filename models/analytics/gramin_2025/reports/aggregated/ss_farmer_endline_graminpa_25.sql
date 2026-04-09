@@ -2,7 +2,7 @@
 -- approved farmer endline linelist data only.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "ss_graminpa_2025"]
+  tags=["ss_2025", "ss_graminpa_2025"]
 ) }}
 
 SELECT

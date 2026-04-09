@@ -2,7 +2,7 @@
 -- lineage sources. GP fields are retained as zero for schema alignment.
 {{ config(
   materialized='table',
-  tags=["analytics", "analytics_gdgs_2025", "analytical_models", "reports_gdgs_2025", "ss_gdgs_2025"]
+  tags=["ss_2025", "ss_gdgs_2025"]
 ) }}
 
 WITH approved_work_orders AS (

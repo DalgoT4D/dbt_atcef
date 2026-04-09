@@ -1,0 +1,264 @@
+version: 2
+
+models:
+  - name: approval_status_niti_22
+    description: "Latest approval status per entity (work order, subject, or encounter) from the NITI 2022 approval_statuses feed."
+    columns:
+      - name: entity_id
+        description: "Identifier of the entity whose approval status is tracked."
+        tests:
+          - not_null
+      - name: entity_type
+        description: "Type of the entity (e.g., work order, subject, encounter)."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Most recent approval status value for the entity."
+        tests:
+          - not_null
+      - name: status_date_time
+        description: "Timestamp when the latest approval status was recorded."
+        tests:
+          - not_null
+
+  - name: encounter_type_niti_22
+    description: "Raw encounters for NITI 2022 with subject identifiers, encounter metadata, observations JSON, and voided flag."
+    columns:
+      - name: eid
+        description: "Unique encounter/event identifier."
+        tests:
+          - not_null
+      - name: subject_id
+        description: "Identifier of the subject associated with the encounter."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type associated with the encounter (e.g., Farmer, Work Order)."
+        tests:
+          - not_null
+      - name: encounter_type
+        description: "Encounter type label captured by the data collection app."
+        tests:
+          - not_null
+      - name: encounter_date_time
+        description: "Timestamp when the encounter occurred."
+        tests:
+          - not_null
+      - name: observations
+        description: "Raw observations payload captured for the encounter (JSON)."
+      - name: voided
+        description: "Whether the encounter record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: location_niti_22
+    description: "Location/address dimension for NITI 2022, providing dam and location hierarchy plus stakeholder and GPS metadata."
+    columns:
+      - name: address_id
+        description: "Unique address/location identifier from the address source."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody title."
+        tests:
+          - not_null
+      - name: silt_target
+        description: "Estimated quantity of silt (target) for the location."
+        tests:
+          - not_null
+      - name: customProperties
+        description: "Raw custom properties payload from the address source (JSON)."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the waterbody/dam."
+      - name: village
+        description: "Village name for the location hierarchy."
+      - name: taluka
+        description: "Taluka name for the location hierarchy."
+      - name: district
+        description: "District name for the location hierarchy."
+      - name: state
+        description: "State name for the location hierarchy."
+      - name: gram_panchayat_name
+        description: "Name of the gram panchayat associated with the location."
+      - name: site_gps_latitude
+        description: "Site GPS latitude captured in custom properties (numeric)."
+      - name: site_gps_longitude
+        description: "Site GPS longitude captured in custom properties (numeric)."
+
+  - name: dim_subjects_farmer_niti_22
+    description: "Farmer subjects for NITI 2022 with demographics, contact details, land holding, silt requirements, and voided flag."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the farmer."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the farmer was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Farmer')."
+        tests:
+          - not_null
+      - name: location_id
+        description: "Location identifier referencing the address/location dimension."
+      - name: gender
+        description: "Gender captured during registration."
+      - name: farmer_last_name
+        description: "Farmer last name."
+      - name: farmer_first_name
+        description: "Farmer first name."
+      - name: land_holding_acres
+        description: "Land holding size in acres (numeric)."
+      - name: date_of_birth
+        description: "Farmer date of birth as captured in observations."
+      - name: mobile_number
+        description: "Farmer mobile phone number."
+      - name: mobile_verified_status
+        description: "Mobile verification status captured in the nested mobile JSON."
+      - name: farmer_category
+        description: "Farmer category captured during registration."
+      - name: total_silt_required
+        description: "Total silt required by the farmer (numeric)."
+      - name: number_hywas_required
+        description: "Number of hyvas required by the farmer (numeric)."
+      - name: number_trolleys_required
+        description: "Number of trolleys required by the farmer (numeric)."
+      - name: capacity_trolleys_cum
+        description: "Capacity of trolleys in cubic meters (numeric)."
+      - name: farmer_contribution_per_trolley
+        description: "Farmer contribution per trolley (numeric)."
+      - name: voided
+        description: "Whether the subject record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: dim_subjects_gp_niti_22
+    description: "Gram panchayat subjects for NITI 2022 with location fields and readiness/plan responses captured in observations."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the gram panchayat."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the gram panchayat was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Gram panchayat')."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the gram panchayat registration."
+      - name: taluka
+        description: "Taluka for the gram panchayat registration."
+      - name: district
+        description: "District for the gram panchayat registration."
+      - name: gp_village
+        description: "Gram panchayat/village value captured in the location JSON."
+      - name: gp_first_name
+        description: "Primary name field captured for the gram panchayat record."
+      - name: supervisor_name
+        description: "Supervisor name captured during registration."
+      - name: silt_usage_plans_exist
+        description: "Whether silt usage plans exist, as captured in observations."
+      - name: gp_poc_name
+        description: "Name of point of contact for the gram panchayat."
+      - name: supervisor_contact_number
+        description: "Supervisor contact number captured during registration."
+      - name: water_committee_active
+        description: "Whether any water committee is active for the waterbody."
+      - name: gp_clarity_about_rwb
+        description: "Whether the gram panchayat is clear about the RWB program."
+      - name: gp_poc_contact_number
+        description: "Contact number of the gram panchayat point of contact."
+      - name: silt_usage_execution_plan
+        description: "Text describing how silt usage plans will be executed."
+      - name: plans_to_establish_wb_committee
+        description: "Whether there are plans to establish a committee for the waterbody."
+      - name: voided
+        description: "Whether the subject record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: dim_subjects_machine_niti_22
+    description: "Excavating machine subjects for NITI 2022 with machine identity, contractor details, and voided flag."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the excavating machine."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the excavating machine was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Excavating Machine')."
+        tests:
+          - not_null
+      - name: location_id
+        description: "Location identifier referencing the address/location dimension."
+      - name: ngo_name
+        description: "NGO name captured during registration."
+      - name: machine_name
+        description: "Machine name/identifier captured during registration."
+      - name: machine_type
+        description: "Type of the excavating machine."
+      - name: contractor_name
+        description: "Name of the contractor associated with the machine."
+      - name: contractor_mobile_number
+        description: "Contractor mobile number (numeric)."
+      - name: voided
+        description: "Whether the subject record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: dim_subjects_work_order_niti_22
+    description: "Work order subjects for NITI 2022 with media links, year metadata, planned silt quantities, and voided flag."
+    columns:
+      - name: subject_id
+        description: "Unique subject identifier for the work order."
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Date/time when the work order was registered."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type (expected 'Work Order')."
+        tests:
+          - not_null
+      - name: location_id
+        description: "Location identifier referencing the address/location dimension."
+      - name: year
+        description: "Year metadata captured during registration."
+      - name: workorder_first_name
+        description: "Primary name field captured for the work order record."
+      - name: site_video_url
+        description: "URL for the site video captured during registration."
+      - name: site_image_1_url
+        description: "URL for site image 1 captured during registration."
+      - name: site_image_2_url
+        description: "URL for site image 2 captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: noc_workorder_image
+        description: "URL/reference for the NOC/work order image."
+      - name: site_marking_image
+        description: "URL/reference for the site marking image."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (numeric)."
+      - name: voided
+        description: "Whether the subject record is voided."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
