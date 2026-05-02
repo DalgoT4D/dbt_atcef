@@ -1,0 +1,98 @@
+version: 2
+
+models:
+  - name: daily_farmer_linelist_approval_gdgs_24
+    description: "Status linelist joining farmer registrations, work orders, and non-voided daily farmer encounters with approval flags for review (filters to farmer & work order approved)."
+    columns:
+      - name: farmer_id
+        description: "Farmer subject identifier."
+        tests:
+          - not_null
+      - name: work_order_id
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: farmer_approval_status
+        description: "Approval status for the farmer registration."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+      - name: work_order_approval_status
+        description: "Approval status for the work order registration."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Approved"]
+
+  - name: daily_machine_linelist_approval_gdgs_24
+    description: "Status linelist of machine daily recording encounters joined to machine registrations and encounter approvals (includes only approved machines)."
+    columns:
+      - name: machine_work_order_sub_id
+        description: "Work order subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: excavating_machine_id
+        description: "Machine subject identifier reported in the encounter."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the machine encounter (may be null/unfiltered)."
+
+  - name: farmer_endline_linelist_approval_gdgs_24
+    description: "Status linelist keeping the latest farmer endline per farmer and surfacing the endline encounter approval_status (filtered to non-null statuses)."
+    columns:
+      - name: farmer_beneficiary_id
+        description: "Farmer subject identifier associated with the endline."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the farmer endline encounter."
+        tests:
+          - not_null
+
+  - name: farmer_linelist_approval_gdgs_24
+    description: "Status linelist joining farmer registrations with carting totals and latest endline details, without filtering approval outcome."
+    columns:
+      - name: farmer_id
+        description: "Farmer subject identifier."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Most recent approval status for the farmer subject."
+      - name: endline_status
+        description: "Whether a farmer endline exists for the farmer subject: Endline Done or Endline Not Done."
+
+  - name: machine_endline_linelist_approval_gdgs_24
+    description: "Status linelist joining machine endline encounters with machine registrations and exposing endline encounter approval status (unfiltered)."
+    columns:
+      - name: machine_id
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: approval_status
+        description: "Approval status for the machine endline encounter (may be null/unfiltered)."
+
+  - name: workorder_endline_linelist_approval_gdgs_24
+    description: "Status linelist keeping the latest work order endline per work order and surfacing the endline encounter approval_status alongside registration context."
+    columns:
+      - name: workorder_id
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: endline_date
+        description: "Timestamp for the latest endline encounter."
+      - name: approval_status
+        description: "Approval status for the work order endline encounter (unfiltered)."
+
+  - name: workorder_linelist_approval_gdgs_24
+    description: "Status linelist combining work order registrations, latest endline info, and contractor details, exposing work order approval_status (unfiltered)."
+    columns:
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: registration_date
+        description: "Work order registration date/time."
+      - name: dam
+        description: "Dam/waterbody name for the work order location."
+      - name: approval_status
+        description: "Most recent approval status for the work order subject."

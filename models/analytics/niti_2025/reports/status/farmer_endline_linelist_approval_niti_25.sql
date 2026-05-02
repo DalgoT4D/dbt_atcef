@@ -44,6 +44,7 @@ SELECT
   fe.type_of_land_silt_is_spread_on,
   fe.major_crops_grown,
   fe.major_to_be_grown,
+  fe.distance_from_waterbody, -- new
   -- farmers' village is to be added, but it isnt the same as other village?
   fe.approval_status
 

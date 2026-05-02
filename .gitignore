@@ -6,4 +6,8 @@ logs/
 profiles.yml
 .user.yml
 **/.DS_Store
-niti_2024/
+analytics/niti_2024/
+analytics/niti_2022/
+analytics/niti_2023/
+analytics/gdgs_2023/
+analytics/gdgs_2024/

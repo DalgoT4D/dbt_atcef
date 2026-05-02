@@ -34,6 +34,8 @@ models:
         description: "Number of hyvas/dumpers carted in the encounter."
       - name: silt_carted
         description: "Silt carted in the encounter (cu.m)."
+      - name: machine_id
+        description: "Machine subject identifier associated with the farmer daily recording."
       - name: if_silt_used_non_farm_purpose
         description: "Whether silt was used for non-farm purpose in the encounter."
       - name: purpose_of_carting_silt
@@ -60,6 +62,10 @@ models:
     columns:
       - name: machine_work_order_sub_id
         description: "Work order subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: machine_id
+        description: "Machine subject identifier associated with this machine encounter."
         tests:
           - not_null
       - name: machine_name
@@ -160,6 +166,8 @@ models:
         description: "Farmer category captured during registration."
       - name: approval_status
         description: "Approval status for the farmer registration."
+      - name: endline_status
+        description: "Whether a farmer endline exists for the farmer subject: Endline Done or Endline Not Done."
       - name: area_silt_spread
         description: "Area silt spread from the latest endline (if present)."
       - name: total_trolleys_carted

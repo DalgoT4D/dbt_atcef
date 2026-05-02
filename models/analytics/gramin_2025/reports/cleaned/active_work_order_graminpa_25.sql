@@ -3,158 +3,35 @@
   tags=["analytics","analytics_gramin_2025", "analytical_models", "reports_graminpa_2025", "cleaned_graminpa_25"]
 ) }}
 
--- ANALYTICAL TABLE: Work Orders × Farmers × Machines × Silt (graminpa 2025)
---
--- ------------------------------------------------------------
--- CTE OVERVIEW WITH SOURCE TABLES
--- ------------------------------------------------------------
--- 1. machine_type: Maps farmer-reported silt carting records to machine types.
---    SOURCES:
---      - work_order_farmer_graminpa_25
---      - machine_regn_graminpa_25
---      - approval_status_graminpa_25
---
--- 2. machine_type_pivot: Aggregates silt carted per work order by machine type.
---    SOURCES:
---      - machine_type (CTE)
---
--- 3. carting_by_machine_type: Produces work-order–level silt excavation totals split by
---      JCB and Poclain.
---    SOURCES:
---      - machine_type_pivot (CTE)
--- 4. machine_silt: Aggregates approved machine working hours per work order,
---      including total hours and hours by machine type.
---    SOURCES:
---      - work_order_machine_graminpa_25
---      - approval_status_graminpa_25
---      - machine_regn_graminpa_25
---
--- 5. machine_types_counted: Counts distinct approved machines used per work order,
---      split by machine type (JCB / Poclain).
---      Also derives ACTIVE machine counts based on machine endlines.
---    SOURCES:
---      - work_order_machine_graminpa_25
---      - machine_regn_graminpa_25
---      - machine_endline_linelist_graminpa_25
---
--- 6. approved_work_orders: Filters to approved work orders and selects core metadata
---      such as location, stakeholder, planned silt, and start date.
---    SOURCES:
---      - work_order_regn_graminpa_25
---
--- 7. farmer_silt_cl: Filters farmer_silt to work orders with non-zero farmer silt.
---      SOURCES:
---        - daily_farmer_linelist_graminpa_25
---
--- 8. gp_silt: Aggregates GP / non-farmer silt excavation per work order.
---     SOURCES:
---       - gp_endline_graminpa_25
---       - approval_status_graminpa_25
---
--- ------------------------------------------------------------
--- FINAL OUTPUT
--- ------------------------------------------------------------
--- ONE ROW PER WORK ORDER, joining:
---   - approved_work_orders
---   - farmer_silt_cl
---   - gp_silt
---   - workorder_endline_linelist_graminpa_25
---   - machine_silt
---   - machine_types_counted
---   - carting_by_machine_type
---
--- ------------------------------------------------------------
--- ACTIVITY DEFIgraminpaONS
--- ------------------------------------------------------------
--- Active Work Order: workorder_endline_date IS NULL
--- Active Farmer: farmer has approved silt carted > 0
--- Active Machine: workorder endline NOT reached (to check if this should be revised to machine endline)
+-- Work-order-level analytical table for GraminPA 2025. Farmer and machine
+-- metrics are derived from the approved daily linelists, while GP/non-farm
+-- excavation is sourced from approved GP endlines.
 
-
-
-
-
--- machine type merge
-with machine_type as (
-SELECT
-wf.farmer_work_order_sub_id as workorderid,
-wf.silt_carted,
-wf.machine_sub_id,
-mr.machine_type
-from {{ ref('work_order_farmer_graminpa_25') }} as wf
-LEFT JOIN {{ref('machine_regn_graminpa_25')}} as mr
-ON mr.subject_id = wf.machine_sub_id
-INNER JOIN {{ ref('approval_status_graminpa_25') }} as a 
-ON wf.eid = a.entity_id ),
-
-machine_type_pivot AS (
+with carting_by_machine_type AS (
     SELECT
-        workorderid,
-        LOWER(machine_type) AS machine_type_lower,
-        SUM(silt_carted) AS total_silt_carted_by_type
-    FROM machine_type
-    GROUP BY 1, 2),
-
-carting_by_machine_type AS (
-    SELECT 
-    workorderid,
-    SUM(CASE WHEN machine_type_lower = 'jcb' THEN total_silt_carted_by_type ELSE 0 END) AS jcb_excavation,
-    SUM(CASE WHEN machine_type_lower = 'poclain' THEN total_silt_carted_by_type ELSE 0 END) AS poclain_excavation
-FROM machine_type_pivot
-GROUP BY 1),
+        df.work_order_id AS workorderid,
+        SUM(CASE WHEN LOWER(mr.machine_type) = 'jcb' THEN COALESCE(df.silt_carted, 0) ELSE 0 END) AS jcb_excavation,
+        SUM(CASE WHEN LOWER(mr.machine_type) = 'poclain' THEN COALESCE(df.silt_carted, 0) ELSE 0 END) AS poclain_excavation
+    FROM {{ ref('daily_farmer_linelist_graminpa_25') }} AS df
+    LEFT JOIN {{ ref('machine_regn_graminpa_25') }} AS mr
+        ON mr.subject_id = df.machine_id
+    GROUP BY df.work_order_id
+),
 
 
 
 -- machine details
 machine_silt as (
 SELECT 
-    mw.machine_work_order_sub_id as workorderid,
-    SUM(CASE 
-        -- Total working hours (Approved only)
-        WHEN a.approval_status = 'Approved' THEN COALESCE(mw.working_hours, 0) 
-        ELSE 0 
-    END) as total_machine_working_hours,
-    SUM(CASE
-        -- JCB working hours (Approved only)
-        WHEN a.approval_status = 'Approved' 
-             AND LOWER(mr.machine_type) = 'jcb' 
-             THEN COALESCE(mw.working_hours, 0)
-        ELSE 0
-    END) as jcb_working_hours,
-    SUM(CASE
-        -- Poclain working hours (Approved only)
-        WHEN a.approval_status = 'Approved' 
-             AND LOWER(mr.machine_type) = 'poclain' 
-             THEN COALESCE(mw.working_hours, 0)
-        ELSE 0
-    END) as poclain_working_hours
-FROM {{ ref('work_order_machine_graminpa_25') }} as mw
-INNER JOIN {{ ref('approval_status_graminpa_25') }} as a 
-    ON mw.eid = a.entity_id 
--- Add machine registration table to get machine type
+    dm.machine_work_order_sub_id as workorderid,
+    SUM(COALESCE(dm.working_hours, 0)) as total_machine_working_hours,
+    SUM(CASE WHEN LOWER(mr.machine_type) = 'jcb' THEN COALESCE(dm.working_hours, 0) ELSE 0 END) as jcb_working_hours,
+    SUM(CASE WHEN LOWER(mr.machine_type) = 'poclain' THEN COALESCE(dm.working_hours, 0) ELSE 0 END) as poclain_working_hours
+FROM {{ ref('daily_machine_linelist_graminpa_25') }} as dm
 LEFT JOIN {{ ref('machine_regn_graminpa_25') }} AS mr
-    ON mw.excavating_machine_id = mr.subject_id
-WHERE mw.voided != TRUE
-GROUP BY mw.machine_work_order_sub_id
+    ON dm.machine_id = mr.subject_id
+GROUP BY dm.machine_work_order_sub_id
 ),
-
---machine types
--- machine_types_counted as (
--- SELECT
---     t.workorderid,
---     SUM(CASE WHEN t.machine_type_lower = 'jcb' THEN 1 ELSE 0 END) AS jcb_count,
---     SUM(CASE WHEN t.machine_type_lower = 'poclain' THEN 1 ELSE 0 END) AS poclain_count
--- FROM
---     (SELECT DISTINCT
---             mw.machine_work_order_sub_id AS workorderid,
---             mw.excavating_machine_id,
---             LOWER(mr.machine_type) AS machine_type_lower
---         FROM {{ ref('work_order_machine_graminpa_25') }} AS mw
---         LEFT JOIN{{ ref('machine_regn_graminpa_25') }} AS mr
---             ON mw.excavating_machine_id = mr.subject_id
---         WHERE mw.voided != TRUE AND mr.approval_status = 'Approved') AS t
--- GROUP BY t.workorderid),
-
 
 machine_types_counted AS (
 SELECT
@@ -164,33 +41,19 @@ SELECT
     SUM(CASE WHEN t.machine_type_lower = 'poclain' THEN 1 ELSE 0 END) AS poclain_count,
 
     /* active machines (endline NOT reached) */
-    SUM(
-        CASE
-            WHEN t.machine_type_lower = 'jcb'
-            AND me.endline_date_time IS NULL
-            THEN 1 ELSE 0
-        END
-    ) AS active_jcb_count,
-
-    SUM(
-        CASE
-            WHEN t.machine_type_lower = 'poclain'
-            AND me.endline_date_time IS NULL
-            THEN 1 ELSE 0
-        END
-    ) AS active_poclain_count
+    SUM(CASE WHEN t.machine_type_lower = 'jcb' AND me.endline_date_time IS NULL THEN 1 ELSE 0 END) AS active_jcb_count,
+    SUM(CASE WHEN t.machine_type_lower = 'poclain' AND me.endline_date_time IS NULL THEN 1 ELSE 0 END) AS active_poclain_count
 
 FROM (
     SELECT DISTINCT
-        mw.machine_work_order_sub_id AS workorderid,
-        mw.excavating_machine_id AS machine_id,
+        dm.machine_work_order_sub_id AS workorderid,
+        dm.machine_id AS machine_id,
         LOWER(mr.machine_type) AS machine_type_lower
-    FROM {{ ref('work_order_machine_graminpa_25') }} AS mw
+    FROM {{ ref('daily_machine_linelist_graminpa_25') }} AS dm
     LEFT JOIN {{ ref('machine_regn_graminpa_25') }} AS mr
-        ON mw.excavating_machine_id = mr.subject_id
+        ON dm.machine_id = mr.subject_id
     WHERE
-        mw.voided != TRUE
-        AND mr.approval_status = 'Approved'
+        dm.machine_id IS NOT NULL
 ) t
 LEFT JOIN {{ ref('machine_endline_linelist_graminpa_25') }} me
     ON t.machine_id = me.machine_id

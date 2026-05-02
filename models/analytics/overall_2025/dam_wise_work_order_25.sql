@@ -3,11 +3,83 @@
   tags=["analytics", "analytical_models", "reports_overall_2025", "analytical_models_overall_2025"]
 ) }}
 
-SELECT *, 'niti 2025' AS project
+SELECT
+    dam,
+    state,
+    district,
+    taluka,
+    village,
+    registered_work_orders,
+    work_order_endlines_completed,
+    active_work_orders,
+    active_farmers,
+    active_poclains,
+    active_jcbs,
+    silt_to_be_excavated_as_per_plan,
+    total_silt_carted_by_farmers,
+    total_silt_excavated_by_gp_non_farm,
+    total_silt_excavated,
+    total_silt_overall_excavated,
+    percent_silt_excavated,
+    active_work_days,
+    total_machine_working_hours,
+    jcb_working_hours,
+    poclain_working_hours,
+    total_jcb_excavation,
+    total_poclain_excavation,
+    'niti 2025' AS project
 FROM {{ ref('dam_wise_work_order_niti_25') }}
 UNION ALL
-SELECT *, 'gdgs 2025' AS project
+SELECT
+    dam,
+    state,
+    district,
+    taluka,
+    village,
+    registered_work_orders,
+    work_order_endlines_completed,
+    active_work_orders,
+    NULL AS active_farmers,
+    NULL AS active_poclains,
+    NULL AS active_jcbs,
+    silt_to_be_excavated_as_per_plan,
+    total_silt_carted_by_farmers,
+    total_silt_excavated_by_gp_non_farm,
+    total_silt_excavated,
+    total_silt_overall_excavated,
+    percent_silt_excavated,
+    active_work_days,
+    total_machine_working_hours,
+    jcb_working_hours,
+    poclain_working_hours,
+    total_jcb_excavation,
+    total_poclain_excavation,
+    'gdgs 2025' AS project
 FROM {{ ref('dam_wise_work_order_gdgs_25') }}
 UNION ALL
-SELECT *, 'graminpa 2025' AS project
+SELECT
+    dam,
+    state,
+    district,
+    taluka,
+    village,
+    registered_work_orders,
+    work_order_endlines_completed,
+    active_work_orders,
+    active_farmers,
+    active_poclains,
+    active_jcbs,
+    silt_to_be_excavated_as_per_plan,
+    total_silt_carted_by_farmers,
+    total_silt_excavated_by_gp_non_farm,
+    total_silt_excavated,
+    total_silt_overall_excavated,
+    percent_silt_excavated,
+    active_work_days,
+    total_machine_working_hours,
+    jcb_working_hours,
+    poclain_working_hours,
+    total_jcb_excavation,
+    total_poclain_excavation,
+    'graminpa 2025' AS project
 FROM {{ ref('dam_wise_work_order_graminpa_25') }}

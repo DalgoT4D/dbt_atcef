@@ -1,0 +1,376 @@
+version: 2
+
+models:
+  - name: daily_farmer_linelist_approval_niti_24
+    description: "Status/approval linelist for farmer daily recording encounters for NITI 2024, joining farmer registrations, work order registrations, encounter details, and approval statuses for review."
+    columns:
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: farmer_name
+        description: "Farmer name from registration."
+      - name: farmer_id
+        description: "Farmer subject identifier."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the record location."
+      - name: district
+        description: "District for the record location."
+      - name: village
+        description: "Village for the record location."
+      - name: taluka
+        description: "Taluka for the record location."
+      - name: dam
+        description: "Dam/waterbody for the record location."
+      - name: gp
+        description: "Gram panchayat for the record location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: trolleys_carted
+        description: "Number of trolleys carted in the encounter."
+      - name: hyvas_carted
+        description: "Number of hyvas/dumpers carted in the encounter."
+      - name: silt_carted
+        description: "Silt carted in the encounter (cu.m)."
+      - name: machine_id
+        description: "Machine subject identifier associated with the farmer daily recording."
+      - name: silt_target
+        description: "Planned/estimated silt target associated with the work order."
+      - name: if_silt_used_non_farm_purpose
+        description: "Whether silt was used for non-farm purpose in the encounter."
+      - name: purpose_of_carting_silt
+        description: "Purpose of carting silt captured in observations."
+      - name: amt_silt_used_non_farm_purpose
+        description: "Amount of silt used for non-farm purpose in the encounter (cu.m)."
+      - name: other_person_taking_silt
+        description: "Other person taking silt (if captured)."
+      - name: other_purpose_of_carting_silt
+        description: "Other purpose of carting silt (if captured)."
+      - name: silt_taken_by
+        description: "Who the silt was taken by (if captured)."
+      - name: encounter_date_time
+        description: "Timestamp when the farmer daily encounter occurred."
+      - name: work_order_id
+        description: "Work order subject identifier associated with the encounter."
+      - name: work_order_approval_status
+        description: "Approval status for the work order registration."
+      - name: farmer_approval_status
+        description: "Approval status for the farmer registration."
+      - name: approval_status
+        description: "Approval status for the daily recording encounter."
+
+  - name: daily_machine_linelist_approval_niti_24
+    description: "Status/approval linelist for machine daily recording encounters for NITI 2024, joining machine encounter logs to machine registrations and encounter approval statuses."
+    columns:
+      - name: machine_work_order_sub_id
+        description: "Work order subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: machine_id
+        description: "Machine subject identifier associated with this machine encounter."
+        tests:
+          - not_null
+      - name: machine_name
+        description: "Machine name from registration."
+      - name: encounter_date_time
+        description: "Timestamp when the machine encounter occurred."
+      - name: contractor_name
+        description: "Contractor name associated with the machine."
+      - name: contractor_mobile_number
+        description: "Contractor mobile number associated with the machine."
+      - name: state
+        description: "State for the machine location."
+      - name: district
+        description: "District for the machine location."
+      - name: taluka
+        description: "Taluka for the machine location."
+      - name: village
+        description: "Village for the machine location."
+      - name: dam
+        description: "Dam/waterbody for the machine location."
+      - name: gp
+        description: "Gram panchayat for the machine location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: approval_status
+        description: "Approval status for the machine encounter."
+      - name: log_book_image_machine
+        description: "Log book image URL/reference captured for the machine encounter."
+      - name: working_hours
+        description: "Machine working hours captured in the encounter."
+
+  - name: farmer_endline_linelist_approval_niti_24
+    description: "Status/approval linelist for farmer endline encounters for NITI 2024, keeping the latest non-voided endline per farmer and attaching approval status plus registration context."
+    columns:
+      - name: farmer_name
+        description: "Farmer name from registration."
+      - name: farmer_beneficiary_id
+        description: "Farmer subject identifier associated with the endline."
+        tests:
+          - not_null
+      - name: encounter_date_time
+        description: "Timestamp when the endline encounter occurred."
+      - name: state
+        description: "State for the farmer location."
+      - name: district
+        description: "District for the farmer location."
+      - name: taluka
+        description: "Taluka for the farmer location."
+      - name: village
+        description: "Village for the farmer location."
+      - name: dam
+        description: "Dam/waterbody for the farmer location."
+      - name: gp
+        description: "Gram panchayat for the farmer location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: total_silt_excavated
+        description: "Total silt excavated captured in the endline (cu.m)."
+      - name: area_silt_spread
+        description: "Area where silt was spread captured in the endline."
+      - name: type_of_land_silt_is_spread_on
+        description: "Type of land where the silt is spread on (as captured)."
+      - name: major_crops_grown
+        description: "Major crops grown (as captured)."
+      - name: major_to_be_grown
+        description: "Major crops to be grown (as captured)."
+      - name: distance_from_waterbody
+        description: "Distance from the waterbody captured in the endline."
+      - name: approval_status
+        description: "Approval status for the endline encounter."
+
+  - name: farmer_linelist_approval_niti_24
+    description: "Status/approval linelist for farmers for NITI 2024, combining farmer registrations with cumulative carting totals and latest endline information."
+    columns:
+      - name: farmer_id
+        description: "Farmer subject identifier."
+        tests:
+          - not_null
+      - name: farmer_name
+        description: "Farmer name from registration."
+      - name: state
+        description: "State for the farmer location."
+      - name: district
+        description: "District for the farmer location."
+      - name: taluka
+        description: "Taluka for the farmer location."
+      - name: village
+        description: "Village for the farmer location."
+      - name: dam
+        description: "Dam/waterbody for the farmer location."
+      - name: gp
+        description: "Gram panchayat for the farmer location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: mobile_number
+        description: "Farmer mobile phone number."
+      - name: land_holding
+        description: "Land holding in acres (numeric)."
+      - name: farmer_category
+        description: "Farmer category captured during registration."
+      - name: approval_status
+        description: "Approval status for the farmer registration."
+      - name: endline_status
+        description: "Whether a farmer endline exists for the farmer subject: Endline Done or Endline Not Done."
+      - name: area_silt_spread
+        description: "Area silt spread from the latest endline (if present)."
+      - name: total_trolleys_carted
+        description: "Total trolleys carted across all encounters for the farmer."
+      - name: total_hyvas_carted
+        description: "Total hyvas carted across all encounters for the farmer."
+      - name: total_silt_carted
+        description: "Total silt carted across all encounters for the farmer (cu.m)."
+
+  - name: gp_linelist_approval_niti_24
+    description: "Status/approval linelist for gram panchayats for NITI 2024, combining GP registration responses with the latest non-voided GP endline and total GP silt excavated."
+    columns:
+      - name: gp_name
+        description: "Gram panchayat name (from gp_first_name)."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the gram panchayat."
+      - name: district
+        description: "District for the gram panchayat."
+      - name: taluka
+        description: "Taluka for the gram panchayat."
+      - name: village
+        description: "Village for the gram panchayat (from gp_village)."
+      - name: supervisor_name
+        description: "Supervisor name captured during registration."
+      - name: supervisor_contact_number
+        description: "Supervisor contact number captured during registration."
+      - name: water_committee_active
+        description: "Whether any water committee is active for the waterbody."
+      - name: plans_to_establish_wb_committee
+        description: "Whether there are plans to establish a committee for the waterbody."
+      - name: gp_clarity_about_rwb
+        description: "Whether the gram panchayat is clear about the RWB program."
+      - name: gp_poc_name
+        description: "Name of point of contact for the gram panchayat."
+      - name: gp_poc_contact_number
+        description: "Contact number of the gram panchayat point of contact."
+      - name: silt_usage_plans_exist
+        description: "Whether silt usage plans exist, as captured in observations."
+      - name: silt_usage_execution_plan
+        description: "Text describing how silt usage plans will be executed."
+      - name: approval_status
+        description: "Approval status for the gram panchayat registration."
+      - name: total_gp_silt_excavated_non_farm
+        description: "Total silt excavated for non-farm/GP purposes captured in the latest GP endline (cu.m)."
+      - name: last_gp_update
+        description: "Timestamp of the latest GP endline encounter used in the report."
+
+  - name: machine_endline_linelist_approval_niti_24
+    description: "Status/approval linelist for machine endlines for NITI 2024, joining machine endline encounters to machine registrations and encounter approval status."
+    columns:
+      - name: machine_name
+        description: "Machine name from registration."
+      - name: machine_id
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: machine_type
+        description: "Machine type (e.g., JCB, Poclain)."
+      - name: total_machine_working_hours
+        description: "Total machine working hours captured in the endline (numeric)."
+      - name: endline_date_time
+        description: "Timestamp when the machine endline encounter occurred."
+      - name: state
+        description: "State for the machine location."
+      - name: district
+        description: "District for the machine location."
+      - name: taluka
+        description: "Taluka for the machine location."
+      - name: village
+        description: "Village for the machine location."
+      - name: dam
+        description: "Dam/waterbody for the machine location."
+      - name: gp
+        description: "Gram panchayat for the machine location."
+      - name: approval_status
+        description: "Approval status for the machine endline encounter."
+
+  - name: machine_linelist_approval_niti_24
+    description: "Status/approval linelist for machines for NITI 2024, exposing machine registration attributes and approval status for review."
+    columns:
+      - name: machine_name
+        description: "Machine name from registration."
+      - name: registration_date
+        description: "Date/time when the machine was registered."
+      - name: uuid
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the machine location."
+      - name: district
+        description: "District for the machine location."
+      - name: taluka
+        description: "Taluka for the machine location."
+      - name: village
+        description: "Village for the machine location."
+      - name: gp
+        description: "Gram panchayat for the machine location."
+      - name: dam
+        description: "Dam/waterbody for the machine location."
+      - name: machine_type
+        description: "Machine type (e.g., JCB, Poclain)."
+      - name: contractor_name
+        description: "Contractor name associated with the machine."
+      - name: contractor_mobile_number
+        description: "Contractor mobile number associated with the machine."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: approval_status
+        description: "Approval status for the machine registration."
+
+  - name: workorder_endline_linelist_approval_niti_24
+    description: "Status/approval linelist for work order endlines for NITI 2024, keeping the latest non-voided endline per work order and attaching registration context and encounter approval status."
+    columns:
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: workorder_id
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: dam
+        description: "Dam/waterbody for the work order location."
+      - name: gp
+        description: "Gram panchayat for the work order location."
+      - name: endline_date
+        description: "Timestamp of the latest work order endline encounter."
+      - name: stakeholder_responsible
+        description: "Stakeholder/NGO associated with the endline record."
+      - name: site_video
+        description: "Site video captured during endline."
+      - name: mb_recording_done
+        description: "Whether MB recording is done (as captured)."
+      - name: site_image_1_url
+        description: "Site image 1 URL/reference captured during endline."
+      - name: site_image_2_url
+        description: "Site image 2 URL/reference captured during endline."
+      - name: total_silt_excavated
+        description: "Total silt excavated captured in endline (cu.m)."
+      - name: mb_document_url
+        description: "URL/reference for the MB document."
+      - name: silt_excavated_as_per_mb
+        description: "Silt excavated as per MB recording (cu.m)."
+      - name: is_mb_data_same_as_app_data
+        description: "Whether MB data matches app data (as captured)."
+      - name: approval_status
+        description: "Approval status for the endline encounter."
+
+  - name: workorder_linelist_approval_niti_24
+    description: "Status/approval linelist for work order registrations for NITI 2024, combining work order registration attributes with latest endline timestamp and contractor details."
+    columns:
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: registration_date
+        description: "Work order registration date/time."
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: dam
+        description: "Dam/waterbody for the work order location."
+      - name: gp
+        description: "Gram panchayat for the work order location."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) captured during registration."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order/dam."
+      - name: endline_date
+        description: "Work order endline encounter date/time (if present)."
+      - name: site_image_1_url
+        description: "Site image 1 URL/reference captured during registration."
+      - name: site_image_2_url
+        description: "Site image 2 URL/reference captured during registration."
+      - name: site_video_url
+        description: "Site video URL/reference captured during registration."
+      - name: noc_workorder_image
+        description: "NOC/work order image URL/reference captured during registration."
+      - name: site_marking_image
+        description: "Site marking image URL/reference captured during registration."
+      - name: contractor_name
+        description: "Latest known contractor name for machines reporting to this work order."
+      - name: approval_status
+        description: "Approval status for the work order registration."

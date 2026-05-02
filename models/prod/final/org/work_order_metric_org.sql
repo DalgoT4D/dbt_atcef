@@ -6,7 +6,10 @@
 SELECT DISTINCT
     CAST(n.date_time AS DATE) AS date_time,
     n.work_order_name,
-    n.state,
+    CASE 
+        WHEN LOWER(n.state) = 'maharshtra' THEN 'Maharashtra'
+        ELSE n.state
+    END AS state,
     n.district,
     n.taluka,
     n.village,
@@ -23,7 +26,10 @@ UNION
 SELECT DISTINCT
     CAST(s.date_time AS DATE) AS date_time,
     s.work_order_name,
-    s.state,
+    CASE 
+        WHEN LOWER(s.state) = 'maharshtra' THEN 'Maharashtra'
+        ELSE s.state
+    END AS state,
     s.district,
     s.taluka,
     s.village,
@@ -40,7 +46,10 @@ UNION
 SELECT DISTINCT
     CAST(g.date_time AS DATE) AS date_time,
     g.work_order_name,
-    g.state,
+    CASE 
+        WHEN LOWER(g.state) = 'maharshtra' THEN 'Maharashtra'
+        ELSE g.state
+    END AS state,
     g.district,
     g.taluka,
     g.village,

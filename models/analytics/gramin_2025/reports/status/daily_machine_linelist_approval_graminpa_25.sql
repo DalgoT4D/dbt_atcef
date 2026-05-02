@@ -21,8 +21,8 @@ WITH machine_logs AS (
 SELECT
     -- ml.eid,
     ml.machine_work_order_sub_id,
+    ml.excavating_machine_id AS machine_id,
     mr.machine_name,
-    ml.excavating_machine_id, -- temp
     -- ml.total_working_hours,
     ml.encounter_date_time,
     -- mr.machine_type,

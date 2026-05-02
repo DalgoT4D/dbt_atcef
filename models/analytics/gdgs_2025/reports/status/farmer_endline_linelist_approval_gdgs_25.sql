@@ -36,6 +36,7 @@ SELECT
   fe.major_crops_grown,
   fe.major_to_be_grown,
   fe.farmer_subsidy,
+  fe.distance_from_waterbody,
   -- farmers' village is to be added, but it isnt the same as other village?
   asn.approval_status
 

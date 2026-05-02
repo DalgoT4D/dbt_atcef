@@ -1,5 +1,5 @@
--- Aggregates machine_clean_niti_25 by dam hierarchy to split active vs completed 
--- work orders and total farmers, machines, silt, and hours.
+-- Work-order-level metrics with dam context for NITI 2025, preserving the
+-- existing work-order KPI columns and appending progress-waterbody fields.
 {{ config(
   materialized='table',
   tags=["analytics","analytics_niti_2025","analytical_models", "reports_niti_2025"]

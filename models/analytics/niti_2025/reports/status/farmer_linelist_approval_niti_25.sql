@@ -50,6 +50,11 @@ SELECT
   s.farmer_category,
   s.approval_status,
 
+  CASE
+    WHEN fe.endline_farmer_sub_id IS NOT NULL THEN 'Endline Done'
+    ELSE 'Endline Not Done'
+  END AS endline_status,
+
   fe.area_silt_spread,
 
   w.total_trolleys_carted,

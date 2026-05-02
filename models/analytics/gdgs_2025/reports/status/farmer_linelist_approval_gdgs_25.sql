@@ -13,7 +13,7 @@ with farmer_totals as (
       SUM(COALESCE(w.hyvas_carted, 0)) AS total_hyvas_carted,
       SUM(COALESCE(w.silt_carted, 0)) AS total_silt_carted
 
-  FROM {{ ref('daily_farmer_linelist_approval_niti_25') }} AS w
+  FROM {{ ref('daily_farmer_linelist_approval_gdgs_25') }} AS w
   WHERE w.farmer_id IS NOT NULL
   GROUP BY
       w.farmer_id
@@ -48,6 +48,11 @@ SELECT
   s.land_holding,
   s.farmer_category,
   s.approval_status,
+
+  CASE
+    WHEN fe.endline_farmer_sub_id IS NOT NULL THEN 'Endline Done'
+    ELSE 'Endline Not Done'
+  END AS endline_status,
 
   fe.area_silt_spread,
 

@@ -27,6 +27,8 @@ SELECT
     w.trolleys_carted,
     w.hyvas_carted,
     w.silt_carted,
+    w.machine_sub_id AS machine_id, --new
+    ws.silt_target, -- new
     w.if_silt_used_non_farm_purpose,
     w.purpose_of_carting_silt,
     w.amt_silt_used_non_farm_purpose,
