@@ -2,7 +2,7 @@
    
   {{ config(
     materialized='table',
-    tags=["analytics", "analytics_gramin_2025", "analytics_intermediate", "analytics_encounters_graminpa_25"]
+    tags=["analytics", "analytics_gramin_2026", "analytics_intermediate", "analytics_encounters_gramin_26"]
   ) }}
 
   SELECT
@@ -28,6 +28,6 @@
       e.observations ->> 'Name of PoC for the committee' AS committee_poc_name,
       e.voided
 
-  FROM {{ ref('encounter_type_graminpa_25') }} e
+  FROM {{ ref('encounter_type_graminpa_26') }} e
   WHERE e.encounter_type = 'Gram Panchayat Endline' 
 --   and e.voided = false

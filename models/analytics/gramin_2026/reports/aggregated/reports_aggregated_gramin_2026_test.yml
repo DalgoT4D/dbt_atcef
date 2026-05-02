@@ -1,0 +1,809 @@
+version: 2
+
+models:
+  - name: dam_wise_farmer_graminpa_26
+    description: "Dam-level rollup of farmer daily recordings and farmer endlines for GraminPA 2026, split by farmer category and non-farm silt usage."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: gp
+        description: "Gram panchayat name for the dam/location."
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the dam/location."
+      - name: total_daily_recordings
+        description: "Total count of farmer daily recording encounters for this dam."
+      - name: mobile_verified_farmers
+        description: "Count of mobile-verified farmers among farmers who have at least one daily recording for this dam."
+      - name: registered_farmers
+        description: "Count of farmers with at least one daily recording for this dam."
+      - name: farmers_with_endline_done
+        description: "Count of farmers with an endline record for this dam."
+      - name: marginal_farmers
+        description: "Count of farmers categorized as Marginal (0-2.49 acres)."
+      - name: small_farmers
+        description: "Count of farmers categorized as Small (2.5-4.99 acres)."
+      - name: semi_medium_farmers
+        description: "Count of farmers categorized as Semi-medium (5-9.99 acres)."
+      - name: medium_farmers
+        description: "Count of farmers categorized as Medium (10-24.99 acres)."
+      - name: large_farmers
+        description: "Count of farmers categorized as Large (above 25 acres)."
+      - name: disabled_farmers
+        description: "Count of farmers categorized as Disabled."
+      - name: widow_farmers
+        description: "Count of farmers categorized as Widow."
+      - name: family_members_suicide_farmers
+        description: "Count of farmers categorized as Family of farmer who committed suicide."
+      - name: marginal_farmers_silt_carted
+        description: "Total silt carted (cu.m) by marginal farmers for this dam."
+      - name: small_farmers_silt_carted
+        description: "Total silt carted (cu.m) by small farmers for this dam."
+      - name: semi_medium_farmers_silt_carted
+        description: "Total silt carted (cu.m) by semi-medium farmers for this dam."
+      - name: medium_farmers_silt_carted
+        description: "Total silt carted (cu.m) by medium farmers for this dam."
+      - name: large_farmers_silt_carted
+        description: "Total silt carted (cu.m) by large farmers for this dam."
+      - name: disabled_farmers_silt_carted
+        description: "Total silt carted (cu.m) by disabled farmers for this dam."
+      - name: widow_farmers_silt_carted
+        description: "Total silt carted (cu.m) by widow farmers for this dam."
+      - name: family_members_suicide_farmers_silt_carted
+        description: "Total silt carted (cu.m) by family-members-suicide farmers for this dam."
+      - name: marginal_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by marginal farmers for this dam."
+      - name: small_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by small farmers for this dam."
+      - name: semi_medium_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by semi-medium farmers for this dam."
+      - name: medium_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by medium farmers for this dam."
+      - name: large_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by large farmers for this dam."
+      - name: disabled_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by disabled farmers for this dam."
+      - name: widow_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by widow farmers for this dam."
+      - name: family_members_suicide_farmers_silt_for_non_farm_purpose
+        description: "Total silt used for non-farm purpose (cu.m) by family-members-suicide farmers for this dam."
+      - name: area_silt_spread
+        description: "Total farm area where silt was spread (as captured) from farmer endlines for this dam."
+
+  - name: dam_wise_work_order_graminpa_26
+    description: "Dam-level rollup of work orders and activity metrics for GraminPA 2026 derived from active_work_order_graminpa_26."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the dam/location."
+      - name: district
+        description: "District for the dam/location."
+      - name: taluka
+        description: "Taluka for the dam/location."
+      - name: village
+        description: "Village for the dam/location."
+      - name: registered_work_orders
+        description: "Count of registered work orders for this dam."
+      - name: work_order_endlines_completed
+        description: "Count of work orders with an endline date present."
+      - name: active_work_orders
+        description: "Count of work orders with no endline date (active)."
+      - name: active_farmers
+        description: "Sum of active farmers across work orders for this dam."
+      - name: active_poclains
+        description: "Sum of active poclains across work orders for this dam."
+      - name: active_jcbs
+        description: "Sum of active JCBs across work orders for this dam."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Total planned silt to be excavated (cu.m) across work orders for this dam."
+      - name: total_silt_carted_by_farmers
+        description: "Total silt carted by farmers (cu.m) across work orders for this dam."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Total silt excavated by GP/non-farm (cu.m) across work orders for this dam."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) across work orders for this dam."
+      - name: percent_silt_excavated
+        description: "Percent of planned silt excavated: (total_silt_excavated / silt_to_be_excavated_as_per_plan) * 100."
+      - name: active_work_days
+        description: "Total active work days across work orders for this dam."
+      - name: total_machine_working_hours
+        description: "Total machine working hours across work orders for this dam."
+      - name: jcb_working_hours
+        description: "Total JCB working hours across work orders for this dam."
+      - name: poclain_working_hours
+        description: "Total poclain working hours across work orders for this dam."
+      - name: total_jcb_excavation
+        description: "Total silt excavation attributed to JCBs across work orders for this dam."
+      - name: total_poclain_excavation
+        description: "Total silt excavation attributed to poclains across work orders for this dam."
+
+  - name: org_level_graminpa_26
+    description: "Stakeholder-level rollup of work orders and activity metrics for GraminPA 2026 derived from active_work_order_graminpa_26."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work orders."
+        tests:
+          - not_null
+      - name: number_districts
+        description: "Count of distinct districts covered by the stakeholder."
+      - name: number_waterbodies
+        description: "Count of distinct dams/waterbodies covered by the stakeholder."
+      - name: registered_work_orders
+        description: "Count of registered work orders for the stakeholder."
+      - name: work_order_endlines_completed
+        description: "Count of work orders with an endline date present."
+      - name: active_work_orders
+        description: "Count of work orders with no endline date (active)."
+      - name: active_work_days
+        description: "Total active work days across work orders for the stakeholder."
+      - name: active_farmers
+        description: "Sum of active farmers across work orders for the stakeholder."
+      - name: active_poclains
+        description: "Sum of active poclains across work orders for the stakeholder."
+      - name: active_jcbs
+        description: "Sum of active JCBs across work orders for the stakeholder."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Total planned silt to be excavated (cu.m) across work orders for the stakeholder."
+      - name: total_silt_carted_by_farmers
+        description: "Total silt carted by farmers (cu.m) across work orders for the stakeholder."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Total silt excavated by GP/non-farm (cu.m) across work orders for the stakeholder."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) across work orders for the stakeholder."
+      - name: total_machine_working_hours
+        description: "Total machine working hours across work orders for the stakeholder."
+
+  - name: overall_approval_statistics_graminpa_26
+    description: "Counts records by approval status across entity types (registrations and encounters) for GraminPA 2026, grouped by location hierarchy."
+    columns:
+      - name: Characteristic
+        description: "Entity/characteristic name (e.g., Farmer Registration, Work order endline)."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the entity record."
+      - name: district
+        description: "District for the entity record."
+      - name: taluka
+        description: "Taluka for the entity record."
+      - name: village
+        description: "Village for the entity record."
+      - name: dam
+        description: "Dam/waterbody for the entity record."
+      - name: total_registrations
+        description: "Total number of records observed for the characteristic and location."
+      - name: approved_count
+        description: "Count of records with approval_status = Approved."
+      - name: pending_count
+        description: "Count of records with approval_status = Pending."
+      - name: rejected_count
+        description: "Count of records with approval_status = Rejected."
+
+  - name: work_order_aggregate_dam_graminpa_26
+    description: "Work-order-level summary per dam for GraminPA 2026, aggregating silt, farmer, machine totals and elapsed days from active_work_order_graminpa_26."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name for the work order."
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: state
+        description: "State for the work order location."
+      - name: district
+        description: "District for the work order location."
+      - name: taluka
+        description: "Taluka for the work order location."
+      - name: village
+        description: "Village for the work order location."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Silt excavated by GP/non-farm (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_machine_working_hours
+        description: "Total machine working hours for the work order."
+      - name: poclain_count
+        description: "Total distinct poclain machines used for the work order."
+      - name: jcb_count
+        description: "Total distinct JCB machines used for the work order."
+      - name: total_number_of_farmers
+        description: "Total distinct farmers associated with the work order."
+      - name: active_work_days
+        description: "Date difference between work order start date and endline date."
+      - name: work_order_start_date
+        description: "Work order registration date (start date)."
+      - name: workorder_endline_date
+        description: "Work order endline date (NULL if endline not completed)."
+
+  - name: work_order_aggregate_org_graminpa_26
+    description: "Work-order-level summary per stakeholder for GraminPA 2026, aggregating silt, farmer, machine totals and elapsed days from active_work_order_graminpa_26."
+    columns:
+      - name: stakeholder_responsible
+        description: "Stakeholder responsible for the work order."
+        tests:
+          - not_null
+      - name: workorderid
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+      - name: workorder_name
+        description: "Work order name captured during registration."
+      - name: updated_workorder_name
+        description: "Updated work order name captured during registration."
+      - name: silt_to_be_excavated_as_per_plan
+        description: "Planned silt to be excavated (cu.m) for the work order."
+      - name: total_silt_carted_by_farmers
+        description: "Silt carted by farmers (cu.m) for the work order."
+      - name: total_silt_excavated_by_gp_non_farm
+        description: "Silt excavated by GP/non-farm (cu.m) for the work order."
+      - name: total_silt_excavated
+        description: "Total silt excavated (farmers + GP/non-farm) for the work order."
+      - name: total_machine_working_hours
+        description: "Total machine working hours for the work order."
+      - name: poclain_count
+        description: "Total distinct poclain machines used for the work order."
+      - name: jcb_count
+        description: "Total distinct JCB machines used for the work order."
+      - name: total_number_of_farmers
+        description: "Total distinct farmers associated with the work order."
+      - name: active_work_days
+        description: "Date difference between work order start date and endline date."
+
+  - name: ss_combined_silt_graminpa_26
+    description: "Combined silt achievement data from approved farmer progress and approved GP endlines for GraminPA 2026 using analytics lineage."
+    tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          min_value: 1
+          max_value: 1000000
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list: ["state", "district", "taluka", "village", "work_order_name"]
+    columns:
+      - name: state
+        description: "State name."
+        tests:
+          - not_null
+      - name: district
+        description: "District name."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka name."
+        tests:
+          - not_null
+      - name: village
+        description: "Village name."
+        tests:
+          - not_null
+      - name: dam
+        description: "Name of the dam."
+      - name: work_order_name
+        description: "Name of the work order."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Name of the stakeholder responsible."
+        tests:
+          - not_null
+      - name: farmer_silt_achieved
+        description: "Total silt achieved by farmers."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1000000
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: total_farm_area_with_silt
+        description: "Total farm area where silt is spread from approved farmer endlines."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100000
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: gp_silt_achieved
+        description: "Total silt achieved by gram panchayats for non-farm use."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1000000
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: total_silt_achieved
+        description: "Combined total silt achieved by farmers and gram panchayats."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "= (farmer_silt_achieved + gp_silt_achieved)"
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: last_updated
+        description: "Most recent farmer or GP update timestamp."
+        tests:
+          - not_null
+
+  - name: ss_progress_dam_graminpa_26
+    description: "Approved work order progress status for GraminPA 2026 using analytics lineage."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: work_order_id
+        description: "Work order subject identifier."
+        tests:
+          - not_null
+          - unique
+      - name: state
+        description: "State for the work order location."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the work order location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the work order location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the work order location."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the work order."
+        tests:
+          - not_null
+      - name: endline_date
+        description: "Latest approved work order endline timestamp."
+      - name: farmer_date
+        description: "Latest approved farmer daily encounter timestamp for the work order."
+      - name: project_status
+        description: "Progress status derived from approved endline and farmer activity."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Ongoing"
+                - "Completed"
+                - "Not Started"
+      - name: work_order_endline_status
+        description: "Whether the approved work order endline exists."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Endline Done"
+                - "Endline Not Done"
+
+  - name: ss_silt_per_acre_graminpa_26
+    description: "Silt-per-acre summary for GraminPA 2026 using analytics lineage."
+    columns:
+      - name: work_order_name
+        description: "Name of the work order."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the work order location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the work order location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the work order location."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the work order."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the work order location."
+        tests:
+          - not_null
+      - name: endline_status
+        description: "Farmer endline completion status included in the aggregation."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Endline Done"
+      - name: date_time
+        description: "Latest approved farmer daily encounter timestamp for the aggregated work order."
+        tests:
+          - not_null
+      - name: silt_achieved_by_endline_farmers
+        description: "Total approved silt achieved by farmers with endlines."
+        tests:
+          - not_null
+      - name: total_farm_area_silt_is_spread_on
+        description: "Total farm area recorded in approved farmer endlines."
+        tests:
+          - not_null
+      - name: silt_per_acre
+        description: "Computed silt achieved per acre."
+      - name: silt_per_acre_benchmark_classification
+        description: "Benchmark classification based on the silt-per-acre threshold."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Above Benchmark"
+                - "Below Benchmark"
+
+  - name: ss_farmer_vulnerable_graminpa_26
+    description: "Farmer vulnerability split for GraminPA 2026 using distinct farmers from daily_farmer_linelist_graminpa_26 and farmer_regn_graminpa_26 categories, grouping marginal+small as vulnerable and semi-medium+medium+large as others, with farmer counts and total silt carted."
+    columns:
+      - name: state
+        description: "State for the location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the location."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the location."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the location."
+        tests:
+          - not_null
+      - name: farmer_type
+        description: "Farmer vulnerability grouping."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "vulnerable"
+                - "others"
+      - name: farmers_count
+        description: "Number of farmers in the vulnerability grouping."
+        tests:
+          - not_null
+      - name: total_silt_carted
+        description: "Total silt carted by farmers in the vulnerability grouping."
+        tests:
+          - not_null
+
+  - name: ss_farmer_endline_graminpa_26
+    description: "Farmer endline status for GraminPA 2026 using approved farmer registrations and approved farmer endline linelist data."
+    columns:
+      - name: farmer_id
+        description: "Farmer subject identifier."
+        tests:
+          - not_null
+      - name: farmer_name
+        description: "Farmer name."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the farmer location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the farmer location."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the farmer location."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the farmer location."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the farmer."
+        tests:
+          - not_null
+      - name: type_of_land_silt_is_spread_on
+        description: "Type of land where silt is spread."
+      - name: total_farm_area_silt_is_spread_on
+        description: "Farm area where silt is spread from the approved farmer endline."
+      - name: distance_from_waterbody
+        description: "Distance from the waterbody captured in the farmer endline."
+      - name: endline_status
+        description: "Whether an approved farmer endline exists."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Endline Done"
+                - "Endline Not Done"
+
+  - name: ss_farmer_agg_graminpa_26
+    description: "Aggregated farmer data by location for GraminPA 2026 using daily_farmer_linelist_graminpa_26 and farmer_regn_graminpa_26."
+    columns:
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: date_time
+        description: "Latest approved daily farmer encounter timestamp at the grouped location grain."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the location."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the location."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the location."
+        tests:
+          - not_null
+      - name: verified_farmers
+        description: "Count of farmers with mobile verification status = true."
+        tests:
+          - not_null
+      - name: unverified_farmers
+        description: "Count of farmers with mobile verification status = false."
+        tests:
+          - not_null
+      - name: total
+        description: "Total number of farmers in the grouped location grain."
+        tests:
+          - not_null
+      - name: vulnerable_marginal
+        description: "Count of marginal farmers."
+        tests:
+          - not_null
+      - name: vulnerable_small
+        description: "Count of small farmers."
+        tests:
+          - not_null
+      - name: semi_medium
+        description: "Count of semi-medium farmers."
+        tests:
+          - not_null
+      - name: medium
+        description: "Count of medium farmers."
+        tests:
+          - not_null
+      - name: large
+        description: "Count of large farmers."
+        tests:
+          - not_null
+
+  - name: ss_barren_fertile_silt_graminpa_26
+    description: "Summarized silt data for approved endline farmers merged with work-order and location details in the analytics GraminPA 2026 lineage, including type of land where silt is spread."
+    columns:
+      - name: work_order_name
+        description: "Work order name from the approved daily farmer linelist."
+        tests:
+          - not_null
+      - name: date_time
+        description: "Latest approved daily farmer encounter date for the grouped work order and location grain."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the work order location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the work order location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the work order location."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody name."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the work order location."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the work order location."
+        tests:
+          - not_null
+      - name: endline_status
+        description: "Farmer endline status represented in this model."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Endline Done"
+      - name: type_of_land_silt_is_spread_on
+        description: "Type of land where silt is spread from farmer_endline_linelist_graminpa_26."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Barren"
+                - "Fertile"
+      - name: silt_achieved_by_endline_farmers
+        description: "Total approved silt carted by farmers with approved endlines."
+        tests:
+          - not_null
+      - name: total_farm_area_silt_is_spread_on
+        description: "Total farm area on which silt is spread from the approved farmer endline."
+        tests:
+          - not_null
+
+  - name: ss_machine_endline_graminpa_26
+    description: "Machine data compiled with endline status for GraminPA 2026 using analytics lineage, limited to approved machines that appear in approved daily machine recordings."
+    columns:
+      - name: machine_id
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: subject_type
+        description: "Subject type from the machine registration."
+        tests:
+          - not_null
+      - name: machine_voided
+        description: "Voided flag from the machine registration."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - true
+                - false
+      - name: machine_name
+        description: "Machine name from the approved machine registration."
+        tests:
+          - not_null
+      - name: type_of_machine
+        description: "Machine type from the approved machine registration."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody for the machine location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the machine location."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the machine location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the machine location."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the machine location."
+        tests:
+          - not_null
+      - name: machine_approval_status
+        description: "Approval status for the machine registration."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Approved"
+      - name: ngo_name
+        description: "Stakeholder responsible for the machine location."
+        tests:
+          - not_null
+      - name: endline_status
+        description: "Whether an approved machine endline exists for the machine."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Endline Done"
+                - "Endline Not Done"
+
+  - name: ss_machine_metric_graminpa_26
+    description: "Machine efficiency metrics for GraminPA 2026 using analytics lineage from daily_machine_linelist_graminpa_26 and daily_farmer_linelist_graminpa_26."
+    columns:
+      - name: machine_id
+        description: "Machine subject identifier."
+        tests:
+          - not_null
+      - name: machine_name
+        description: "Machine name."
+        tests:
+          - not_null
+      - name: type_of_machine
+        description: "Machine type."
+        tests:
+          - not_null
+      - name: dam
+        description: "Dam/waterbody for the machine location."
+        tests:
+          - not_null
+      - name: district
+        description: "District for the machine location."
+        tests:
+          - not_null
+      - name: state
+        description: "State for the machine location."
+        tests:
+          - not_null
+      - name: taluka
+        description: "Taluka for the machine location."
+        tests:
+          - not_null
+      - name: village
+        description: "Village for the machine location."
+        tests:
+          - not_null
+      - name: ngo_name
+        description: "Stakeholder responsible for the machine location."
+        tests:
+          - not_null
+      - name: date_time
+        description: "Latest approved daily machine encounter date for the machine."
+        tests:
+          - not_null
+      - name: total_silt_carted
+        description: "Total approved silt carted attributed to the machine from farmer daily recordings."
+        tests:
+          - not_null
+      - name: total_working_hours
+        description: "Total approved machine working hours from daily machine recordings."
+        tests:
+          - not_null
+      - name: avg_silt_excavated_per_hour
+        description: "Average silt excavated per machine working hour."
+        tests:
+          - not_null
+      - name: benchmark_classification
+        description: "Benchmark classification based on machine type and average excavation rate."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Above Benchmark"
+                - "Below Benchmark"
+                - "Unknown"
