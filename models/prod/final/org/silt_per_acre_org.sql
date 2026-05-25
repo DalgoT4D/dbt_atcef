@@ -41,7 +41,7 @@ SELECT DISTINCT
     s.silt_per_acre,
     s.silt_per_acre_benchmark_classification,
     'Project A' AS project
-FROM {{ ref('silt_per_acre_gramin') }} AS s
+FROM {{ ref('silt_per_acre_gramin_union') }} AS s
 
 UNION
 

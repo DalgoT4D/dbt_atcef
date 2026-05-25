@@ -39,7 +39,7 @@ SELECT DISTINCT
     COALESCE(s.silt_achieved, 0) AS silt_achieved,
     s.total_farm_area_silt_is_spread_on,
     'Project A' AS project
-FROM {{ ref('work_order_silt_calc') }} AS s
+FROM {{ ref('work_order_metric_gramin_union') }} AS s
 
 UNION
 

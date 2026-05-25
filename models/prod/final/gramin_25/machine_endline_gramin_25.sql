@@ -4,7 +4,17 @@
 ) }}
 
 SELECT
-    m.*,
+    m.machine_id,
+    m.subject_type,
+    m.machine_voided,
+    m.machine_name,
+    m.type_of_machine,
+    m.dam,
+    m.district,
+    m.state,
+    m.taluka,
+    m.village,
+    m.machine_approval_status,
     a.ngo_name,
     CASE
         WHEN e.encounter_type = 'Excavating Machine Endline' THEN 'Endline Done'

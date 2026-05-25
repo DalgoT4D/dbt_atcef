@@ -39,7 +39,7 @@ SELECT DISTINCT
     avg_silt_excavated_per_hour,
     benchmark_classification,
     'Project A' AS project
-FROM {{ ref('machine_gramin_metric') }}
+FROM {{ ref('machine_gramin_union') }}
 
 UNION ALL
 

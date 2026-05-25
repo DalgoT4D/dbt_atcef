@@ -61,13 +61,13 @@ SELECT DISTINCT
     COALESCE(n.farmer_niti_22, 0) AS farmer_niti_22,
     CASE
         WHEN n.date_time IS NOT NULL THEN 'Niti Aayog'
-        WHEN g.date_time IS NOT NULL THEN 'GDGS'
-        ELSE 'Project A'
+        WHEN g.date_time IS NOT NULL THEN 'Project A'
+        ELSE 'GDGS'
     END AS project
 FROM
     {{ ref('farmer_niti_agg_union') }} AS n
 FULL OUTER JOIN
-    {{ ref('farmer_agg_gramin') }} AS g
+    {{ ref('farmer_gramin_agg_union') }} AS g
     ON
         n.date_time = g.date_time
         AND n.dam = g.dam
