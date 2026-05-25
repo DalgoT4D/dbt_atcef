@@ -39,7 +39,7 @@ SELECT DISTINCT
     s.type_of_land_silt_is_spread_on,
     s.endline_status,
     'Project A' AS project
-FROM {{ ref('barren_fertile_silt_gramin') }} AS s
+FROM {{ ref('barren_fertile_silt_gramin_union') }} AS s
 
 UNION
 

@@ -13,7 +13,7 @@ UNION
 SELECT DISTINCT
     *,
     'Project A' AS project
-FROM {{ ref('farmer_gramin_percentage') }}
+FROM {{ ref('farmer_gramin_un_percentage') }}
 
 UNION
 

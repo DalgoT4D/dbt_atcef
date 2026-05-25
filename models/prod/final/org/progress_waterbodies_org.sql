@@ -33,7 +33,7 @@ SELECT DISTINCT
     g.work_order_endline_status,
     g.work_order_id,
     'Project A' AS project
-FROM {{ ref('progress_waterbodies_gramin') }} AS g
+FROM {{ ref('progress_waterbodies_gramin_union') }} AS g
 
 UNION
 

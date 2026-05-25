@@ -1,9 +1,9 @@
 {{ config(
   materialized='table',
-  tags=["final","final_org"]
+  tags=["final", "final_gramin_union", "gramin_niti"]
 ) }}
 
-SELECT DISTINCT
+select
     machine_id,
     subject_type,
     machine_voided,
@@ -14,14 +14,14 @@ SELECT DISTINCT
     state,
     taluka,
     village,
+    machine_approval_status,
     ngo_name,
-    endline_status,
-    'Niti Aayog' AS project
-FROM {{ ref('machine_endline_niti_union') }}
+    endline_status
+from {{ ref('machine_endline_gramin') }}
 
-UNION
+union all
 
-SELECT DISTINCT
+select
     machine_id,
     subject_type,
     machine_voided,
@@ -32,14 +32,14 @@ SELECT DISTINCT
     state,
     taluka,
     village,
+    machine_approval_status,
     ngo_name,
-    endline_status,
-    'Project A' AS project
-FROM {{ ref('machine_endline_gramin_union') }}
+    endline_status
+from {{ ref('machine_endline_gramin_25') }}
 
-UNION
+union all
 
-SELECT DISTINCT
+select
     machine_id,
     subject_type,
     machine_voided,
@@ -50,7 +50,7 @@ SELECT DISTINCT
     state,
     taluka,
     village,
+    machine_approval_status,
     ngo_name,
-    endline_status,
-    'GDGS' AS project
-FROM {{ ref('machine_endline_gdgs_union') }}
+    endline_status
+from {{ ref('machine_endline_gramin_26') }}
