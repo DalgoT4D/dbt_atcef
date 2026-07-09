@@ -32,7 +32,7 @@ SELECT
     fc.district,
     fc.taluka,
     fc.dam,
-    fc.stakeholder_responsible as ngo_name,
+    fc.ngo_name,
     fc.village,
     MAX(fc.encounter_date_time) AS date_time,
     MAX(fc.silt_target) AS silt_target,
@@ -49,4 +49,4 @@ GROUP BY
     fc.dam,
     fc.village,
     fc.updated_workorder_name,
-    fc.stakeholder_responsible
+    fc.ngo_name

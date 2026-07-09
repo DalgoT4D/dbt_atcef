@@ -34,6 +34,7 @@ SELECT
     fs.dam,
     fs.gp,
     fs.stakeholder_responsible,
+    fs.stakeholder_responsible AS ngo_name,
 
     w.trolleys_carted,
     w.hyvas_carted,

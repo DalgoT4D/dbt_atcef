@@ -14,7 +14,7 @@ WITH fc_agg AS (
         d.taluka,
         d.dam,
         d.village,
-        d.stakeholder_responsible AS ngo_name,
+        d.ngo_name,
         MAX(CAST(d.encounter_date_time AS DATE)) AS date_time,
         SUM(COALESCE(d.silt_carted, 0)) AS total_silt_carted
     FROM {{ ref('daily_farmer_linelist_graminpa_26') }} AS d
@@ -27,7 +27,7 @@ WITH fc_agg AS (
         d.taluka,
         d.dam,
         d.village,
-        d.stakeholder_responsible
+        d.ngo_name
 ),
 
 fe_agg AS (

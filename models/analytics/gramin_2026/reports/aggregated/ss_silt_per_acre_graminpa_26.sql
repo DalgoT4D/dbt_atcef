@@ -12,7 +12,7 @@ WITH farmer_daily_by_workorder AS (
         d.district,
         d.taluka,
         d.dam,
-        d.stakeholder_responsible AS ngo_name,
+        d.ngo_name,
         d.village,
         d.farmer_id,
         MAX(CAST(d.encounter_date_time AS DATE)) AS date_time,
@@ -26,7 +26,7 @@ WITH farmer_daily_by_workorder AS (
         d.district,
         d.taluka,
         d.dam,
-        d.stakeholder_responsible,
+        d.ngo_name,
         d.village,
         d.farmer_id
 ),
