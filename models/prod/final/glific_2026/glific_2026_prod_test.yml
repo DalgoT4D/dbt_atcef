@@ -1,0 +1,303 @@
+version: 2
+
+models:
+  - name: contact_status_year_2026_prod
+    description: "FY2026 contact universe and derived user status for the Glific 2026 dashboard."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_id
+    columns:
+      - name: reporting_year
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2026]
+      - name: contact_id
+        tests:
+          - not_null
+      - name: contact_phone
+        tests:
+          - not_null
+      - name: user_status
+        tests:
+          - accepted_values:
+              values: ['Active', 'Dormant', 'Inactive']
+
+  - name: contact_role_year_2026_prod
+    description: "FY2026 role breakup for the Glific 2026 dashboard."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - role
+    columns:
+      - name: role
+        tests:
+          - not_null
+      - name: contact_count
+        tests:
+          - not_null
+
+  - name: messages_month_summary_2026_prod
+    description: "Month-level Glific message summary for FY2026."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - month_start
+    columns:
+      - name: month_start
+        tests:
+          - not_null
+      - name: total_message_count
+        tests:
+          - not_null
+      - name: hi_flow_message_count
+        tests:
+          - not_null
+      - name: users_interacting_count
+        tests:
+          - not_null
+
+  - name: messages_flow_month_2026_prod
+    description: "Month x flow Glific message summary for FY2026."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - month_start
+            - flow
+    columns:
+      - name: month_start
+        tests:
+          - not_null
+      - name: flow
+        tests:
+          - not_null
+      - name: total_message_count
+        tests:
+          - not_null
+      - name: hi_flow_message_count
+        tests:
+          - not_null
+
+  - name: flow_results_month_summary_2026_prod
+    description: "Month-level flow result counts for FY2026."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - month_start
+    columns:
+      - name: month_start
+        tests:
+          - not_null
+      - name: flow_result_count
+        tests:
+          - not_null
+      - name: hi_flow_result_count
+        tests:
+          - not_null
+
+  - name: questions_topic_month_2026_prod
+    description: "Month x question topic counts for FY2026."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - month_start
+            - question_topic
+    columns:
+      - name: month_start
+        tests:
+          - not_null
+      - name: question_topic
+        tests:
+          - not_null
+      - name: question_count
+        tests:
+          - not_null
+
+  - name: tickets_topic_month_2026_prod
+    description: "Month x ticket topic counts for FY2026."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - month_start
+            - topic
+    columns:
+      - name: month_start
+        tests:
+          - not_null
+      - name: topic
+        tests:
+          - not_null
+      - name: ticket_count
+        tests:
+          - not_null
+
+  - name: avni_funnel_year_stage_2026_prod
+    description: "FY2026 Avni funnel stage counts and step-to-step dropoff rates aggregated across projects."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - stage_order
+    columns:
+      - name: stage_order
+        tests:
+          - not_null
+      - name: stage_short_name
+        tests:
+          - not_null
+      - name: stage_name
+        tests:
+          - not_null
+      - name: contact_count
+        tests:
+          - not_null
+
+  - name: integrated_training_trigger_events_2026_int
+    description: "FY2026 contact-stage event table for integrated Avni-Gramin training auto-triggers sent through Glific."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_phone
+            - stage_order
+    columns:
+      - name: reporting_year
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2026]
+      - name: contact_phone
+        tests:
+          - not_null
+      - name: stage_order
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+      - name: stage_name
+        tests:
+          - not_null
+      - name: flow_name
+        tests:
+          - not_null
+      - name: flow_uuid
+        tests:
+          - not_null
+      - name: first_message_at
+        tests:
+          - not_null
+      - name: outbound_message_count
+        tests:
+          - not_null
+
+  - name: integrated_training_funnel_year_stage_2026_prod
+    description: "FY2026 Superset-ready funnel for integrated Avni-Gramin training auto-triggers. The chart metric should use funnel_contact_count or contact_count; raw_contact_count is retained for QA."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - stage_order
+    columns:
+      - name: reporting_year
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2026]
+      - name: stage_order
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+      - name: stage_short_name
+        tests:
+          - not_null
+      - name: stage_name
+        tests:
+          - not_null
+      - name: stage_name_with_dropoff
+        tests:
+          - not_null
+      - name: avni_action
+        tests:
+          - not_null
+      - name: glific_auto_trigger
+        tests:
+          - not_null
+      - name: flow_name
+        tests:
+          - not_null
+      - name: flow_uuid
+        tests:
+          - not_null
+      - name: raw_contact_count
+        tests:
+          - not_null
+      - name: funnel_contact_count
+        tests:
+          - not_null
+      - name: contact_count
+        tests:
+          - not_null
+
+  - name: contact_flow_status_year_2026_prod
+    description: "FY2026 training-status contact table using the same legacy logic as the 2025 Glific training cards."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contact_id
+    columns:
+      - name: reporting_year
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2026]
+      - name: contact_id
+        tests:
+          - not_null
+      - name: phone
+        tests:
+          - not_null
+      - name: avni_gramin_initiated_flow
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: rwb_training_initiated_flow
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: completed_both_trainings
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: avni_training_completed
+        tests:
+          - accepted_values:
+              values: [0, 1]
+      - name: rwb_training_completed
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+  - name: training_split_year_2026_prod
+    description: "FY2026 training split using the same legacy logic as the 2025 Glific training pie."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - reporting_year
+            - training_type
+    columns:
+      - name: reporting_year
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2026]
+      - name: training_type
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'Avni Training Only'
+                - 'RWB Training Only'
+                - 'Both Trainings'
+                - 'Training Not Started'
+      - name: num_people
+        tests:
+          - not_null
