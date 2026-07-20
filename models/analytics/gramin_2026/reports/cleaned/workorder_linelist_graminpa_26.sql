@@ -5,7 +5,7 @@
 ) }}
 
 
-SELECT *
+SELECT * -- date_time source: work-order registration date from the approval model; safe to change/remove there.
 
 FROM {{ ref('workorder_linelist_approval_graminpa_26') }}
 WHERE approval_status = 'Approved'

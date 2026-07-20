@@ -5,6 +5,6 @@
 ) }}
 
 
-SELECT *
+SELECT * -- date_time source: farmer endline encounter date from the approval model; safe to change/remove there.
 FROM {{ ref('farmer_endline_linelist_approval_graminpa_26') }}
 WHERE approval_status = 'Approved'

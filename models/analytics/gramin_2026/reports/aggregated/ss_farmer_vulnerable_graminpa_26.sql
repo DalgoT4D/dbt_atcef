@@ -22,10 +22,10 @@ farmer_counts AS (
         fr.village,
         fr.dam,
         fr.stakeholder_responsible AS ngo_name,
-        COUNT(CASE WHEN fr.farmer_category IN ('Marginal (0-2.49 acres)', 'Small (2.5-4.99 acres)') THEN fr.subject_id END) AS vulnerable_farmers,
-        COUNT(CASE WHEN fr.farmer_category IN ('Semi-medium (5-9.99 acres)', 'Semi-medium (5 to 9.99 acre)', 'Semi-medium (5-9.99 acre)', 'Medium (10-24.99 acres)', 'Large (above 25 acres)', 'Large (25+ acres)') THEN fr.subject_id END) AS other_farmers,
-        SUM(CASE WHEN fr.farmer_category IN ('Marginal (0-2.49 acres)', 'Small (2.5-4.99 acres)') THEN COALESCE(d.total_silt_carted, 0) ELSE 0 END) AS vulnerable_silt,
-        SUM(CASE WHEN fr.farmer_category IN ('Semi-medium (5-9.99 acres)', 'Semi-medium (5 to 9.99 acre)', 'Semi-medium (5-9.99 acre)', 'Medium (10-24.99 acres)', 'Large (above 25 acres)', 'Large (25+ acres)') THEN COALESCE(d.total_silt_carted, 0) ELSE 0 END) AS other_silt
+        COUNT(CASE WHEN fr.farmer_category IN ('Marginal: 0-2.47 acres', 'Small: 2.48 to 4.94 acres') THEN fr.subject_id END) AS vulnerable_farmers,
+        COUNT(CASE WHEN fr.farmer_category IN ('Semi Medium: 4.95 to 9.88 acres', 'Medium: 9.89 acres to 24.7 acres', 'Large: Above 24.7 acres') THEN fr.subject_id END) AS other_farmers,
+        SUM(CASE WHEN fr.farmer_category IN ('Marginal: 0-2.47 acres', 'Small: 2.48 to 4.94 acres') THEN COALESCE(d.total_silt_carted, 0) ELSE 0 END) AS vulnerable_silt,
+        SUM(CASE WHEN fr.farmer_category IN ('Semi Medium: 4.95 to 9.88 acres', 'Medium: 9.89 acres to 24.7 acres', 'Large: Above 24.7 acres') THEN COALESCE(d.total_silt_carted, 0) ELSE 0 END) AS other_silt
     FROM farmer_activity AS d
     INNER JOIN {{ ref('farmer_regn_graminpa_26') }} AS fr
         ON d.farmer_id = fr.subject_id

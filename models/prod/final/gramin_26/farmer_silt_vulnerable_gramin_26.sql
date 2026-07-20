@@ -14,8 +14,8 @@ WITH farmer_silt AS (
         SUM(CASE
             WHEN
                 f.category_of_farmer IN (
-                    'Marginal (0-2.49 acres)',
-                    'Small (2.5-4.99 acres)',
+                    'Marginal: 0-2.47 acres',
+                    'Small: 2.48 to 4.94 acres',
                     'Widow',
                     'Disabled',
                     'Family of farmer who committed suicide'
@@ -26,9 +26,9 @@ WITH farmer_silt AS (
         SUM(CASE
             WHEN
                 f.category_of_farmer IN (
-                    'Semi-medium (5 to 9.99 acre)',
-                    'Medium (10-24.99 acres)',
-                    'Large (above 25 acres)'
+                    'Semi Medium: 4.95 to 9.88 acres',
+                    'Medium: 9.89 acres to 24.7 acres',
+                    'Large: Above 24.7 acres'
                 )
                 THEN e.total_silt_carted
             ELSE 0

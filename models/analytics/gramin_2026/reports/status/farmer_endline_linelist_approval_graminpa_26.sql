@@ -32,6 +32,7 @@ SELECT
   fr.farmer_name,
   fr.subject_id as farmer_beneficiary_id,
   fe.encounter_date_time,
+  CAST(fe.encounter_date_time AS TIMESTAMP) AS date_time, -- Source: farmer endline encounter date; safe to change/remove.
   fr.state,
   fr.district,
   fr.taluka,
@@ -51,7 +52,5 @@ SELECT
 from farmer_with_status as fe
 LEFT JOIN {{ ref('farmer_regn_graminpa_26') }} AS fr
     ON fe.endline_farmer_sub_id = fr.subject_id
-
-
 
 

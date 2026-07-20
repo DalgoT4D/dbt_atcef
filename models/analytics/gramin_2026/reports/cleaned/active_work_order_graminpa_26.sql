@@ -163,6 +163,7 @@ SELECT
     fc.total_number_of_farmers, -- change the source for this. 
     wd.work_order_start_date,
     we.endline_date as workorder_endline_date,
+    GREATEST(wd.work_order_start_date, CAST(we.endline_date AS TIMESTAMP)) AS date_time, -- Source: latest of work-order registration and endline encounter; safe to change/remove.
     ms.jcb_working_hours,
     ms.poclain_working_hours,
     exc.jcb_excavation,

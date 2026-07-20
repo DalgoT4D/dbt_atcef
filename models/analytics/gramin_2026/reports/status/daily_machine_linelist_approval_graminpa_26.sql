@@ -25,6 +25,7 @@ SELECT
     mr.machine_name,
     -- ml.total_working_hours,
     ml.encounter_date_time,
+    ml.encounter_date_time AS date_time, -- Source: machine daily-recording encounter date; safe to change/remove.
     -- mr.machine_type,
     mr.contractor_name,
     mr.contractor_mobile_number,

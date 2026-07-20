@@ -16,6 +16,7 @@ mr.subject_id as machine_id,
 mr.machine_type,
 cast(me.total_machine_working_hours as NUMERIC) as total_machine_working_hours,
 cast(me.encounter_date_time as TIMESTAMP) as endline_date_time,
+cast(me.encounter_date_time as TIMESTAMP) as date_time, -- Source: machine endline encounter date; safe to change/remove.
 mr.state,
 mr.district,
 mr.taluka,
@@ -31,4 +32,3 @@ ON mr.subject_id = me.endline_machine_sub_id
 LEFT JOIN {{ ref('approval_status_graminpa_26') }} as a
 ON a.entity_id = me.eid
 WHERE mr.approval_status = 'Approved' -- only registered machines can have an endline
-

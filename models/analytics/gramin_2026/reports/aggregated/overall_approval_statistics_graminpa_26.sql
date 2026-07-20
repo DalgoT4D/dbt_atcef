@@ -7,35 +7,35 @@
 WITH entity_statuses AS (
     SELECT 'Farmer Registration' AS entity, 
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
     FROM {{ ref('farmer_linelist_approval_graminpa_26') }}
 
     UNION ALL
 
     SELECT 'Farmer Endline' AS entity, 
     state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
     FROM {{ ref('farmer_endline_linelist_approval_graminpa_26') }}
 
     UNION ALL
 
     SELECT 'Machine Registration' AS entity, 
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
     FROM {{ ref('machine_linelist_approval_graminpa_26') }}
 
     UNION ALL
 
     SELECT 'Machine Endline' AS entity, 
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
     FROM {{ ref('machine_endline_linelist_approval_graminpa_26') }}
 
     UNION ALL
 
     SELECT 'Work order registration' AS entity,
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
     FROM {{ ref('workorder_linelist_approval_graminpa_26') }}
 
     UNION ALL
@@ -43,7 +43,7 @@ WITH entity_statuses AS (
     SELECT
         'Work order daily recording - Farmer' AS entity,
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
         -- COALESCE(encounter_approval_status) AS approval_status
     FROM {{ ref('daily_farmer_linelist_approval_graminpa_26') }}
 
@@ -51,7 +51,7 @@ WITH entity_statuses AS (
 
     SELECT 'Work order daily recording - Machine' AS entity, 
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
         -- COALESCE(encounter_approval_status) AS approval_status
 FROM {{ ref('daily_machine_linelist_approval_graminpa_26') }}
 
@@ -59,7 +59,7 @@ FROM {{ ref('daily_machine_linelist_approval_graminpa_26') }}
 
     SELECT 'Work order endline' AS entity,
         state, district, taluka, village, dam, --stakeholder_responsible,
-        approval_status
+        approval_status, date_time
     FROM {{ ref('workorder_endline_linelist_approval_graminpa_26') }}
 )
 
@@ -71,6 +71,7 @@ SELECT
     taluka,
     village,
     dam,
+    MAX(date_time) AS date_time, -- Source: latest registration or encounter date for each entity/status group; safe to change/remove.
    -- stakeholder_responsible,
 
     COUNT(*) AS total_registrations,

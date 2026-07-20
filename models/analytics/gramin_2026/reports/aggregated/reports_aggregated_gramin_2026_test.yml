@@ -29,15 +29,15 @@ models:
       - name: farmers_with_endline_done
         description: "Count of farmers with an endline record for this dam."
       - name: marginal_farmers
-        description: "Count of farmers categorized as Marginal (0-2.49 acres)."
+        description: "Count of farmers categorized as Marginal: 0-2.47 acres."
       - name: small_farmers
-        description: "Count of farmers categorized as Small (2.5-4.99 acres)."
+        description: "Count of farmers categorized as Small: 2.48 to 4.94 acres."
       - name: semi_medium_farmers
-        description: "Count of farmers categorized as Semi-medium (5-9.99 acres)."
+        description: "Count of farmers categorized as Semi Medium: 4.95 to 9.88 acres."
       - name: medium_farmers
-        description: "Count of farmers categorized as Medium (10-24.99 acres)."
+        description: "Count of farmers categorized as Medium: 9.89 acres to 24.7 acres."
       - name: large_farmers
-        description: "Count of farmers categorized as Large (above 25 acres)."
+        description: "Count of farmers categorized as Large: Above 24.7 acres."
       - name: disabled_farmers
         description: "Count of farmers categorized as Disabled."
       - name: widow_farmers

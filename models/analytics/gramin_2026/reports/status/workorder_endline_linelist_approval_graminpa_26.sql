@@ -35,6 +35,7 @@ ws.dam,
 ws.gram_panchayat_name as gp,
 
 cast(we.encounter_date_time as TIMESTAMP) as endline_date,
+cast(we.encounter_date_time as TIMESTAMP) as date_time, -- Source: work-order endline encounter date; safe to change/remove.
 we.ngo as stakeholder_responsible,
 we.site_video,
 we.mb_recording_done,

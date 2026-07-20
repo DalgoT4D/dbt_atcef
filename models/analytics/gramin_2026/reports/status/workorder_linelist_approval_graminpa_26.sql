@@ -32,6 +32,7 @@ SELECT
 ws.workorder_first_name as workorder_name,
 ws.updated_workorder_name as updated_workorder_name,
 ws.registration_date,
+CAST(ws.registration_date AS TIMESTAMP) AS date_time, -- Source: work-order registration date; safe to change/remove.
 
 ws.state,
 ws.district,

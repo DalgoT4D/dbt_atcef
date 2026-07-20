@@ -36,7 +36,8 @@ gr.silt_usage_plans_exist,
 gr.silt_usage_execution_plan,
 gr.approval_status,
 CAST(ge.total_gp_silt_excavated_non_farm as numeric) as total_gp_silt_excavated_non_farm,
-ge.encounter_date_time as last_gp_update
+ge.encounter_date_time as last_gp_update,
+CAST(ge.encounter_date_time AS TIMESTAMP) AS date_time -- Source: latest GP endline encounter date; safe to change/remove.
 
 from {{ ref('gp_regn_graminpa_26') }} as gr
 left join latest_endline_per_gp ge

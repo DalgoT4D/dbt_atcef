@@ -59,6 +59,7 @@ SELECT
   s.land_holding,
   s.farmer_category,
   s.approval_status,
+  GREATEST(CAST(s.registration_date AS TIMESTAMP), CAST(fe.encounter_date_time AS TIMESTAMP)) AS date_time, -- Source: latest of farmer registration and farmer endline encounter; safe to change/remove.
 
   fe.area_silt_spread,
 

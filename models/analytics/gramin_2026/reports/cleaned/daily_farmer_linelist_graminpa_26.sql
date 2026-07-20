@@ -48,6 +48,7 @@ SELECT
     w.other_purpose_of_carting_silt,
     w.silt_taken_by,
     w.encounter_date_time,
+    CAST(w.encounter_date_time AS TIMESTAMP) AS date_time, -- Source: farmer daily-recording encounter date; safe to change/remove.
 
     w.farmer_work_order_sub_id AS work_order_id,
     ws.approval_status AS work_order_approval_status,

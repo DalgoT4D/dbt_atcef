@@ -12,6 +12,7 @@ SELECT
     m.district, 
     m.taluka, 
     m.village, 
+    MAX(m.date_time) AS date_time, -- Source: latest work-order registration or endline encounter per dam; safe to change/remove.
     COUNT(m.workorderid) AS registered_work_orders,
     SUM(CASE WHEN m.workorder_endline_date IS NOT NULL THEN 1 ELSE 0 END) AS work_order_endlines_completed,
     SUM(CASE WHEN m.workorder_endline_date IS NULL THEN 1 ELSE 0 END) AS active_work_orders,
@@ -52,4 +53,3 @@ GROUP BY
     -- ELSE 0 END) AS active_poclains,
     -- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.jcb_count, 0) ELSE 0
     -- END) AS active_jcbs,    
-  

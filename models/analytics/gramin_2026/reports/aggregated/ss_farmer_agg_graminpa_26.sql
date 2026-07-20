@@ -46,11 +46,11 @@ SELECT
     SUM(CASE WHEN LOWER(COALESCE(mobile_verified_status, '')) = 'true' THEN 1 ELSE 0 END) AS verified_farmers,
     SUM(CASE WHEN LOWER(COALESCE(mobile_verified_status, '')) = 'false' THEN 1 ELSE 0 END) AS unverified_farmers,
     COUNT(*) AS total,
-    COUNT(CASE WHEN farmer_category = 'Marginal (0-2.49 acres)' THEN 1 END) AS vulnerable_marginal,
-    COUNT(CASE WHEN farmer_category = 'Small (2.5-4.99 acres)' THEN 1 END) AS vulnerable_small,
-    COUNT(CASE WHEN farmer_category IN ('Semi-medium (5-9.99 acres)', 'Semi-medium (5 to 9.99 acre)', 'Semi-medium (5-9.99 acre)') THEN 1 END) AS semi_medium,
-    COUNT(CASE WHEN farmer_category = 'Medium (10-24.99 acres)' THEN 1 END) AS medium,
-    COUNT(CASE WHEN farmer_category IN ('Large (25+ acres)', 'Large (above 25 acres)') THEN 1 END) AS large
+    COUNT(CASE WHEN farmer_category = 'Marginal: 0-2.47 acres' THEN 1 END) AS vulnerable_marginal,
+    COUNT(CASE WHEN farmer_category = 'Small: 2.48 to 4.94 acres' THEN 1 END) AS vulnerable_small,
+    COUNT(CASE WHEN farmer_category = 'Semi Medium: 4.95 to 9.88 acres' THEN 1 END) AS semi_medium,
+    COUNT(CASE WHEN farmer_category = 'Medium: 9.89 acres to 24.7 acres' THEN 1 END) AS medium,
+    COUNT(CASE WHEN farmer_category = 'Large: Above 24.7 acres' THEN 1 END) AS large
 FROM farmer_latest_activity
 GROUP BY
     dam,

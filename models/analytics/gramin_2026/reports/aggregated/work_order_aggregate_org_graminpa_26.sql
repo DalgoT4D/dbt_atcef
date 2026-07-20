@@ -10,6 +10,7 @@ SELECT
     aw.workorderid,
     aw.workorder_name,
     aw.updated_workorder_name,
+    MAX(aw.date_time) AS date_time, -- Source: latest work-order registration or endline encounter; safe to change/remove.
     sum(aw.silt_to_be_excavated_as_per_plan) as silt_to_be_excavated_as_per_plan,
     sum(aw.total_silt_carted_by_farmers) as total_silt_carted_by_farmers,
     sum(aw.total_silt_excavated_by_gp_non_farm) as total_silt_excavated_by_gp_non_farm,

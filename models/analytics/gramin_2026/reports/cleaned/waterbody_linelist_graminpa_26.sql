@@ -14,5 +14,6 @@ l.silt_target as estimated_silt_quantity,
 -- l.site_gps_latitude,
 -- l.site_gps_longitude,
 l.gram_panchayat_name,
-l.stakeholder_responsible
+l.stakeholder_responsible,
+CAST(NULL AS TIMESTAMP) AS date_time -- Source: none; location model has no registration/encounter date; safe to change/remove.
 from {{ ref('location_graminpa_26') }} as l

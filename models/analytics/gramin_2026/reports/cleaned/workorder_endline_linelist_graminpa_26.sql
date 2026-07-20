@@ -4,6 +4,6 @@
   tags=["analytics","analytics_gramin_2026", "analytical_models", "reports_graminpa_2026", "cleaned_graminpa_26"]
 ) }}
 
-SELECT *
+SELECT * -- date_time source: work-order endline encounter date from the approval model; safe to change/remove there.
 FROM {{ ref('workorder_endline_linelist_approval_graminpa_26') }}
 WHERE approval_status = 'Approved'

@@ -7,6 +7,7 @@
 
 SELECT
     m.stakeholder_responsible, 
+    MAX(m.date_time) AS date_time, -- Source: latest work-order registration or endline encounter per organisation; safe to change/remove.
     count(distinct m.district) as number_districts, 
     count(distinct m.dam) as number_waterbodies,
     COUNT(m.workorderid) AS registered_work_orders,
@@ -36,4 +37,3 @@ GROUP BY
     -- count(distinct m.village) as number_villages, 
      -- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.total_number_of_farmers, 0) ELSE 0
     --     END) AS active_farmers,
- 

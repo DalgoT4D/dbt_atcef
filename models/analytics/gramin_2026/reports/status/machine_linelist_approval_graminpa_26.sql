@@ -6,7 +6,8 @@
 
 Select
 m.machine_name,
-m.registration_date, 
+m.registration_date,
+CAST(m.registration_date AS TIMESTAMP) AS date_time, -- Source: machine registration date; safe to change/remove.
 m.subject_id as uuid,
 m.state, 
 m.district, 
