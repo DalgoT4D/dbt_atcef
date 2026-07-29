@@ -27,7 +27,6 @@ models:
       - dbt_expectations.expect_column_values_to_be_of_type:
           column_name: date_time
           column_type: date
-
   - name: subjects_gdgs_2023
     tests:
       - not_null: 
@@ -831,6 +830,10 @@ models:
           column_name: date_time
           column_type: date
 
+    columns:
+      - name: total_silt_excavated_by_gp_for_non_farm_purpose
+        description: "Silt excavated by the Gram Panchayat for non-farm use, captured at GP endline."
+
   - name: work_order_gramin_25
     tests: 
       - not_null: 
@@ -915,7 +918,6 @@ models:
       - dbt_expectations.expect_column_values_to_be_of_type:
           column_name: date_time
           column_type: date
-
   - name: work_order_gramin_26
     tests:
       - not_null:

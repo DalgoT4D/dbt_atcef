@@ -55,6 +55,12 @@ cte AS (
             observations ->> 'Total silt excavated' AS NUMERIC
         ) AS total_silt_excavated_encounter,
         CAST(
+            NULLIF(
+                TRIM(observations ->> 'Total silt excavated by GP (for non-farm purpose)'),
+                ''
+            ) AS NUMERIC
+        ) AS total_silt_excavated_by_gp_for_non_farm_purpose,
+        CAST(
             TO_DATE(
                 "Encounter_date_time", 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"'
             ) AS DATE

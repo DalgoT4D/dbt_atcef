@@ -157,3 +157,34 @@ models:
       - name: total_farm_area_silt_is_spread_on
         tests:
           - not_null
+
+  - name: gram_panchayat_gramin_25
+    description: "Approved Gram Panchayat endline silt records enriched with work-order and location details."
+    columns:
+      - name: work_order_id
+        tests:
+          - not_null
+      - name: work_order_name
+        tests:
+          - not_null
+      - name: total_silt_excavated_by_gp_for_non_farm_purpose
+        tests:
+          - not_null
+
+  - name: combined_silt_achievement_gramin_25
+    description: "Work-order silt achievement combining farmer carting and Gram Panchayat non-farm excavation."
+    columns:
+      - name: work_order_name
+        tests:
+          - not_null
+      - name: farmer_silt_achieved
+        tests:
+          - not_null
+      - name: gp_silt_achieved
+        tests:
+          - not_null
+      - name: total_silt_achieved
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "= (farmer_silt_achieved + gp_silt_achieved)"

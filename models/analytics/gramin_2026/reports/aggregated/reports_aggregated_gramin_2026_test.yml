@@ -304,6 +304,8 @@ models:
         description: "Name of the stakeholder responsible."
         tests:
           - not_null
+      - name: silt_target
+        description: "Planned silt excavation target for the work order."
       - name: farmer_silt_achieved
         description: "Total silt achieved by farmers."
         tests:

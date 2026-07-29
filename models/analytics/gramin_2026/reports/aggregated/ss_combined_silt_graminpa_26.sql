@@ -14,7 +14,8 @@ WITH approved_work_orders AS (
         w.village,
         w.dam,
         w.workorder_first_name AS work_order_name,
-        w.stakeholder_responsible AS ngo_name
+        w.stakeholder_responsible AS ngo_name,
+        w.silt_to_be_excavated_as_per_plan AS silt_target
     FROM {{ ref('work_order_regn_graminpa_26') }} AS w
     WHERE w.approval_status = 'Approved'
 ),
@@ -46,6 +47,7 @@ farmer_silt AS (
         w.dam,
         w.work_order_name,
         w.ngo_name,
+        w.silt_target,
         SUM(f.farmer_silt_achieved) AS farmer_silt_achieved,
         SUM(COALESCE(f.total_farm_area_with_silt, 0)) AS total_farm_area_with_silt,
         MAX(f.last_farmer_update) AS last_farmer_update
@@ -60,17 +62,18 @@ farmer_silt AS (
         w.village,
         w.dam,
         w.work_order_name,
-        w.ngo_name
+        w.ngo_name,
+        w.silt_target
 ),
 
 gp_silt AS (
     SELECT
         gp.workorder_id,
         SUM(gp.total_gp_silt_excavated_non_farm) AS gp_silt_achieved,
-        gp.last_gp_update
+        MAX(gp.last_gp_update) AS last_gp_update
     FROM {{ ref('gp_linelist_approval_graminpa_26') }} AS gp
     WHERE gp.approval_status = 'Approved'
-    GROUP BY gp.workorder_id, gp.last_gp_update
+    GROUP BY gp.workorder_id
 )
 
 SELECT
@@ -81,6 +84,7 @@ SELECT
     f.dam,
     f.work_order_name,
     f.ngo_name,
+    f.silt_target,
     SUM(COALESCE(f.farmer_silt_achieved, 0)) AS farmer_silt_achieved,
     SUM(COALESCE(f.total_farm_area_with_silt, 0)) AS total_farm_area_with_silt,
     SUM(COALESCE(g.gp_silt_achieved, 0)) AS gp_silt_achieved,
@@ -99,4 +103,5 @@ GROUP BY
     f.taluka,
     f.village,
     f.dam,
-    f.ngo_name
+    f.ngo_name,
+    f.silt_target
