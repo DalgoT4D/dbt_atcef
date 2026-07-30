@@ -1,14 +1,9 @@
-{{ config(
-  materialized='table',
-  tags=["final", "final_gramin_union", "gramin_niti"]
-) }}
+{{ config(materialized='table', tags=["final", "final_gramin_union", "gramin_niti"]) }}
 
-select * from {{ ref('machine_gramin_metric') }}
+{% set columns = ['machine_id', 'machine_name', 'type_of_machine', 'dam', 'district', 'state', 'taluka', 'village', 'ngo_name', 'total_silt_carted', 'total_working_hours', 'avg_silt_excavated_per_hour', 'benchmark_classification', 'date_time'] %}
 
-union all
-
-select * from {{ ref('machine_gramin_metric_25') }}
-
-union all
-
-select * from {{ ref('machine_gramin_metric_26') }}
+SELECT {{ columns | join(', ') }} FROM {{ ref('machine_gramin_metric') }}
+UNION ALL
+SELECT {{ columns | join(', ') }} FROM {{ ref('machine_gramin_metric_25') }}
+UNION ALL
+SELECT {{ columns | join(', ') }} FROM {{ ref('ss_machine_metric_graminpa_26') }}

@@ -23,6 +23,7 @@ WITH non_voided_work_orders AS (
 )
 
 SELECT
+    w.eid,
     ws.workorder_first_name AS workorder_name,
     ws.updated_workorder_name AS updated_workorder_name,
     fs.farmer_name,

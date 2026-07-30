@@ -1,14 +1,9 @@
-{{ config(
-  materialized='table',
-  tags=["final", "final_gramin_union", "gramin_niti"]
-) }}
+{{ config(materialized='table', tags=["final", "final_gramin_union", "gramin_niti"]) }}
 
-select * from {{ ref('progress_waterbodies_gramin') }}
+{% set columns = ['dam', 'work_order_id', 'state', 'village', 'district', 'taluka', 'endline_date', 'farmer_date', 'ngo_name', 'project_status', 'work_order_endline_status'] %}
 
-union all
-
-select * from {{ ref('progress_waterbodies_gramin_25') }}
-
-union all
-
-select * from {{ ref('progress_waterbodies_gramin_26') }}
+SELECT {{ columns | join(', ') }} FROM {{ ref('progress_waterbodies_gramin') }}
+UNION ALL
+SELECT {{ columns | join(', ') }} FROM {{ ref('progress_waterbodies_gramin_25') }}
+UNION ALL
+SELECT {{ columns | join(', ') }} FROM {{ ref('ss_progress_dam_graminpa_26') }}

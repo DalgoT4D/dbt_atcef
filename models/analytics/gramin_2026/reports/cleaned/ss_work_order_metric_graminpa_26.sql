@@ -1,6 +1,6 @@
 {{ config(
   materialized='table',
-  tags=["ss_2026", "ss_graminpa_2026"]
+  tags=["analytics", "analytics_gramin_2026", "ss_2026", "ss_graminpa_2026"]
 ) }}
 
 -- Farmer-carted silt plus GP excavation for non-farm use.

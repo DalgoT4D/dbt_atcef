@@ -1,7 +1,7 @@
 -- Work order progress status for GraminPA 2026 using only analytics lineage.
 {{ config(
   materialized='table',
-  tags=["ss_2026", "ss_graminpa_2026"]
+  tags=["analytics", "analytics_gramin_2026", "ss_2026", "ss_graminpa_2026"]
 ) }}
 
 WITH approved_work_orders AS (

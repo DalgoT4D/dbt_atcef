@@ -1,7 +1,7 @@
 -- Machine efficiency metrics for GraminPA 2026 using analytics lineage only.
 {{ config(
   materialized='table',
-  tags=["ss_2026", "ss_graminpa_2026"]
+  tags=["analytics", "analytics_gramin_2026", "ss_2026", "ss_graminpa_2026"]
 ) }}
 
 WITH working_hours AS (

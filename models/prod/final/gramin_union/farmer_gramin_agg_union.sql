@@ -1,14 +1,9 @@
-{{ config(
-  materialized='table',
-  tags=["final", "final_gramin_union", "gramin_niti"]
-) }}
+{{ config(materialized='table', tags=["final", "final_gramin_union", "gramin_niti"]) }}
 
-select * from {{ ref('farmer_agg_gramin') }}
+{% set columns = ['dam', 'date_time', 'state', 'district', 'taluka', 'village', 'ngo_name', 'verified_farmers', 'unverified_farmers', 'total', 'vulnerable_marginal', 'vulnerable_small', 'semi_medium', 'medium', 'large'] %}
 
-union all
-
-select * from {{ ref('farmer_agg_gramin_25') }}
-
-union all
-
-select * from {{ ref('farmer_agg_gramin_26') }}
+SELECT {{ columns | join(', ') }} FROM {{ ref('farmer_agg_gramin') }}
+UNION ALL
+SELECT {{ columns | join(', ') }} FROM {{ ref('farmer_agg_gramin_25') }}
+UNION ALL
+SELECT {{ columns | join(', ') }} FROM {{ ref('ss_farmer_agg_graminpa_26') }}

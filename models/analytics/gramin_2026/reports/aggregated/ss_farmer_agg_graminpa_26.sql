@@ -1,7 +1,7 @@
 -- Aggregated farmer status by location for GraminPA 2026 using analytics lineage.
 {{ config(
   materialized='table',
-  tags=["ss_2026", "ss_graminpa_2026"]
+  tags=["analytics", "analytics_gramin_2026", "ss_2026", "ss_graminpa_2026"]
 ) }}
 
 WITH farmer_latest_activity AS (

@@ -2,7 +2,7 @@
 -- lineage only, limited to machines that appear in approved daily recordings.
 {{ config(
   materialized='table',
-  tags=["ss_2026", "ss_graminpa_2026"]
+  tags=["analytics", "analytics_gramin_2026", "ss_2026", "ss_graminpa_2026"]
 ) }}
 
 WITH machines_with_daily_recording AS (

@@ -31,4 +31,4 @@ UNION ALL
 
 SELECT
     {{ work_order_metric_columns | join(',\n    ') }}
-FROM {{ ref('work_order_silt_calc_26') }}
+FROM {{ ref('ss_work_order_metric_graminpa_26') }}
