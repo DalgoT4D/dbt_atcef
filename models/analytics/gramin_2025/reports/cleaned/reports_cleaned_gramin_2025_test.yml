@@ -22,7 +22,7 @@ models:
       - name: total_machine_working_hours
         description: "Total approved machine working hours (all types) for the work order."
       - name: active_work_orders
-        description: "Active work order flag (1 when endline date is NULL, else 0)."
+        description: "Jasper-aligned active work order flag (1 when no work order endline exists and at least one approved farmer daily recording exists)."
         tests:
           - not_null
           - accepted_values:

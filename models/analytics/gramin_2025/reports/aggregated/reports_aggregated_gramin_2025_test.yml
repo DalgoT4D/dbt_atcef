@@ -99,13 +99,13 @@ models:
       - name: work_order_endlines_completed
         description: "Count of work orders with an endline date present."
       - name: active_work_orders
-        description: "Count of work orders with no endline date (active)."
+        description: "Count of work orders with no endline and at least one approved farmer daily recording."
       - name: active_farmers
-        description: "Sum of active farmers across work orders for this dam."
+        description: "Farmers with approved daily records and no approved farmer endline on a work order without an endline."
       - name: active_poclains
-        description: "Sum of active poclains across work orders for this dam."
+        description: "Total Poclains deployed across work orders, matching the Jasper column labelled active."
       - name: active_jcbs
-        description: "Sum of active JCBs across work orders for this dam."
+        description: "Total JCBs deployed across work orders, matching the Jasper column labelled active."
       - name: silt_to_be_excavated_as_per_plan
         description: "Total planned silt to be excavated (cu.m) across work orders for this dam."
       - name: total_silt_carted_by_farmers
@@ -145,15 +145,15 @@ models:
       - name: work_order_endlines_completed
         description: "Count of work orders with an endline date present."
       - name: active_work_orders
-        description: "Count of work orders with no endline date (active)."
+        description: "Count of work orders with no endline and at least one approved farmer daily recording."
       - name: active_work_days
         description: "Total active work days across work orders for the stakeholder."
       - name: active_farmers
-        description: "Sum of active farmers across work orders for the stakeholder."
+        description: "Farmers with approved daily records and no approved farmer endline on a work order without an endline."
       - name: active_poclains
-        description: "Sum of active poclains across work orders for the stakeholder."
+        description: "Total Poclains deployed across work orders, matching the Jasper column labelled active."
       - name: active_jcbs
-        description: "Sum of active JCBs across work orders for the stakeholder."
+        description: "Total JCBs deployed across work orders, matching the Jasper column labelled active."
       - name: silt_to_be_excavated_as_per_plan
         description: "Total planned silt to be excavated (cu.m) across work orders for the stakeholder."
       - name: total_silt_carted_by_farmers

@@ -14,7 +14,7 @@ SELECT
     m.village, 
     COUNT(m.workorderid) AS registered_work_orders,
     SUM(CASE WHEN m.workorder_endline_date IS NOT NULL THEN 1 ELSE 0 END) AS work_order_endlines_completed,
-    SUM(CASE WHEN m.workorder_endline_date IS NULL THEN 1 ELSE 0 END) AS active_work_orders,
+    SUM(m.active_work_orders) AS active_work_orders,
     sum(m.active_farmers) as active_farmers,
     sum(m.active_poclains) as active_poclains,
     sum(m.active_jcbs) as active_jcbs,
@@ -52,4 +52,4 @@ GROUP BY
     -- ELSE 0 END) AS active_poclains,
     -- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.jcb_count, 0) ELSE 0
     -- END) AS active_jcbs,    
-  
+
