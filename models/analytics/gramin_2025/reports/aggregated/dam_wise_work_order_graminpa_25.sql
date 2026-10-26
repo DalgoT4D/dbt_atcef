@@ -21,13 +21,18 @@ SELECT
     sum(m.silt_to_be_excavated_as_per_plan) as silt_to_be_excavated_as_per_plan,
     sum(m.total_silt_carted_by_farmers) as total_silt_carted_by_farmers,
     sum(m.total_silt_excavated_by_gp_non_farm) as total_silt_excavated_by_gp_non_farm,
-    sum(m.total_silt_excavated_by_gp_non_farm)+sum(m.total_silt_carted_by_farmers) as total_silt_excavated,
-        SUM(
+    SUM(
         COALESCE(m.total_silt_carted_by_farmers, 0) +
         COALESCE(m.total_silt_excavated_by_gp_non_farm, 0)
-    ) AS total_silt_overall_excavated, -- new metric combining farmer and GP/non-farm excavation
-    ROUND(((sum(m.total_silt_excavated_by_gp_non_farm)
-    +sum(m.total_silt_carted_by_farmers))*100
+    ) AS total_silt_excavated,
+    SUM(
+        COALESCE(m.total_silt_carted_by_farmers, 0) +
+        COALESCE(m.total_silt_excavated_by_gp_non_farm, 0)
+    ) AS total_silt_overall_excavated,
+    ROUND((SUM(
+        COALESCE(m.total_silt_carted_by_farmers, 0) +
+        COALESCE(m.total_silt_excavated_by_gp_non_farm, 0)
+    )*100
     / NULLIF(sum(m.silt_to_be_excavated_as_per_plan), 0)), 2) AS percent_silt_excavated, -- dam level
 
     SUM(CAST(m.workorder_endline_date AS DATE) - CAST(m.work_order_start_date AS DATE)) AS active_work_days,
