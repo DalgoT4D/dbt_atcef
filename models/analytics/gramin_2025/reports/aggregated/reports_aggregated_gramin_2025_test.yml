@@ -101,7 +101,7 @@ models:
       - name: active_work_orders
         description: "Count of work orders with no endline and at least one approved farmer daily recording."
       - name: active_farmers
-        description: "Farmers with approved daily records and no approved farmer endline on a work order without an endline."
+        description: "Farmers with approved daily records showing positive silt carted, regardless of endline status."
       - name: active_poclains
         description: "Total Poclains deployed across work orders, matching the Jasper column labelled active."
       - name: active_jcbs
@@ -149,7 +149,7 @@ models:
       - name: active_work_days
         description: "Total active work days across work orders for the stakeholder."
       - name: active_farmers
-        description: "Farmers with approved daily records and no approved farmer endline on a work order without an endline."
+        description: "Farmers with approved daily records showing positive silt carted, regardless of endline status."
       - name: active_poclains
         description: "Total Poclains deployed across work orders, matching the Jasper column labelled active."
       - name: active_jcbs

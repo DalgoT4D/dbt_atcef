@@ -117,22 +117,11 @@ farmer_silt_cl as (
     select
         work_order_id,
         count(distinct farmer_id) as total_number_of_farmers,
-        sum(silt_carted) as total_silt_carted_by_farmers
+        sum(silt_carted) as total_silt_carted_by_farmers,
+        count(distinct case when silt_carted > 0 then farmer_id end) as active_farmers
     from {{ ref('daily_farmer_linelist_graminpa_25') }}
     group by work_order_id),
     -- having sum(silt_carted) > 0),
-
--- Jasper counts a farmer as active only while the farmer and the work order
--- have not been endlined. Keep this separate from all-time carting counts.
-active_farmer_counts as (
-    select
-        df.work_order_id,
-        count(distinct case when fe.farmer_beneficiary_id is null then df.farmer_id end) as active_farmers
-    from {{ ref('daily_farmer_linelist_graminpa_25') }} as df
-    left join {{ ref('farmer_endline_linelist_graminpa_25') }} as fe
-        on df.farmer_id = fe.farmer_beneficiary_id
-    group by df.work_order_id
-),
 
 
 -- GP SILT
@@ -181,9 +170,7 @@ SELECT
 
     /* ---------------- ACTIVE METRICS ---------------- */
 
-    CASE WHEN we.endline_date IS NULL
-        THEN COALESCE(af.active_farmers, 0) ELSE 0
-    END AS active_farmers,
+    COALESCE(fc.active_farmers, 0) AS active_farmers,
 
     -- mtc.active_jcb_count as active_jcbs,
     -- mtc.active_poclain_count as active_poclains,
@@ -203,7 +190,6 @@ SELECT
 
 FROM approved_work_orders AS wd
 LEFT JOIN farmer_silt_cl AS fc ON wd.workorderid = fc.work_order_id
-LEFT JOIN active_farmer_counts AS af ON wd.workorderid = af.work_order_id
 LEFT JOIN gp_silt AS gs ON wd.workorderid = gs.workorderid
 LEFT JOIN {{ref('workorder_endline_linelist_graminpa_25')}} AS we ON wd.workorderid = we.workorder_id
 LEFT JOIN   machine_silt AS ms ON wd.workorderid = ms.workorderid
