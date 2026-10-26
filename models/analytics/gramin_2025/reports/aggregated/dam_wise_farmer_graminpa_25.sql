@@ -25,7 +25,9 @@ WITH daily_summed AS (
     CASE WHEN fc.mobile_verified_status = 'true' THEN 1 ELSE 0 END AS mobile_verified_status
 
     FROM {{ ref('farmer_regn_graminpa_25') }} AS fc
-    LEFT JOIN {{ ref('daily_farmer_linelist_graminpa_25') }} AS d
+    -- Jasper's farmer detail report includes farmers with an approved daily
+    -- recording. The registration approval report retains all registrations.
+    INNER JOIN {{ ref('daily_farmer_linelist_graminpa_25') }} AS d
         ON d.farmer_id = fc.subject_id
     WHERE fc.approval_status = 'Approved'
 

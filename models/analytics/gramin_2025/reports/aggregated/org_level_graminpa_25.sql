@@ -11,7 +11,7 @@ SELECT
     count(distinct m.dam) as number_waterbodies,
     COUNT(m.workorderid) AS registered_work_orders,
     SUM(CASE WHEN m.workorder_endline_date IS NOT NULL THEN 1 ELSE 0 END) AS work_order_endlines_completed,
-    SUM(CASE WHEN m.workorder_endline_date IS NULL THEN 1 ELSE 0 END) AS active_work_orders,
+    SUM(m.active_work_orders) AS active_work_orders,
     SUM(CAST(m.workorder_endline_date AS DATE) - CAST(m.work_order_start_date AS DATE)) AS active_work_days,
     sum(m.active_farmers) as active_farmers,
     sum(m.active_poclains) as active_poclains,
@@ -36,4 +36,4 @@ GROUP BY
     -- count(distinct m.village) as number_villages, 
      -- SUM(CASE WHEN m.workorder_endline_date IS NULL THEN COALESCE(m.total_number_of_farmers, 0) ELSE 0
     --     END) AS active_farmers,
- 
+
